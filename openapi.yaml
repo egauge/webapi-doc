@@ -1,0 +1,28 @@
+openapi: "3.1.0"
+info:
+  version: "4.4.0"
+  title: eGauge WebAPI
+  description: eGauge Meter API
+servers:
+  - url: https://{devname}.egauge.io/api
+    description: The WebAPI server
+    variables:
+      devname:
+        default: eGaugeHQ
+#       description: The name of the target device.
+paths:
+  $ref: "./paths-manual.yaml"
+
+components:
+  parameters:
+    $ref: "./params.yaml"
+  schemas:
+    $ref: "./schemas-manual.yaml"
+  securitySchemes:
+    ApiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - ApiKey: []

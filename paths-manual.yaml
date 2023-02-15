@@ -1,0 +1,94 @@
+/auth/login:
+  post:
+    description: "Obtain the an authorization token (JSON Web Token, or JWT).
+
+
+    When accessing a protected resource, a valid JWT needs to be
+    supplied as the bearer token in the HTTP Authorization header
+    [RFC-7519](https://rfc.org/rfc7519).  The header must have the
+    form:
+
+    > Authorization: Bearer *JWT*
+
+
+    where *JWT* is a token returned in the response to this post
+    request.  The returned token is valid for a limited time;
+    typically for about 10 minutes.
+
+
+    There are two ways for supplying credentials in the request body:
+
+      1) Over a secure connection (`https://` scheme), credentials in
+      the form of a realm, username, and password may be supplied.
+
+      1) Over any connection, a digest login may be used to obtain a token
+      without transmitting the password.
+
+
+    We recommend using digest-based authentication whenever possible."
+    requestBody:
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: "./schemas-manual.yaml#/PasswordObject"
+            - $ref: "./schemas-manual.yaml#/DigestObject"
+    responses:
+      "200":
+        description: Authentication response.
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: "./schemas-manual.yaml#/JWTObject"
+              - $ref: "./schemas-manual.yaml#/ErrorObject"
+
+/auth/logout:
+  get:
+    description: "Revoke the JWT supplied as the bearer token in the
+    Authorization header."
+    responses:
+      "200":
+        description: Logout response.
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: "./schemas-manual.yaml#/StatusObject"
+              - $ref: "./schemas-manual.yaml#/ErrorObject"
+
+/auth/unauthorized:
+  get:
+    description: "This resource returns a 401 response unless the request
+    contains an Authorized header with a valid JWT token.   This
+    can be used to check the validity of a JWT token and, if invalid,
+    obtain the realm and server nonce required to refresh the token."
+    responses:
+      "200":
+        description: Status response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas-manual.yaml#/StatusObject"
+              example: You are logged in.
+      "401":
+        description: Unauthorized response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas-manual.yaml#/UnauthorizedObject"
+
+/auth/rights:
+  get:
+    description: Return a list of rights the authenticated user possesses.
+    responses:
+      "200":
+        description: Rights response.
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "./schemas-manual.yaml#/RightsObject"
+                - $ref: "./schemas-manual.yaml#/ErrorObject"
+
+$ref: "./paths-auto.yaml"
