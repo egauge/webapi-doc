@@ -20394,7 +20394,13 @@ components:
                 example: |-
                   Multiple lines...
                   ...are possible.
-          example: '[{"prio":6,"ts":"6.9801816","msg":"    6.980181] ehci-atmel: EHCI Atmel driver"},{"prio":6,"ts":"6.9886136","msg":"    6.988613] atmel-ehci 500000.ehci: EHCI Host Controller"}]'
+          example:
+            - prio: 6
+              ts: '6.9801816'
+              msg: '    6.980181] ehci-atmel: EHCI Atmel driver'
+            - prio: 6
+              ts: '6.9886136'
+              msg: '    6.988613] atmel-ehci 500000.ehci: EHCI Host Controller'
         error:
           $ref: '#/components/schemas/ErrorString'
     configBacnetServerBipPort:
