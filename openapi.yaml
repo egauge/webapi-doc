@@ -82,6 +82,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RightsObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
   /log:
     description: Provides access to various logs.  Since logs may contain sensitive information, this service is available only to users with the `save` privilege (see /auth/rights).
   /log/kernel:
@@ -91,11 +97,17 @@ paths:
       description: The operating system's kernel log has a fixed size and consists of a series of prioritized and time stamped messages. When the log fills up, older entries are dropped.
       responses:
         '200':
-          description: Get the kernel log.
+          description: Kernel log response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/KernelLogObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
   /config:
     description: |-
       The meter configuration.
