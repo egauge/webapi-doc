@@ -88,9 +88,10 @@ paths:
     get:
       summary: /log/kernel
       operationId: logKernelGet
+      description: The operating system's kernel log has a fixed size and consists of a series of prioritized and time stamped messages. When the log fills up, older entries are dropped.
       responses:
         '200':
-          description: Returns the kernel log. The kernel log has a fixed size and consists of a series of prioritized and time stamped messages. When the log fills up, older entries are dropped.
+          description: Get the kernel log.
           content:
             application/json:
               schema:
