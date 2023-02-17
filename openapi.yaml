@@ -13,7 +13,7 @@ paths:
   /auth/login:
     post:
       summary: /auth/login
-      operationId: /auth/login
+      operationId: authLoginPost
       description: |-
         When accessing a protected resource, a valid JWT needs to be supplied as the bearer token in the HTTP Authorization header [RFC-7519](https://rfc-editor.org/rfc/rfc7519).  The header must have the form:
         > Authorization: Bearer *JWT*
@@ -42,7 +42,7 @@ paths:
   /auth/logout:
     get:
       summary: /auth/logout
-      operationId: /auth/logout
+      operationId: authLogoutGet
       description: Revoke the JWT supplied as the bearer token in the Authorization header.
       responses:
         '200':
@@ -54,7 +54,7 @@ paths:
   /auth/unauthorized:
     get:
       summary: /auth/unauthorized
-      operationId: /auth/unauthorized
+      operationId: authUnauthorizedGet
       description: This resource returns a 401 response unless the request contains an Authorized header with a valid JWT token.   This can be used to check the validity of a JWT token and, if invalid, obtain the realm and server nonce required to refresh the token.
       responses:
         '200':
@@ -73,7 +73,7 @@ paths:
   /auth/rights:
     get:
       summary: /auth/rights
-      operationId: /auth/rights
+      operationId: authRightsGet
       description: Return a list of rights the authenticated user possesses.
       responses:
         '200':
@@ -82,6 +82,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RightsObject'
+  /log:
+    description: Provides access to various logs.  Since logs may contain sensitive information, this service is available only to users with the `save` privilege (see /auth/rights).
+  /log/kernel:
+    get:
+      summary: /log/kernel
+      operationId: logKernelGet
+      responses:
+        '200':
+          description: Returns the kernel log. The kernel log has a fixed size and consists of a series of prioritized and time stamped messages. When the log fills up, older entries are dropped.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KernelLogObject'
   /config:
     description: |-
       The meter configuration.
@@ -20239,6 +20252,13 @@ components:
           value: '{reg[7:8{addr}]}'
           summary: nested filter spec example
           description: Selects all members of the top-level object.  Within the values of those members, only the `reg` member is selected. Of the `reg` arrays, items for indices 7 and 8 are selected and, within those, member `addr` is selected.
+    afterParam:
+      name: after
+      in: query
+      description: Limits the output to messages with a timestamp that is newer than the value specified by this parameter.  The timestamp is expressed as a decimal number which is interpreted as seconds. A fractional part may be specified for sub-second resolution.
+      schema:
+        type: number
+      example: 1676670965.155
   securitySchemes:
     ApiKey:
       type: http
@@ -20354,6 +20374,29 @@ components:
           example:
             - save
             - ctrl
+    KernelLogObject:
+      type: object
+      properties:
+        log:
+          type: array
+          items:
+            type: object
+            properties:
+              prio:
+                type: integer
+                minimum: 0
+                example: 7
+              ts:
+                type: number
+                example: 1.2516333
+              msg:
+                type: string
+                example: |-
+                  Multiple lines...
+                  ...are possible.
+          example: '[{"prio":6,"ts":"6.9801816","msg":"    6.980181] ehci-atmel: EHCI Atmel driver"},{"prio":6,"ts":"6.9886136","msg":"    6.988613] atmel-ehci 500000.ehci: EHCI Host Controller"}]'
+        error:
+          $ref: '#/components/schemas/ErrorString'
     configBacnetServerBipPort:
       type: integer
     configBacnetServerBip:
