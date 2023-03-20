@@ -1032,7 +1032,6 @@ paths:
                     list must have values that are compatible with the
                     arguments expected by the method.
                   items:
-                    type: string
                     format: json
             example:
               attrs:
@@ -2004,7 +2003,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StoreVariable'
+                $ref: '#/components/schemas/StoreContentObject'
               example:
                 name: dash/dashCfg-default
                 content:
@@ -2691,7 +2690,6 @@ paths:
                     $ref: '#/components/schemas/configBacnetServerBipPort'
                   error:
                     $ref: '#/components/schemas/ErrorString'
-              example: 47808
         '401':
           description: Unauthorized response.
           content:
@@ -8162,6 +8160,10 @@ paths:
         required: true
         schema:
           type: string
+          enum:
+            - default-modbus-addr
+            - default-serial-params
+            - default-tcp-port
     get:
       tags:
         - /config/modbus/client/map/{name}/option/{opt}
@@ -24622,10 +24624,6 @@ components:
         Modbus map consisting of a list of register definitions and a set
         of options.
     ModbusClientMapObjectOption:
-      x-schema-enum:
-        - default-modbus-addr
-        - default-serial-params
-        - default-tcp-port
       x-schema-example:
         default-modbus-addr: '2'
         default-serial-params: 9600/8n1
@@ -25115,9 +25113,9 @@ components:
                   This is `true` if the trigger occurred at the time
                   indicated by member `t`.
                 type: boolean
-              required:
-                - t
-                - d
+            required:
+              - t
+              - d
         error:
           $ref: '#/components/schemas/ErrorString'
       required:
@@ -25185,10 +25183,9 @@ components:
         params:
           type: object
           description: Sensor-type dependent parameters.
-          properties:
-            patternProperties:
-              ^[a-zA-Z_][a-zA-Z_0-9]+$:
-                description: A sensor-type dependent parameter.
+          patternProperties:
+            ^[a-zA-Z_][a-zA-Z_0-9]+$:
+              description: A sensor-type dependent parameter.
         polarity:
           type: string
           enum:
@@ -25290,15 +25287,18 @@ components:
             type: string
           description: The unique path identifying the device.
         interface:
-          type: string
-          description: |
-            The interface name that must be supported by the target
-            device.
-      patternProperties:
-        /^[-_a-zA-Z0-9]*$/:
-          type: string
-          description: |
-            The value of the attribute.
+          type: array
+          items:
+            type: string
+            description: |
+              The interface name that must be supported by the target
+              device.
+      additionalProperties:
+        patternProperties:
+          ^[-_a-zA-Z0-9]*$:
+            type: string
+            description: |
+              The value of the attribute.
     CtrlCallResponseObject:
       type: object
       properties:
@@ -25322,7 +25322,6 @@ components:
       type: object
       properties:
         result:
-          type: object
           description: |
             The value returned by the method.  If the method returns
             no value, this member is not present.
@@ -25336,23 +25335,28 @@ components:
       type: object
       properties:
         result:
-          type: object
-          properties:
-            path:
-              type: array
-              items:
-                type: string
-              description: The unique path identifying the device.
-            interface:
-              type: array
-              items:
-                type: string
-              description: The list interface names supported by the device.
-          patternProperties:
-            /^[-_a-zA-Z0-9]*$/:
-              type: string
-              description: |
-                The value of the attribute.
+          type: array
+          description: The list of detected devices.
+          items:
+            type: object
+            description: Detected device description.
+            properties:
+              path:
+                type: array
+                items:
+                  type: string
+                description: The unique path identifying the device.
+              interface:
+                type: array
+                items:
+                  type: string
+                  description: The list interface names supported by the device.
+            additionalProperties:
+              patternProperties:
+                ^[-_a-zA-Z0-9]*$:
+                  type: string
+                  description: |
+                    The value of the attribute.
         error:
           $ref: '#/components/schemas/ErrorString'
     LocalApparentObject:
@@ -25561,16 +25565,7 @@ components:
                 description: |
                   The [Unix timestamp](#tag/Glossary/Unix-Timestamp) indicating
                   when the entry was added to the log.
-                type:
-                  type: string
-                  description: |
-                    A [Unix timestamp](#tag/Glossary/Unix-Timestamp) expressed as a
-                    decimal string that may contain a fractional value for sub-second
-                    resolution.  A string is used here since most JSON libraries store
-                    numbers as IEEE-754 double-precision numbers and the 54-bit
-                    mantissa of that format may not be sufficient to accurately
-                    represent the timestamp.
-                  example: '1677523091.000900435'
+                $ref: '#/components/schemas/ForeverStamp'
               msg:
                 type: string
                 description: The log message.
@@ -25645,6 +25640,10 @@ components:
                 description: |
                   A tariff service provider.
                 properties:
+                  name:
+                    type: string
+                    description: |
+                      The tariff name.
                   country:
                     type: string
                     description: |
@@ -25871,8 +25870,7 @@ components:
       type: object
       properties:
         name:
-          schema:
-            type: string
+          type: string
           description: |
             The name of the section being read.
         content:
@@ -25892,22 +25890,7 @@ components:
         ^[-a-zA-Z%_/]*$:
           type:
             - string
-            - null
-          description: |
-            The new value of the variable.  A `null` value deletes the
-            variable.  Any other value either creates a new variable or
-            updates an existing variable with the specified value.
-
-            Interpretation of this value is left to the applications that
-            use it.  By convention, this is often a URL-encoded string or
-            a JSON-encoded value.
-    StoreVariable:
-      type: object
-      properties:
-        '':
-          type:
-            - string
-            - null
+            - 'null'
           description: |
             The new value of the variable.  A `null` value deletes the
             variable.  Any other value either creates a new variable or
@@ -25922,7 +25905,7 @@ components:
         '':
           type:
             - string
-            - null
+            - 'null'
           description: |
             The new value of the variable.  A `null` value deletes the
             variable.  Any other value either creates a new variable or
@@ -26170,8 +26153,7 @@ components:
           $ref: '#/components/schemas/configDisplayScreenRegisters'
     configDisplayOrientation:
       minimum: 0
-      maximum: 360
-      maximumExclusive: true
+      exclusiveMaximum: 360
       example: 90
       description: |
         The angle in degrees by which the orientation of the display
@@ -26362,7 +26344,7 @@ components:
         the expense of having a 10 times smaller range.
       type: string
     configLocalUpdateInterval:
-      enum: 500
+      example: 500
       description: |
         The interval in milliseconds between measurement updates.  The
         default is 1000ms (one update per second) but some meters support
@@ -26501,10 +26483,6 @@ components:
         The value of the Modbus map option.
       type: string
     configModbusClientMapNameOption:
-      enum:
-        - default-modbus-addr
-        - default-serial-params
-        - default-tcp-port
       example:
         default-modbus-addr: '2'
         default-serial-params: 9600/8n1
@@ -28590,10 +28568,6 @@ components:
         The value of the Modbus map option.
       type: string
     sysModbusClientMapNameOption:
-      enum:
-        - default-modbus-addr
-        - default-serial-params
-        - default-tcp-port
       example:
         default-modbus-addr: '2'
         default-serial-params: 9600/8n1
@@ -30128,8 +30102,7 @@ tags:
       (translated) before presenting it to a user.
   - name: /config/display/orientation
     x-schema-minimum: 0
-    x-schema-maximum: 360
-    x-schema-maximumExclusive: true
+    x-schema-exclusiveMaximum: 360
     x-schema-example: 90
     description: |
       The angle in degrees by which the orientation of the display
@@ -30312,7 +30285,7 @@ tags:
       phase needs to be adjusted by 1 degree at 1A and by 0.75 degrees
       at 50A.
   - name: /config/local/update-interval
-    x-schema-enum: 500
+    x-schema-example: 500
     description: |
       The interval in milliseconds between measurement updates.  The
       default is 1000ms (one update per second) but some meters support
@@ -30457,10 +30430,6 @@ tags:
       Modbus map consisting of a list of register definitions and a set
       of options.
   - name: /config/modbus/client/map/{name}/option
-    x-schema-enum:
-      - default-modbus-addr
-      - default-serial-params
-      - default-tcp-port
     x-schema-example:
       default-modbus-addr: '2'
       default-serial-params: 9600/8n1
@@ -32097,10 +32066,6 @@ tags:
       Modbus map consisting of a list of register definitions and a set
       of options.
   - name: /sys/modbus/client/map/{name}/option
-    x-schema-enum:
-      - default-modbus-addr
-      - default-serial-params
-      - default-tcp-port
     x-schema-example:
       default-modbus-addr: '2'
       default-serial-params: 9600/8n1
