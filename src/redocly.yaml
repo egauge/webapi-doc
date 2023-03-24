@@ -1,0 +1,13 @@
+apis:
+  main@v4.4:
+    root: openapi.yaml
+
+extends:
+  - recommended
+
+rules:
+  operation-operationId-url-safe: error
+  no-path-trailing-slash: off
+
+theme.openapi:
+  pagination: section
