@@ -719,6 +719,8 @@ class OpenAPIBuilder:
         gen = URLDomainGenerator(self.log, self.tags, paths, schemas)
         gen.translate(url_domains)
 
+        # pick up additional tag descriptions from x-schema-ref:
+
         for tag in tag_list.content:
             path = tag["name"]
             if Key.DESCRIPTION not in tag:
