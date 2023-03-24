@@ -1191,7 +1191,7 @@
   x-path-method-delete:
     description: |
       Delete this map.
-  $ref: "./schemas.yaml#/ModbusClientMapObject"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObject"
 
 - name: /config/modbus/client/map/{name}/option
   x-path-var:
@@ -1206,13 +1206,13 @@
   x-path-method-delete:
     description: |
       Delete all options.
-  $ref: "./schemas.yaml#/ModbusClientMapObjectOption"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectOption"
 
 - name: /config/modbus/client/map/{name}/option/{opt}
   x-path-method-delete:
     description: |
       Delete this option.
-  $ref: "./schemas.yaml#/ModbusClientMapObjectOptionObject"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectOptionObject"
 
 - name: /config/modbus/client/map/{name}/reg
   x-path-var:
@@ -1223,52 +1223,52 @@
     required: true
     schema:
       type: string
-  $ref: "./schemas.yaml#/ModbusClientMapObjectReg"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectReg"
 
 - name: /config/modbus/client/map/{name}/reg/{idx}
   x-path-method-delete:
     description: |
       Delete this register definition.
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObject"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObject"
 
 - name: /config/modbus/client/map/{name}/reg/{idx}/name
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectName"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectName"
 
 - name: /config/modbus/client/map/{name}/reg/{idx}/addr
   x-schema:
     minimum: 0
     maximum: 65535
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectAddr"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectAddr"
 
 - name: /config/modbus/client/map/{name}/reg/{idx}/type
   x-path-method-delete:
     description: |
       Reset to `u16`.
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectType"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectType"
 
 - name: /config/modbus/client/map/{name}/reg/{idx}/kind
   x-path-method-delete:
     description: |
       Reset to `analog`.
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectKind"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectKind"
 
 - name: /config/modbus/client/map/{name}/reg/{idx}/unit
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectUnit"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectUnit"
 
 - name: /config/modbus/client/map/{name}/reg/{idx}/offset
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectOffset"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectOffset"
 
 - name: /config/modbus/client/map/{name}/reg/{idx}/scale
   x-path-method-delete:
     description: |
       Reset to 1.
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectScale"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectScale"
 
 - name: /config/modbus/client/map/{name}/reg/{idx}/access
   x-path-method-delete:
     description: |
       Reset to `rw`.
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectAccess"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectAccess"
 
 - name: /config/modbus/server
   description: |
@@ -1475,43 +1475,43 @@
         CGI-BIN programs that are not considered security critical.
 
 - name: /config/net/ipv4
-  $ref: "./schemas.yaml#/IPv4Object"
+  x-schema-ref: "./schemas.yaml#/IPv4Object"
 
 - name: /config/net/ipv4/dhcp
   x-path-method-delete:
     description: |
       Reset to `true`.
-  $ref: "./schemas.yaml#/IPv4ObjectDHCP"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectDHCP"
 
 - name: /config/net/ipv4/address
   x-path-method-delete:
     description: |
       Reset to 0.0.0.0.
-  $ref: "./schemas.yaml#/IPv4ObjectAddress"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectAddress"
 
 - name: /config/net/ipv4/broadcast
   x-path-method-delete:
     description: |
       Reset to 0.0.0.0.
-  $ref: "./schemas.yaml#/IPv4ObjectBroadcast"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectBroadcast"
 
 - name: /config/net/ipv4/netmask
   x-path-method-delete:
     description: |
       Reset to 0.0.0.0.
-  $ref: "./schemas.yaml#/IPv4ObjectNetmask"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectNetmask"
 
 - name: /config/net/ipv4/network
   x-path-method-delete:
     description: |
       Reset to 0.0.0.0.
-  $ref: "./schemas.yaml#/IPv4ObjectNetwork"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectNetwork"
 
 - name: /config/net/ipv4/gateway
   x-path-method-delete:
     description: |
       Reset to 0.0.0.0.
-  $ref: "./schemas.yaml#/IPv4ObjectGateway"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectGateway"
 
 - name: /config/net/nameserver
   description: |
@@ -2024,6 +2024,7 @@
   x-path-method-delete:
     description: |
       Reset to [`UTC`](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)  x-schema:
+  x-schema:
     example: "LST7LDT6,M3.2.0/02:00,M11.1.0/02:00"
   description: |
     The timezone the meter is located in.  The string is interpreted
@@ -2831,7 +2832,7 @@
 - name: /sys/func/basic/{name}
   x-schema:
     example: max
-  $ref: "./schemas.yaml#/FuncObjectName"
+  x-schema-ref: "./schemas.yaml#/FuncObjectName"
 
 - name: /sys/func/basic/{name}/arg
   x-path-var:
@@ -2845,32 +2846,32 @@
       minimum: 0
   x-schema:
     example: [{"name":"x","type":"#"},{"name":"y","type":"#"}]
-  $ref: "./schemas.yaml#/FuncObjectArg"
+  x-schema-ref: "./schemas.yaml#/FuncObjectArg"
 
 - name: /sys/func/basic/{name}/arg/{idx}
   x-schema:
     example: {"name":"x","type":"#"}
-  $ref: "./schemas.yaml#/FuncObjectArgItem"
+  x-schema-ref: "./schemas.yaml#/FuncObjectArgItem"
 
 - name: /sys/func/basic/{name}/arg/{idx}/name
   x-schema:
     example: x
-  $ref: "./schemas.yaml#/FuncObjectArgItemName"
+  x-schema-ref: "./schemas.yaml#/FuncObjectArgItemName"
 
 - name: /sys/func/basic/{name}/arg/{idx}/type
   x-schema:
     example: "#"
-  $ref: "./schemas.yaml#/FuncObjectArgItemType"
+  x-schema-ref: "./schemas.yaml#/FuncObjectArgItemType"
 
 - name: /sys/func/basic/{name}/help
   x-schema:
     example: "Returns the greater value of <arg>x</arg> and <arg>y</arg>."
-  $ref: "./schemas.yaml#/FuncObjectHelp"
+  x-schema-ref: "./schemas.yaml#/FuncObjectHelp"
 
 - name: /sys/func/basic/{name}/min-args
   x-schema:
     example: 2
-  $ref: "./schemas.yaml#/FuncObjectMinArgs"
+  x-schema-ref: "./schemas.yaml#/FuncObjectMinArgs"
 
 - name: /sys/func/alert
   x-path-var:
@@ -2891,7 +2892,7 @@
 - name: /sys/func/alert/{name}
   x-schema:
     example: dayavg
-  $ref: "./schemas.yaml#/FuncObjectName"
+  x-schema-ref: "./schemas.yaml#/FuncObjectName"
 
 - name: /sys/func/alert/{name}/arg
   x-path-var:
@@ -2905,32 +2906,32 @@
       minimum: 0
   x-schema:
     example: [{"name":"reg","type":"string"}]
-  $ref: "./schemas.yaml#/FuncObjectArg"
+  x-schema-ref: "./schemas.yaml#/FuncObjectArg"
 
 - name: /sys/func/alert/{name}/arg/{idx}
   x-schema:
     example: {"name":"reg","type":"string"}
-  $ref: "./schemas.yaml#/FuncObjectArgItem"
+  x-schema-ref: "./schemas.yaml#/FuncObjectArgItem"
 
 - name: /sys/func/alert/{name}/arg/{idx}/name
   x-schema:
     example: reg
-  $ref: "./schemas.yaml#/FuncObjectArgItemName"
+  x-schema-ref: "./schemas.yaml#/FuncObjectArgItemName"
 
 - name: /sys/func/alert/{name}/arg/{idx}/type
   x-schema:
     example: string
-  $ref: "./schemas.yaml#/FuncObjectArgItemType"
+  x-schema-ref: "./schemas.yaml#/FuncObjectArgItemType"
 
 - name: /sys/func/alert/{name}/help
   x-schema:
     example: "Calculates the 24-hour average value for register <arg>reg</arg>."
-  $ref: "./schemas.yaml#/FuncObjectHelp"
+  x-schema-ref: "./schemas.yaml#/FuncObjectHelp"
 
 - name: /sys/func/alert/{name}/min-args
   x-schema:
     example: 1
-  $ref: "./schemas.yaml#/FuncObjectMinArgs"
+  x-schema-ref: "./schemas.yaml#/FuncObjectMinArgs"
 
 - name: /sys/modbus
   description: |
@@ -2960,7 +2961,8 @@
     will shadow (mask) the system map with the same name.
 
 - name: /sys/modbus/client/map/{name}
-  $ref: "./schemas.yaml#/ModbusClientMapObject"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObject"
+
 - name: /sys/modbus/client/map/{name}/option
   x-path-var:
     name: opt
@@ -2970,9 +2972,11 @@
     required: true
     schema:
       type: string
-  $ref: "./schemas.yaml#/ModbusClientMapObjectOption"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectOption"
+
 - name: /sys/modbus/client/map/{name}/option/{opt}
-  $ref: "./schemas.yaml#/ModbusClientMapObjectOptionObject"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectOptionObject"
+
 - name: /sys/modbus/client/map/{name}/reg
   x-path-var:
     name: idx
@@ -2982,25 +2986,34 @@
     required: true
     schema:
       type: string
-  $ref: "./schemas.yaml#/ModbusClientMapObjectReg"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectReg"
+
 - name: /sys/modbus/client/map/{name}/reg/{idx}
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObject"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObject"
+
 - name: /sys/modbus/client/map/{name}/reg/{idx}/name
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectName"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectName"
+
 - name: /sys/modbus/client/map/{name}/reg/{idx}/addr
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectAddr"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectAddr"
+
 - name: /sys/modbus/client/map/{name}/reg/{idx}/type
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectType"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectType"
+
 - name: /sys/modbus/client/map/{name}/reg/{idx}/kind
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectKind"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectKind"
+
 - name: /sys/modbus/client/map/{name}/reg/{idx}/unit
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectUnit"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectUnit"
+
 - name: /sys/modbus/client/map/{name}/reg/{idx}/offset
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectOffset"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectOffset"
+
 - name: /sys/modbus/client/map/{name}/reg/{idx}/scale
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectScale"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectScale"
+
 - name: /sys/modbus/client/map/{name}/reg/{idx}/access
-  $ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectAccess"
+  x-schema-ref: "./schemas.yaml#/ModbusClientMapObjectRegObjectAccess"
 
 - name: /sys/model
   description: |
@@ -3013,19 +3026,25 @@
     [/config/net](path:/config/net).
 
 - name: /sys/net/ipv4
-  $ref: "./schemas.yaml#/IPv4Object"
+  x-schema-ref: "./schemas.yaml#/IPv4Object"
+
 - name: /sys/net/ipv4/address
-  $ref: "./schemas.yaml#/IPv4ObjectAddress"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectAddress"
+
 - name: /sys/net/ipv4/broadcast
-  $ref: "./schemas.yaml#/IPv4ObjectBroadcast"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectBroadcast"
+
 - name: /sys/net/ipv4/dhcp
-  $ref: "./schemas.yaml#/IPv4ObjectDHCP"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectDHCP"
+
 - name: /sys/net/ipv4/netmask
-  $ref: "./schemas.yaml#/IPv4ObjectNetmask"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectNetmask"
+
 - name: /sys/net/ipv4/network
-  $ref: "./schemas.yaml#/IPv4ObjectNetwork"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectNetwork"
+
 - name: /sys/net/ipv4/gateway
-  $ref: "./schemas.yaml#/IPv4ObjectGateway"
+  x-schema-ref: "./schemas.yaml#/IPv4ObjectGateway"
 
 - name: /sys/net/ntp
   description: |

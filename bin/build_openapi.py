@@ -86,6 +86,7 @@ class Key(StrEnum):
     X_PATH_METHODS = "x-path-methods"
     X_PATH_VAR = "x-path-var"
     X_SCHEMA = "x-schema"
+    X_SCHEMA_REF = "x-schema-ref"
 
 
 class LinkFormat(StrEnum):
@@ -219,8 +220,7 @@ def update(entry, info, json_type=None, update_all=False):
                 else:
                     new = {} if isinstance(value, dict) else []
                 update(new, value, json_type, update_all)
-                if new:
-                    entry[key] = new
+                entry[key] = new
     elif isinstance(info, list):
         for item in info:
             if not update_all and isinstance(item, dict):
@@ -449,6 +449,29 @@ class URLDomainGenerator:
         tag_info = self.tags.get(path, {})
         if not tag_info:
             self.log.warning(f"path {path} missing", filename="tags.yaml")
+
+        xref = tag_info.get(Key.X_SCHEMA_REF)
+        if xref:
+            parts = xref.split("#")
+            xref_filename = parts[0]
+            xref_name = parts[1][1:]  # strip off leading '/'
+            if xref_filename != "./schemas.yaml":
+                self.log.error("x-schema-ref file must be schemas.yaml")
+                return
+            xref_value = self.schemas.content.get(xref_name)
+            if not xref_value:
+                self.log.error("x-schema-ref name `%s' does not exist",
+                               filename="schemas.yaml", line=xref.lc.line)
+                return
+
+            if Key.X_SCHEMA in tag_info:
+                update(tag_info[str(Key.X_SCHEMA)], xref_value, update_all=True)
+            else:
+                tag_info[str(Key.X_SCHEMA)] = xref_value
+
+            if Key.DESCRIPTION in xref_value \
+               and Key.DESCRIPTION not in tag_info:
+                tag_info[str(Key.DESCRIPTION)] = xref_value[Key.DESCRIPTION]
 
         json_type = domain_to_json_type(domain)
 
@@ -688,6 +711,13 @@ class OpenAPIBuilder:
             url_domains = json.load(f)
         gen = URLDomainGenerator(self.log, self.tags, paths, schemas)
         gen.translate(url_domains)
+
+        for tag in tag_list.content:
+            path = tag["name"]
+            if Key.DESCRIPTION not in tag:
+                desc = self.tags[path].get(Key.DESCRIPTION)
+                if desc:
+                    tag[str(Key.DESCRIPTION)] = desc
 
         # write out the patched file, removing any extension tags:
 
