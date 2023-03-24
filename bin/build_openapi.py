@@ -214,7 +214,10 @@ def update(entry, info, json_type=None, update_all=False):
             if is_scalar(value):
                 entry[key] = value
             else:
-                new = {} if isinstance(value, dict) else []
+                if key in entry:
+                    new = entry[key]
+                else:
+                    new = {} if isinstance(value, dict) else []
                 update(new, value, json_type, update_all)
                 if new:
                     entry[key] = new
