@@ -12,6 +12,9 @@ LINK_FORMAT = redocly-hosted
 
 all: $(TARGET)
 
+lint:
+	redocly lint
+
 built/params.yaml: built/tags.yaml
 	@test -f $@ || rm -f built/tags.yaml
 	@test -f $@ || $(MAKE) built/tags.yaml
