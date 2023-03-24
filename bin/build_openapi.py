@@ -460,17 +460,24 @@ class URLDomainGenerator:
                 return
             xref_value = self.schemas.content.get(xref_name)
             if not xref_value:
-                self.log.error("x-schema-ref name `%s' does not exist",
-                               filename="schemas.yaml", line=xref.lc.line)
+                self.log.error(
+                    "x-schema-ref name `%s' does not exist",
+                    filename="schemas.yaml",
+                    line=xref.lc.line,
+                )
                 return
 
             if Key.X_SCHEMA in tag_info:
-                update(tag_info[str(Key.X_SCHEMA)], xref_value, update_all=True)
+                update(
+                    tag_info[str(Key.X_SCHEMA)], xref_value, update_all=True
+                )
             else:
                 tag_info[str(Key.X_SCHEMA)] = xref_value
 
-            if Key.DESCRIPTION in xref_value \
-               and Key.DESCRIPTION not in tag_info:
+            if (
+                Key.DESCRIPTION in xref_value
+                and Key.DESCRIPTION not in tag_info
+            ):
                 tag_info[str(Key.DESCRIPTION)] = xref_value[Key.DESCRIPTION]
 
         json_type = domain_to_json_type(domain)
