@@ -391,7 +391,7 @@
     example: smtp.mail.com
   description: |
     The hostname of a mail server that speaks the
-    [SMPT](https://www.rfc-editor.org/rfc/rfc821) protocol.  If this
+    [SMTP](https://www.rfc-editor.org/rfc/rfc821) protocol.  If this
     is set to an empty string, the meter will attempt to deliver mail
     directly to the destination host.  Many Internet service providers
     block direct mail delivery, so leaving this string empty generally
