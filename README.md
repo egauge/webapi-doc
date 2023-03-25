@@ -3,10 +3,17 @@
 If you just want to get a copy of the latest OpenAPI 3.1 spec of the eGauge WebAPI, simply 
 use the file called `openapi.yaml` in the root directory of this repository.
 
+## Prerequisites
+
+This repository requires:
+
+ * `python` v3.10 or newer
+ * `make` command (GNU make or compatible)
+ * `redocly` command (install with `npm i -g @redocly/cli@latest`)
+
 # Rebuilding openapi.yaml
 
-This file can be rebuilt from the sources with the following steps (assuming you have `make` and `python`
-installed on your system):
+This file can be rebuilt from the sources with the following steps:
 
 ```
 cd src
