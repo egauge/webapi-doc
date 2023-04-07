@@ -2307,6 +2307,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        A `PUT` request is equivalent to a `DELETE` followed by a `POST`
+        with the same request body.  Because of that, care must be taken
+        to ensure the desired configuration is written.  Specifically:
+
+          * The classic interface uses CGI-BIN programs.  It is
+            therefore recommended to include member
+            `"net":{"http":{"cgi-bin":"user-required"}}` in the request
+            body as otherwise CGI-BIN support is disabled.
+
+          * Member `alert` may contain references to register names (as
+            part of custom alert conditions).  This member should
+            therefore appear after member `register`.
+
+          * Member `remote` must appear in the request body before
+            member `register` as otherwise the remote registers in this
+            member will be deleted when member `remote` is processed.
     post:
       tags:
         - /config
@@ -14936,6 +14953,420 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       description: Reset to empty string.
+  /config/remote:
+    get:
+      tags:
+        - /config/remote
+      summary: Get /config/remote
+      operationId: configRemoteGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configRemote'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+    put:
+      tags:
+        - /config/remote
+      summary: Replace /config/remote
+      operationId: configRemotePut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemote'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/remote
+      summary: Update /config/remote
+      operationId: configRemotePost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemote'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/remote
+      summary: Delete /config/remote
+      operationId: configRemoteDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Deletes all remote device configurations and the physical registers
+        using them.
+  /config/remote/{name}:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The name of a remote device.  It must consist of printable
+          characters only.  The name `local` is reserved for internal use
+          and may not appear here.
+        required: true
+        schema:
+          type: string
+          example: PRM3
+    get:
+      tags:
+        - /config/remote/{name}
+      summary: Get /config/remote/{name}
+      operationId: configRemoteNameGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configRemoteName'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+    put:
+      tags:
+        - /config/remote/{name}
+      summary: Replace /config/remote/{name}
+      operationId: configRemoteNamePut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteName'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/remote/{name}
+      summary: Update /config/remote/{name}
+      operationId: configRemoteNamePost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteName'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/remote/{name}
+      summary: Delete /config/remote/{name}
+      operationId: configRemoteNameDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Delete the remote device configuration and the physical registers
+        associated with it.
+  /config/remote/{name}/address:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The name of a remote device.  It must consist of printable
+          characters only.  The name `local` is reserved for internal use
+          and may not appear here.
+        required: true
+        schema:
+          type: string
+          example: PRM3
+    get:
+      tags:
+        - /config/remote/{name}/address
+      summary: Get /config/remote/{name}/address
+      operationId: configRemoteNameAddressGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configRemoteNameAddress'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+    put:
+      tags:
+        - /config/remote/{name}/address
+      summary: Replace /config/remote/{name}/address
+      operationId: configRemoteNameAddressPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteNameAddress'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/remote/{name}/address
+      summary: Update /config/remote/{name}/address
+      operationId: configRemoteNameAddressPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteNameAddress'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/remote/{name}/address
+      summary: Delete /config/remote/{name}/address
+      operationId: configRemoteNameAddressDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: Reset to empty string.
+  /config/remote/{name}/link_type:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The name of a remote device.  It must consist of printable
+          characters only.  The name `local` is reserved for internal use
+          and may not appear here.
+        required: true
+        schema:
+          type: string
+          example: PRM3
+    get:
+      tags:
+        - /config/remote/{name}/link_type
+      summary: Get /config/remote/{name}/link_type
+      operationId: configRemoteNameLinkTypeGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configRemoteNameLinkType'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+    put:
+      tags:
+        - /config/remote/{name}/link_type
+      summary: Replace /config/remote/{name}/link_type
+      operationId: configRemoteNameLinkTypePut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteNameLinkType'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/remote/{name}/link_type
+      summary: Update /config/remote/{name}/link_type
+      operationId: configRemoteNameLinkTypePost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteNameLinkType'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/remote/{name}/link_type
+      summary: Delete /config/remote/{name}/link_type
+      operationId: configRemoteNameLinkTypeDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Clears this value to `tcp`.
   /config/time:
     get:
       tags:
@@ -25866,6 +26297,39 @@ components:
           $ref: '#/components/schemas/configRegisterVirtual'
       description: |
         The register configuration of the meter.
+    configRemoteNameAddress:
+      type: string
+      example: modbus://sunspec.1@USB2
+      description: |
+        The address of the remote device.  The meaning of this value
+        depends on the [link-type](/tag/Glossary#section/Link-Types).
+    configRemoteNameLinkType:
+      type: string
+      example: slowd
+      description: |
+        The [link-type](/tag/Glossary#section/Link-Types) of the remote device.
+    configRemoteName:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/configRemoteNameAddress'
+        link_type:
+          $ref: '#/components/schemas/configRemoteNameLinkType'
+      description: |
+        The configuration of a remote device.
+    configRemote:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/configRemoteName'
+      example:
+        PRM3:
+          address: modbus://sunspec.1@USB2
+          link_type: slowd
+        panel2:
+          address: panel2.local
+          link_type: udp
+      description: |
+        The remote device configurations.
     configTimeZone:
       type: string
       example: LST7LDT6,M3.2.0/02:00,M11.1.0/02:00
@@ -26135,7 +26599,7 @@ components:
       example: smtp.mail.com
       description: |
         The hostname of a mail server that speaks the
-        [SMPT](https://www.rfc-editor.org/rfc/rfc821) protocol.  If this
+        [SMTP](https://www.rfc-editor.org/rfc/rfc821) protocol.  If this
         is set to an empty string, the meter will attempt to deliver mail
         directly to the destination host.  Many Internet service providers
         block direct mail delivery, so leaving this string empty generally
@@ -26304,6 +26768,8 @@ components:
           $ref: '#/components/schemas/configPush'
         register:
           $ref: '#/components/schemas/configRegister'
+        remote:
+          $ref: '#/components/schemas/configRemote'
         time:
           $ref: '#/components/schemas/configTime'
         user:
@@ -28115,7 +28581,7 @@ tags:
   - name: /config/alert/reporter/mail/server
     description: |
       The hostname of a mail server that speaks the
-      [SMPT](https://www.rfc-editor.org/rfc/rfc821) protocol.  If this
+      [SMTP](https://www.rfc-editor.org/rfc/rfc821) protocol.  If this
       is set to an empty string, the meter will attempt to deliver mail
       directly to the destination host.  Many Internet service providers
       block direct mail delivery, so leaving this string empty generally
@@ -29204,7 +29670,17 @@ tags:
       of this addend.
   - name: /config/remote
     description: |
-      _**To be implemented.**_
+      The remote device configurations.
+  - name: /config/remote/{name}
+    description: |
+      The configuration of a remote device.
+  - name: /config/remote/{name}/address
+    description: |
+      The address of the remote device.  The meaning of this value
+      depends on the [link-type](/tag/Glossary#section/Link-Types).
+  - name: /config/remote/{name}/link_type
+    description: |
+      The [link-type](/tag/Glossary#section/Link-Types) of the remote device.
   - name: /config/time
     description: |
       Time related configurations.
@@ -30477,6 +30953,253 @@ tags:
       filter-spec can also be applied to several comma-separated indices
       by enclosing them in parentheses and writing the common filter-spec
       after the closing parenthesis.
+
+      ## Link Types
+
+      The link type of a remote device determines the communication
+      protocol that is used to talk to the device and the format of the
+      address string.  Supported link-types are:
+
+        * `ailux`: This link type can be used to read data from heat
+          pump controllers manufactured by [Alpha
+          Innotec](http://www.alpha-innotec.de/).  The address must be
+          the hostname or IP address of the heat pump controller.  The
+          data is fetched from TCP port 8088 of the controller.
+
+        * `coap`: This link type can be used to read data from devices
+          that support the
+          [CoAP](https://en.wikipedia.org/wiki/Constrained_Application_Protocol)
+          protocol.  The address must be the hostname or IP address of
+          the device.  The data is fetched from UDP port 5683.
+
+        * `ctrlbyweb`: This link type can be used to read data from
+          devices manufactured by
+          [ControlByWeb](https://www.controlbyweb.com/).  The address
+          must be the hostname or IP address of the device.  An optional
+          port number may be specified after a colon (`:`).  By default,
+          port 80 is used. The data is fetched from the device with the
+          HTTP protocol.
+
+        * `modbus`: This link type can be used to read data from a
+           [Modbus/TCP](https://modbus.org/docs/Modbus_Messaging_Implementation_Guide_V1_0b.pdf)
+           device.  The address must have the format
+           `map.unit@host:port`:
+
+            * `map`: The name of the Modbus address map to use for the
+              device (see
+              [/sys/modbus/client/map](/tag/sysmodbusclientmap) and
+              [/config/modbus/client/map](/tag/configmodbusclientmap)).
+              If the Modbus device supports the [SunSpec
+              standard](https://sunspec.org/), this can be `sunspec`
+              instead.  With SunSpec, the meter can automatically detect
+              the available Modbus registers.
+
+            * `unit`: The Modbus unit number of the device (defaults to 255).
+
+            * `host`: The hostname or IP address of the device.
+
+            * `port`: The port number to use.  Defaults to the value of
+              map option `default-tcp-port`, or port 502 if the option
+              is not present.
+
+            An example address is `sunspec.1@192.168.1.34` which would
+            refer to a SunSpec-compatible device with unit number 1 and
+            IP address `192.168.1.34`.
+
+        * `po`: This link type can be used to read data from Aurora
+          solar inverters manufactured by Power One.  The inverter's
+          serial port must be connected to an RS485-to-Ethernet adapter
+          such as the [Chiyu
+          BF-430](https://www.chiyu-tech.com/product-bf430-serial-to-tcp-ip-converter-rs485-to-tcp-ip-converter.html).
+          The default RS485 serial parameters used by the inverter are:
+          19200 baud, 1 stop bit, no parity.  The address must have the
+          format `devnum@addr:port`, where `devnum` is the inverter's
+          serial address in the range from 2 to 254, `addr` is the host
+          or IP address of the RS485-to-Ethernet adapter, and `port`
+          is the port number of the adapter.
+
+        * `rtcoa`: This link type can be used to read data from
+          thermostats manufactured by [Radio Thermostat Company of
+          America](https://www.radiothermostat.com/).  The address must
+          be the hostname or IP address of the thermostat.  An optional
+          port number may be specified after a colon (`:`).  By default,
+          port 80 is used. The data is fetched from the device with the
+          HTTP protocol.
+
+        * `slowd`: This link type can be used to read data from various
+          devices connected over a serial port.  The address must have
+          the format `proto://devaddr`, where `proto` is the name of the
+          communication protocol and `devaddr` is a device-address in a
+          format that depends on the protocol.  The available protocols
+          are:
+
+            * `alphatechnics`: Implements a proprietary protocol for
+              reading [AlphaTechnics
+              5000](https://www.te.com/usa-en/plp/precision-thermometers/Y44qp.html)
+              series precision thermometers.  These devices have a USB
+              port which emulates a serial interface, so they can be
+              plugged directly into EG4*xxx* meters.
+
+              The serial port parameters default to 57600 baud, no
+              parity, and one stop bit. `devaddr` must be a
+              [serial-port](/tag/Glossary#section/Serial-Ports) name and optional
+              serial parameters.
+
+              An example address is `alphatechnics://USB2` which would
+              connect to the thermometer plugged into the meter's `USB2`
+              port.
+
+            * `modbus`: Implements the
+               [Modbus/RTU](https://modbus.org/docs/Modbus_over_serial_line_V1_02.pdf)
+               protocol which can connect two or more devices over
+               RS485.  `devaddr` must have the format
+               `modbus://map.unit@serdev` where:
+
+                 * `map`: The name of the Modbus address map to use for
+                 the device (see
+                 [/sys/modbus/client/map](/tag/sysmodbusclientmap)
+                 and
+                 [/config/modbus/client/map](/tag/configmodbusclientmap)).
+                 If the Modbus device supports the [SunSpec
+                 standard](https://sunspec.org/), this can be `sunspec`
+                 instead.  With SunSpec, the meter can automatically
+                 detect the available Modbus registers.
+
+                 * `unit`: The Modbus unit number of the device.  This
+                 defaults to the value of map option
+                 `default-modbus-addr` or 0 if the option is not
+                 present.
+
+                 * `serdev`: The [serial port](/tag/Glossary#section/Serial-Ports)
+                 and optional serial parameters of the meter which is
+                 wired to the RS485 bus.  The serial parameters default
+                 to the values given by map option
+                 `default-serial-params` or 19200 baud, no parity and 1
+                 stop bit if the option is not present.  Alternatively,
+                 `serdev` may also have the format `host:port` where
+                 `host` is the hostname or IP address of an
+                 RS485-to-Ethernet adapter and `port` is an optional TCP
+                 port number.
+
+                An example address is `modbus://sunspec.1@USB1` which
+                would refer to a SunSpec-compatible device with unit
+                number 1, connected to the meter via serial port `USB1`.
+
+            * `po`: Implements the protocol used by older Power One
+              Aurora inverters.  These inverters are no longer being
+              manufactured and Power One has been acquired by
+              [ABB](https://www.abb.com/).
+
+              The inverters are connected via RS485.  The serial
+              communication parameters are 19200 baud, 1 stop-bit, and
+              no parity.  `devaddr` must have the format `num@addr`
+              where `num` is the inverter's serial address in the range
+              from 2 to 254 and `addr` is the name of the meter's
+              serial-port that is wired to the RS485 bus.
+              Alternatively, `addr` may also be the hostname or IP
+              address of an RS485-to-Ethernet adapter that the bus is
+              wired to.
+
+            * `scpi`: Implements the
+              [SCPI](https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments)
+              (skippy) protocol.  `devaddr` must be a
+              [serial-port](/tag/Glossary#section/Serial-Ports) name and optional
+              serial parameters or a hostname or IP-address of
+              serial-to-Ethernet adapter to which the SCPI-compatible
+              device is connected.
+
+              The registers available to be read are automatically
+              detected based on the result of SCPI command `*IDN?`
+              (Identify).  Currently, only [eGauge
+              PRM3](https://store.egauge.net/Power-Relay-Module) relay
+              modules are recognized.
+
+            * `sma`: Implements the SMA Data Communication protocol
+              which is used by older inverters and weather stations
+              manufactured by [SMA](https://www.sma.de/).  These devices
+              are connected via RS485.  The serial communication
+              parameters are 1200 baud, 1 stop-bit, and no parity.  The
+              protocol automatically detects connected devices and the
+              available registers.  However, since the bus operates at
+              only 1200 baud, detection can take several minutes.
+
+              `devaddr` must be the name of the meter's serial-port that
+              is wired to the RS485 bus.  It may also be the hostname or
+              IP address of an RS485-to-Ethernet adapter that the bus is
+              wired to.
+
+            * `sony`: Implements a proprietary protocol for reading
+              certain Sony battery charge controllers (BMUs) over RS232.
+              Specifically, specification P5-9 027, version 2 is
+              supported.  The serial port parameters are fixed to 19200
+              baud, even parity, and one stop bit.
+              `devaddr` must have the format `sony://num@addr` where:
+
+                * `num`: Is the number of the battery charge controller
+                  to read from.  It must be in the range from 0 to 15.
+
+                * `addr`: Must be the hostname or IP address of the
+                  RS232-to-Ethernet adapter which the charge controller
+                  is connected to.
+
+              An example address is `sony://1@192.168.1.34:10001` which
+              would connect to battery charge controller 1 which is
+              wired to the RS232-to-Ethernet adapter at IP address
+              192.168.1.34, port 10001.
+
+        * `tcp`: This link type can be used to read the data from
+          another eGauge meter over the TCP protocol.  The address must
+          be a hostname or IP address which may optionally followed by a
+          vertical bar character (`|`) and a comma-separated list of
+          options.  The available options are:
+
+            * `async`: This option must be used if two or more eGauge
+              meters read each other's data.  This causes a cyclic
+              dependency which, without this option, would result in
+              timeouts and the inability to read the remote meter's
+              data.  To break the cycle, it is sufficient for one of the
+              meters in the cycle to turn on this option.  The downside
+              of turning on this option is that remote data will be
+              recorded at the time it is received by the local meter,
+              rather than the time when it was measured by the remote
+              meter, as would normally be the case.
+
+            * `sync`: This is enables the default synchronous read mode
+              where remote data is recorded with the time that it was
+              measured at by the remote meter.
+
+            * `spiky`: This option affects how data is recorded after
+              the remote meter is unavailable for a period of time.  By
+              default, the local meter will smooth out any jumps
+              (spikes) in the data that are due to the remote meter not
+              being reachable.  Turning on this option disables the
+              smoothing and instead records jumps as they occur.
+              Normally, smoothing is preferable.  However, if a remote
+              meter is frequently unreachable (10% or more of the time),
+              the local meter will fall behind the remote meter data
+              more and more and, in such a case, turning on this option
+              would be advisable.
+
+            The remote data is fetched via HTTP protocol (TCP port 80).
+            It is not possible to specify authentication credentials.
+
+            An example address is `eGauge1234.local|sync,spiky`.  This
+            would connect to the remote meter with hostname
+            `eGauge1234.local` using the `sync` and `spiky` options.
+
+        * `tempalert`: This link type can be used to read data from
+          temperature sensors manufactured by Temperature Alert (no
+          longer in business).  The address must be the hostname or IP
+          address of the sensor.  The data is fetched from port 80 of
+          the device with the HTTP protocol.
+
+        * `udp`: This link type can be used to read the data from
+          another eGauge meter over a proprietary UDP protocol.  As
+          such, it provides the same functionality as `tcp`, but since
+          it runs over UDP, it is a lighter-weight, more efficient
+          protocol.  The data is read from UDP port 59046.  The address
+          syntax and available options are the same as for link type
+          `tcp`.
 
       ## Lua Scripts
 
