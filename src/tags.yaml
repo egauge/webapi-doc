@@ -1822,9 +1822,7 @@
     name: reg
     in: path
     description: |
-      The name of a register.  May not be empty, contain control
-      characters, dots (`.`), or commas (`,`) and may not consist
-      entirely of digits.
+      The [name of a register](glossary:Physical-Register-Names).
     required: true
     schema:
       type: string
@@ -4193,6 +4191,34 @@
     would be:
 
       > MD5("jane:domain:secret") = 251910de04f5eab86859939167d4fded
+
+    ## Physical Register Names
+
+    Physical register names may not be empty, contain control
+    characters, dots (`.`), or commas (`,`).  They may also not
+    consist entirely of digits.
+
+    Register names of locally calculated registers (registers with
+    [`dev`](path:/config/register/physical/{reg}/dev) set to `local`)
+    attach special meaning to the last character (suffix):
+
+      * `+`: Allowed only for power-registers ([type
+        code](glossary:Type-Codes) `P`).  Only positive power will be
+        accumulated.
+
+      * `-`: Allowed only for power-registers ([type
+        code](glossary:Type-Codes) `P`).  Only negative measured
+        power will be accumulated.
+
+      * `|`: Allowed only for power-registers ([type
+        code](glossary:Type-Codes) `P`).  The absolute value of the
+        measured power will be accumulated.
+
+      * `*`: Allowed only and required for apparent-power registers
+        ([type code](glossary:Type-Codes) `S`).
+
+      These suffixes are not allowed for registers whose value is
+      calculated by an [eScript](glossary:eScript) expression.
 
     ## Serial Ports
 
