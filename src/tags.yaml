@@ -1448,9 +1448,24 @@
 
 - name: /config/net/http/certificate
   x-path-methods: [put, post, delete]
+  x-path-method-post:
+    description: |
+      Set the HTTP certificate to the one passed in the request body.
+
+      This resource is **not** updated
+      [transactionally](glossary:Non-Transactional-Updates).
+  x-path-method-put:
+    description: |
+      Set the HTTP certificate to the one passed in the request body.
+
+      This resource is **not** updated
+      [transactionally](glossary:Non-Transactional-Updates).
   x-path-method-delete:
     description: |
       Reset to a factory-installed self-signed certificate.
+
+      This resource is **not** updated
+      [transactionally](glossary:Non-Transactional-Updates).
   description: |
     The certificate used by the web server to identify itself over
     HTTPS connections.
@@ -1475,11 +1490,26 @@
     should normally be set to `false`.
 
 - name: /config/net/http/cgi-bin
+  x-schema:
+    enum: [disable, user-optional, user-required]
+  x-path-method-post:
+    description: |
+      Set CGI-BIN support according to the value passed in the request body.
+
+      This resource is **not** updated
+      [transactionally](glossary:Non-Transactional-Updates).
+  x-path-method-put:
+    description: |
+      Set CGI-BIN support according to the value passed in the request body.
+
+      This resource is **not** updated
+      [transactionally](glossary:Non-Transactional-Updates).
   x-path-method-delete:
     description: |
       Reset to `disable`.
-  x-schema:
-    enum: [disable, user-optional, user-required]
+
+      This resource is **not** updated
+      [transactionally](glossary:Non-Transactional-Updates).
   description: |
     Controls access to CGI-BIN programs.  The following values are supported:
 
