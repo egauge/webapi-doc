@@ -7,7 +7,7 @@ info:
     name: Common Documentation License 1.0
     url: https://spdx.org/licenses/CDL-1.0.html
 servers:
-  - url: https://{devname}.egauge.io/api
+  - url: https://{devname}.d.egauge.net/api
     description: The WebAPI server
     variables:
       devname:
@@ -10811,6 +10811,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Set the HTTP certificate to the one passed in the request body.
+
+        This resource is **not** updated
+        [transactionally](/tag/Glossary#section/Non-Transactional-Updates).
     post:
       tags:
         - /config/net/http/certificate
@@ -10834,6 +10839,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Set the HTTP certificate to the one passed in the request body.
+
+        This resource is **not** updated
+        [transactionally](/tag/Glossary#section/Non-Transactional-Updates).
     delete:
       tags:
         - /config/net/http/certificate
@@ -10854,6 +10864,9 @@ paths:
                 $ref: '#/components/schemas/UnauthorizedObject'
       description: |
         Reset to a factory-installed self-signed certificate.
+
+        This resource is **not** updated
+        [transactionally](/tag/Glossary#section/Non-Transactional-Updates).
   /config/net/http/cgi-bin:
     get:
       tags:
@@ -10905,6 +10918,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Set CGI-BIN support according to the value passed in the request body.
+
+        This resource is **not** updated
+        [transactionally](/tag/Glossary#section/Non-Transactional-Updates).
     post:
       tags:
         - /config/net/http/cgi-bin
@@ -10928,6 +10946,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Set CGI-BIN support according to the value passed in the request body.
+
+        This resource is **not** updated
+        [transactionally](/tag/Glossary#section/Non-Transactional-Updates).
     delete:
       tags:
         - /config/net/http/cgi-bin
@@ -10948,6 +10971,9 @@ paths:
                 $ref: '#/components/schemas/UnauthorizedObject'
       description: |
         Reset to `disable`.
+
+        This resource is **not** updated
+        [transactionally](/tag/Glossary#section/Non-Transactional-Updates).
   /config/net/ipv4:
     get:
       tags:
