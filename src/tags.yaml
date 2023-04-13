@@ -4019,6 +4019,15 @@
     object's member names and the value of array `arr` was replaced by
     its length.
 
+    ## Non-Transactional Updates
+
+    When a modification request to a resource is not executed
+    transactionally, it means that it may be possible to observe the
+    modification of that resource before or after modifications to the
+    other resources being updated within the same request.  It is also
+    possible for the modification to take effect even though the
+    overall request may end up failing with an error.
+
     ## Time Point Names
 
     Time-point names provide a way to refer to both absolute points in
@@ -4191,20 +4200,6 @@
     `global/default/currency_symbol` for this purpose or, if
     undefined, a dollar sign (`$`).
 
-    ## Unix Timestamp
-
-    A Unix timestamp is a number that counts the seconds since the
-    start of January 1, 1970 UTC.
-
-    ## Non-Transactional Updates
-
-    When a modification request to a resource is not executed
-    transactionally, it means that it may be possible to observe the
-    modification of that resource before or after modifications to the
-    other resources being updated within the same request.  It is also
-    possible for the modification to take effect even though the
-    overall request may end up failing with an error.
-
     ## Password Hashes
 
     Passwords are never written directly to this API.  Instead, only
@@ -4267,6 +4262,11 @@
     `8` is the number of bits per character (must be 8), `p` is the
     parity (`n` for none, `e` for even, `o` for odd), and `s` is the
     number of stop bits (1 or 2).
+
+    ## Unix Timestamp
+
+    A Unix timestamp is a number that counts the seconds since the
+    start of January 1, 1970 UTC.
 
     ## User Privileges
 
