@@ -58,10 +58,6 @@
     [examples](https://bitbucket.org/egauge/python/src/master/examples/)
     directory.
 
-    ### With Postman
-
-    *To be added.*
-
 - name: /auth
   description: |
     The authentication service.  Clients can use
@@ -4249,6 +4245,11 @@
 
       These suffixes are not allowed for registers whose value is
       calculated by an [eScript](glossary:eScript) expression.
+
+      If the name of a locally calculated power register does not end
+      with one of the above suffixes, the measured net real power is
+      accumulated.  Net real power may be positive or negative,
+      depending on the direction of the power flow.
 
     ## Serial Ports
 
