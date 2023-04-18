@@ -1929,42 +1929,25 @@ paths:
     put:
       tags:
         - /store
-      summary: Update section
+      summary: Update or delete section
       operationId: storeSectionPut
       description: |
-        Update a server-storage section according to the contents of the
-        request body.
+        Update or delete a server-storage section according to the
+        contents of the request body.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StoreVariableUpdates'
+              oneOf:
+                - $ref: '#/components/schemas/StoreVariableUpdates'
+                - type: 'null'
+                  description: Delete the entire section.
             example:
               test/delete_me: null
               prefs/color: cyan
       responses:
         '200':
           description: Store update response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    delete:
-      tags:
-        - /store
-      summary: Delete an entire section
-      operationId: storeSectionDelete
-      description: |
-        Delete a server-storage section.
-      responses:
-        '200':
-          description: Delete store section response.
           content:
             application/json:
               schema:
@@ -2018,38 +2001,21 @@ paths:
     put:
       tags:
         - /store
-      summary: Update section variable
+      summary: Update or delete section variable
       operationId: storeSectionVarPut
       description: |
-        Update a section variable according to the contents of the
-        request body.
+        Update or delete a section variable according to the contents of
+        the request body.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StoreSingleVariableUpdate'
+              oneOf:
+                - $ref: '#/components/schemas/StoreSingleVariableUpdate'
+                - type: 'null'
+                  description: Delete the section variable.
             example:
               '': '{"name":"default","changed":false,"dashlets":[{"tag":"flow","id":1,"cfg":{"nodes":[{"pos":[0,0],"icon":"house","reg":"use"},{"pos":[0,1],"icon":"solar","reg":"gen"},{"pos":[1,0],"icon":"battery","reg":"bat"},{"pos":[0,-1],"icon":"grid","reg":"Grid","costsMoney":true}]}}],"layouts":[{"designWidth":0,"designHeight":0,"pages":[{"locs":[{"id":1,"x":0,"y":0,"w":10,"h":10}]}]}]}'
-      responses:
-        '200':
-          description: Delete section variable response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    delete:
-      tags:
-        - /store
-      summary: Delete a section variable
-      operationId: storeSectionVarDelete
-      description: |
-        Delete a server-storage section.
       responses:
         '200':
           description: Delete section variable response.
@@ -2113,42 +2079,25 @@ paths:
     put:
       tags:
         - /store
-      summary: Update paragraph
+      summary: Update or delete paragraph
       operationId: storeParagraphPut
       description: |
-        Update a paragraph according to the contents of the request
+        Update or delete a paragraph according to the contents of the request
         body.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StoreVariableUpdates'
+              oneOf:
+                - $ref: '#/components/schemas/StoreVariableUpdates'
+                - type: 'null'
+                  description: Delete the paragraph.
             example:
               start_day: '7'
               taxes: null
       responses:
         '200':
           description: Store update response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    delete:
-      tags:
-        - /store
-      summary: Delete an entire paragraph
-      operationId: storeParagraphDelete
-      description: |
-        Delete a paragraph.
-      responses:
-        '200':
-          description: Delete paragraph response.
           content:
             application/json:
               schema:
@@ -2210,40 +2159,24 @@ paths:
     put:
       tags:
         - /store
-      summary: Update variable
+      summary: Update or delete variable
       operationId: storeVarPut
       description: |
-        Update a variable according to the contents of the request body.
+        Update or delete a variable according to the contents of the
+        request body.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StoreVariableUpdates'
+              oneOf:
+                - $ref: '#/components/schemas/StoreVariableUpdates'
+                - type: 'null'
+                  description: Delete the variable.
             example:
               '': '7'
       responses:
         '200':
           description: Store update response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    delete:
-      tags:
-        - /store
-      summary: Delete a variable
-      operationId: storeVarDelete
-      description: |
-        Delete a variable.
-      responses:
-        '200':
-          description: Delete store section response.
           content:
             application/json:
               schema:
@@ -31240,6 +31173,15 @@ tags:
       object's member names and the value of array `arr` was replaced by
       its length.
 
+      ## Non-Transactional Updates
+
+      When a modification request to a resource is not executed
+      transactionally, it means that it may be possible to observe the
+      modification of that resource before or after modifications to the
+      other resources being updated within the same request.  It is also
+      possible for the modification to take effect even though the
+      overall request may end up failing with an error.
+
       ## Time Point Names
 
       Time-point names provide a way to refer to both absolute points in
@@ -31412,20 +31354,6 @@ tags:
       `global/default/currency_symbol` for this purpose or, if
       undefined, a dollar sign (`$`).
 
-      ## Unix Timestamp
-
-      A Unix timestamp is a number that counts the seconds since the
-      start of January 1, 1970 UTC.
-
-      ## Non-Transactional Updates
-
-      When a modification request to a resource is not executed
-      transactionally, it means that it may be possible to observe the
-      modification of that resource before or after modifications to the
-      other resources being updated within the same request.  It is also
-      possible for the modification to take effect even though the
-      overall request may end up failing with an error.
-
       ## Password Hashes
 
       Passwords are never written directly to this API.  Instead, only
@@ -31488,6 +31416,11 @@ tags:
       `8` is the number of bits per character (must be 8), `p` is the
       parity (`n` for none, `e` for even, `o` for odd), and `s` is the
       number of stop bits (1 or 2).
+
+      ## Unix Timestamp
+
+      A Unix timestamp is a number that counts the seconds since the
+      start of January 1, 1970 UTC.
 
       ## User Privileges
 
