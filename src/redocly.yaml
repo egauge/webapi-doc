@@ -10,3 +10,4 @@ rules:
 
 theme.openapi:
   pagination: section
+  ctrlFHijack: false
