@@ -1277,5 +1277,13 @@ VersionObject:
       type: string
       description: "The latest available firmware/kernel version."
       example: 4.4
+    minimum:
+      type: string
+      description: |
+        The minimum firmware/kernel version that should be used on the
+        meter.  Older versions may not have the latest security fixes
+        or other issues that could prevent proper operation of the
+        meter.
+      example: 4.1.2
     error:
       $ref: "#/ErrorString"
