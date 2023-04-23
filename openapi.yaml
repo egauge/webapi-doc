@@ -28384,6 +28384,13 @@ tags:
       This program takes advantage of class
       `egauge.webapi.device.Capture` to handle the details of encoding
       the HTTP requests and decoding the responses.
+  - name: /cmd
+    description: |
+      The service provides the ability to execute various operations for
+      their side effects, such as rebooting the meter.  Unless stated
+      otherwise, the resources in this service are available only to
+      users with the save right (see
+      [/auth/rights](/tag/auth#operation/authRightsGet)).
   - name: /config
     description: |
       The meter configuration service.
@@ -29657,13 +29664,6 @@ tags:
       Writing an empty hash string disables the account.
 
       This resource is write-only.
-  - name: /cmd
-    description: |
-      The service provides the ability to execute various operations for
-      their side effects, such as rebooting the meter.  Unless stated
-      otherwise, the resources in this service are available only to
-      users with the save right (see
-      [/auth/rights](/tag/auth#operation/authRightsGet)).
   - name: /ctid
     description: |
       This service provides access to the
