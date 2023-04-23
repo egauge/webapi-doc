@@ -173,6 +173,14 @@
     `egauge.webapi.device.Capture` to handle the details of encoding
     the HTTP requests and decoding the responses.
 
+- name: /cmd
+  description: |
+    The service provides the ability to execute various operations for
+    their side effects, such as rebooting the meter.  Unless stated
+    otherwise, the resources in this service are available only to
+    users with the save right (see
+    [/auth/rights](op:/auth:authRightsGet)).
+
 - name: /config
   x-path-methods: [get, put, post, delete]
   x-path-method-get:
@@ -2181,14 +2189,6 @@
     Writing an empty hash string disables the account.
 
     This resource is write-only.
-
-- name: /cmd
-  description: |
-    The service provides the ability to execute various operations for
-    their side effects, such as rebooting the meter.  Unless stated
-    otherwise, the resources in this service are available only to
-    users with the save right (see
-    [/auth/rights](op:/auth:authRightsGet)).
 
 - name: /ctid
   description: |
