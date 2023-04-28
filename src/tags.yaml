@@ -3420,6 +3420,69 @@
   description: |
     The SSID (service set identifier) of this WLAN network.
 
+- name: /sys/push
+  description: |
+    The status of the push (data sharing) service.  See
+    [/config/push](path:/config/push).
+
+- name: /sys/push/next
+  description: |
+    Information about the next push request.
+
+- name: /sys/push/next/attempt
+  x-schema:
+    example: "1682658559.0"
+  description: |
+    The next time the meter will send push data to the server.  The
+    time is expressed as a decimal [Unix
+    timestamp](glossary:Unix-Timestamp) string.  If unavailable, this
+    is an empty string.
+
+- name: /sys/push/last
+  description: |
+    Information about the last (most recent) push request.
+
+- name: /sys/push/last/attempt
+  x-schema:
+    example: "1682658499.0"
+  description: |
+    The last time the meter sent (or attempted to send) push data to
+    the server.  The time is expressed as a decimal [Unix
+    timestamp](glossary:Unix-Timestamp) string.  If unavailable, this
+    is an empty string.
+
+- name: /sys/push/last/count
+  x-schema:
+    example: 900
+  description: |
+    The number of register data rows that were sent to the server
+    during the last push.  If unavailable, this is zero.
+
+- name: /sys/push/last/status
+  x-schema:
+    example: 200
+  description: |
+    The HTTP status returned by the server at the end of the last
+    push.  If unavailable, this is zero.
+
+- name: /sys/push/last/success
+  x-schema:
+    example: "1682658499.1"
+  description: |
+    The most recent time push data was successfully sent to the
+    server.  The time is expressed as a decimal [Unix
+    timestamp](glossary:Unix-Timestamp) string.  If unavailable, this
+    is an empty string.
+
+- name: /sys/push/last/ts
+  x-schema:
+    example: "1682658480.0"
+  description: |
+    The time of the last register data row sent to the server.  The
+    time is expressed as a decimal [Unix
+    timestamp](glossary:Unix-Timestamp) string.  If unavailable, this
+    is an empty string.
+
 - name: /sys/reboot
   description: |
     This is `true` if the meter needs to be rebooted, e.g., due to a
