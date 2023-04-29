@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  version: '4.4'
+  version: '4.5'
   title: eGauge WebAPI
   description: eGauge Meter API
   license:
@@ -13552,6 +13552,420 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       description: Reset to empty string.
+  /config/remote:
+    get:
+      tags:
+        - /config/remote
+      summary: Get /config/remote
+      operationId: configRemoteGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configRemote'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+    put:
+      tags:
+        - /config/remote
+      summary: Replace /config/remote
+      operationId: configRemotePut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemote'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/remote
+      summary: Update /config/remote
+      operationId: configRemotePost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemote'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/remote
+      summary: Delete /config/remote
+      operationId: configRemoteDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Deletes all remote device configurations and the physical registers
+        using them.
+  /config/remote/{name}:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The name of a remote device.  It must consist of printable
+          characters only.  The name `local` is reserved for internal use
+          and may not appear here.
+        required: true
+        schema:
+          type: string
+          example: PRM3
+    get:
+      tags:
+        - /config/remote/{name}
+      summary: Get /config/remote/{name}
+      operationId: configRemoteNameGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configRemoteName'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+    put:
+      tags:
+        - /config/remote/{name}
+      summary: Replace /config/remote/{name}
+      operationId: configRemoteNamePut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteName'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/remote/{name}
+      summary: Update /config/remote/{name}
+      operationId: configRemoteNamePost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteName'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/remote/{name}
+      summary: Delete /config/remote/{name}
+      operationId: configRemoteNameDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Delete the remote device configuration and the physical registers
+        associated with it.
+  /config/remote/{name}/address:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The name of a remote device.  It must consist of printable
+          characters only.  The name `local` is reserved for internal use
+          and may not appear here.
+        required: true
+        schema:
+          type: string
+          example: PRM3
+    get:
+      tags:
+        - /config/remote/{name}/address
+      summary: Get /config/remote/{name}/address
+      operationId: configRemoteNameAddressGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configRemoteNameAddress'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+    put:
+      tags:
+        - /config/remote/{name}/address
+      summary: Replace /config/remote/{name}/address
+      operationId: configRemoteNameAddressPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteNameAddress'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/remote/{name}/address
+      summary: Update /config/remote/{name}/address
+      operationId: configRemoteNameAddressPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteNameAddress'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/remote/{name}/address
+      summary: Delete /config/remote/{name}/address
+      operationId: configRemoteNameAddressDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: Reset to empty string.
+  /config/remote/{name}/link_type:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The name of a remote device.  It must consist of printable
+          characters only.  The name `local` is reserved for internal use
+          and may not appear here.
+        required: true
+        schema:
+          type: string
+          example: PRM3
+    get:
+      tags:
+        - /config/remote/{name}/link_type
+      summary: Get /config/remote/{name}/link_type
+      operationId: configRemoteNameLinkTypeGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configRemoteNameLinkType'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+    put:
+      tags:
+        - /config/remote/{name}/link_type
+      summary: Replace /config/remote/{name}/link_type
+      operationId: configRemoteNameLinkTypePut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteNameLinkType'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/remote/{name}/link_type
+      summary: Update /config/remote/{name}/link_type
+      operationId: configRemoteNameLinkTypePost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configRemoteNameLinkType'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/remote/{name}/link_type
+      summary: Delete /config/remote/{name}/link_type
+      operationId: configRemoteNameLinkTypeDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Clears this value to `tcp`.
   /config/register:
     get:
       tags:
@@ -14902,420 +15316,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       description: Reset to empty string.
-  /config/remote:
-    get:
-      tags:
-        - /config/remote
-      summary: Get /config/remote
-      operationId: configRemoteGet
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  result:
-                    $ref: '#/components/schemas/configRemote'
-                  error:
-                    $ref: '#/components/schemas/ErrorString'
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETagHeader'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-      parameters:
-        - $ref: '#/components/parameters/maxDepthParam'
-        - $ref: '#/components/parameters/filterParam'
-    put:
-      tags:
-        - /config/remote
-      summary: Replace /config/remote
-      operationId: configRemotePut
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configRemote'
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    post:
-      tags:
-        - /config/remote
-      summary: Update /config/remote
-      operationId: configRemotePost
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configRemote'
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    delete:
-      tags:
-        - /config/remote
-      summary: Delete /config/remote
-      operationId: configRemoteDelete
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-      description: |
-        Deletes all remote device configurations and the physical registers
-        using them.
-  /config/remote/{name}:
-    parameters:
-      - name: name
-        in: path
-        description: |
-          The name of a remote device.  It must consist of printable
-          characters only.  The name `local` is reserved for internal use
-          and may not appear here.
-        required: true
-        schema:
-          type: string
-          example: PRM3
-    get:
-      tags:
-        - /config/remote/{name}
-      summary: Get /config/remote/{name}
-      operationId: configRemoteNameGet
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  result:
-                    $ref: '#/components/schemas/configRemoteName'
-                  error:
-                    $ref: '#/components/schemas/ErrorString'
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETagHeader'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-      parameters:
-        - $ref: '#/components/parameters/maxDepthParam'
-        - $ref: '#/components/parameters/filterParam'
-    put:
-      tags:
-        - /config/remote/{name}
-      summary: Replace /config/remote/{name}
-      operationId: configRemoteNamePut
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configRemoteName'
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    post:
-      tags:
-        - /config/remote/{name}
-      summary: Update /config/remote/{name}
-      operationId: configRemoteNamePost
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configRemoteName'
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    delete:
-      tags:
-        - /config/remote/{name}
-      summary: Delete /config/remote/{name}
-      operationId: configRemoteNameDelete
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-      description: |
-        Delete the remote device configuration and the physical registers
-        associated with it.
-  /config/remote/{name}/address:
-    parameters:
-      - name: name
-        in: path
-        description: |
-          The name of a remote device.  It must consist of printable
-          characters only.  The name `local` is reserved for internal use
-          and may not appear here.
-        required: true
-        schema:
-          type: string
-          example: PRM3
-    get:
-      tags:
-        - /config/remote/{name}/address
-      summary: Get /config/remote/{name}/address
-      operationId: configRemoteNameAddressGet
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  result:
-                    $ref: '#/components/schemas/configRemoteNameAddress'
-                  error:
-                    $ref: '#/components/schemas/ErrorString'
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETagHeader'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-      parameters: []
-    put:
-      tags:
-        - /config/remote/{name}/address
-      summary: Replace /config/remote/{name}/address
-      operationId: configRemoteNameAddressPut
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configRemoteNameAddress'
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    post:
-      tags:
-        - /config/remote/{name}/address
-      summary: Update /config/remote/{name}/address
-      operationId: configRemoteNameAddressPost
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configRemoteNameAddress'
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    delete:
-      tags:
-        - /config/remote/{name}/address
-      summary: Delete /config/remote/{name}/address
-      operationId: configRemoteNameAddressDelete
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to empty string.
-  /config/remote/{name}/link_type:
-    parameters:
-      - name: name
-        in: path
-        description: |
-          The name of a remote device.  It must consist of printable
-          characters only.  The name `local` is reserved for internal use
-          and may not appear here.
-        required: true
-        schema:
-          type: string
-          example: PRM3
-    get:
-      tags:
-        - /config/remote/{name}/link_type
-      summary: Get /config/remote/{name}/link_type
-      operationId: configRemoteNameLinkTypeGet
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  result:
-                    $ref: '#/components/schemas/configRemoteNameLinkType'
-                  error:
-                    $ref: '#/components/schemas/ErrorString'
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETagHeader'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-      parameters: []
-    put:
-      tags:
-        - /config/remote/{name}/link_type
-      summary: Replace /config/remote/{name}/link_type
-      operationId: configRemoteNameLinkTypePut
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configRemoteNameLinkType'
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    post:
-      tags:
-        - /config/remote/{name}/link_type
-      summary: Update /config/remote/{name}/link_type
-      operationId: configRemoteNameLinkTypePost
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configRemoteNameLinkType'
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    delete:
-      tags:
-        - /config/remote/{name}/link_type
-      summary: Delete /config/remote/{name}/link_type
-      operationId: configRemoteNameLinkTypeDelete
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-      description: |
-        Clears this value to `tcp`.
   /config/time:
     get:
       tags:
@@ -22980,6 +22980,237 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       parameters: []
+  /sys/push:
+    get:
+      tags:
+        - /sys/push
+      summary: Get /sys/push
+      operationId: sysPushGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysPush'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/push/next:
+    get:
+      tags:
+        - /sys/push/next
+      summary: Get /sys/push/next
+      operationId: sysPushNextGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysPushNext'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/push/next/attempt:
+    get:
+      tags:
+        - /sys/push/next/attempt
+      summary: Get /sys/push/next/attempt
+      operationId: sysPushNextAttemptGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysPushNextAttempt'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/push/last:
+    get:
+      tags:
+        - /sys/push/last
+      summary: Get /sys/push/last
+      operationId: sysPushLastGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysPushLast'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/push/last/attempt:
+    get:
+      tags:
+        - /sys/push/last/attempt
+      summary: Get /sys/push/last/attempt
+      operationId: sysPushLastAttemptGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysPushLastAttempt'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/push/last/count:
+    get:
+      tags:
+        - /sys/push/last/count
+      summary: Get /sys/push/last/count
+      operationId: sysPushLastCountGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysPushLastCount'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/push/last/status:
+    get:
+      tags:
+        - /sys/push/last/status
+      summary: Get /sys/push/last/status
+      operationId: sysPushLastStatusGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysPushLastStatus'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/push/last/success:
+    get:
+      tags:
+        - /sys/push/last/success
+      summary: Get /sys/push/last/success
+      operationId: sysPushLastSuccessGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysPushLastSuccess'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/push/last/ts:
+    get:
+      tags:
+        - /sys/push/last/ts
+      summary: Get /sys/push/last/ts
+      operationId: sysPushLastTsGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysPushLastTs'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
   /sys/reboot:
     get:
       tags:
@@ -23860,6 +24091,14 @@ components:
           type: string
           description: The latest available firmware/kernel version.
           example: 4.4
+        minimum:
+          type: string
+          description: |
+            The minimum firmware/kernel version that should be used on the
+            meter.  Older versions may not have the latest security fixes
+            or other issues that could prevent proper operation of the
+            meter.
+          example: 4.1.2
         error:
           $ref: '#/components/schemas/ErrorString'
     TokenObject:
@@ -26021,6 +26260,39 @@ components:
         The push service configuration.  This service is used to share the
         meter data with a remote web server.  The data is sent via an HTTP
         `POST` request.
+    configRemoteNameAddress:
+      type: string
+      example: modbus://sunspec.1@USB2
+      description: |
+        The address of the remote device.  The meaning of this value
+        depends on the [link-type](/tag/Glossary#section/Link-Types).
+    configRemoteNameLinkType:
+      type: string
+      example: slowd
+      description: |
+        The [link-type](/tag/Glossary#section/Link-Types) of the remote device.
+    configRemoteName:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/configRemoteNameAddress'
+        link_type:
+          $ref: '#/components/schemas/configRemoteNameLinkType'
+      description: |
+        The configuration of a remote device.
+    configRemote:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/configRemoteName'
+      example:
+        PRM3:
+          address: modbus://sunspec.1@USB2
+          link_type: slowd
+        panel2:
+          address: panel2.local
+          link_type: udp
+      description: |
+        The remote device configurations.
     configRegisterPhysicalRegDev:
       type: string
       example: local
@@ -26246,39 +26518,6 @@ components:
           $ref: '#/components/schemas/configRegisterVirtual'
       description: |
         The register configuration of the meter.
-    configRemoteNameAddress:
-      type: string
-      example: modbus://sunspec.1@USB2
-      description: |
-        The address of the remote device.  The meaning of this value
-        depends on the [link-type](/tag/Glossary#section/Link-Types).
-    configRemoteNameLinkType:
-      type: string
-      example: slowd
-      description: |
-        The [link-type](/tag/Glossary#section/Link-Types) of the remote device.
-    configRemoteName:
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/configRemoteNameAddress'
-        link_type:
-          $ref: '#/components/schemas/configRemoteNameLinkType'
-      description: |
-        The configuration of a remote device.
-    configRemote:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/configRemoteName'
-      example:
-        PRM3:
-          address: modbus://sunspec.1@USB2
-          link_type: slowd
-        panel2:
-          address: panel2.local
-          link_type: udp
-      description: |
-        The remote device configurations.
     configTimeZone:
       type: string
       example: LST7LDT6,M3.2.0/02:00,M11.1.0/02:00
@@ -26715,10 +26954,10 @@ components:
           $ref: '#/components/schemas/configNet'
         push:
           $ref: '#/components/schemas/configPush'
-        register:
-          $ref: '#/components/schemas/configRegister'
         remote:
           $ref: '#/components/schemas/configRemote'
+        register:
+          $ref: '#/components/schemas/configRegister'
         time:
           $ref: '#/components/schemas/configTime'
         user:
@@ -28025,6 +28264,82 @@ components:
         The network settings that are in use by the meter.  This may
         or may not be the same as the configuration established in
         [/config/net](/tag/confignet).
+    sysPushNextAttempt:
+      type: string
+      example: '1682658559.0'
+      description: |
+        The next time the meter will send push data to the server.  The
+        time is expressed as a decimal [Unix
+        timestamp](/tag/Glossary#section/Unix-Timestamp) string.  If unavailable, this
+        is an empty string.
+    sysPushNext:
+      type: object
+      properties:
+        attempt:
+          $ref: '#/components/schemas/sysPushNextAttempt'
+      description: |
+        Information about the next push request.
+    sysPushLastAttempt:
+      type: string
+      example: '1682658499.0'
+      description: |
+        The last time the meter sent (or attempted to send) push data to
+        the server.  The time is expressed as a decimal [Unix
+        timestamp](/tag/Glossary#section/Unix-Timestamp) string.  If unavailable, this
+        is an empty string.
+    sysPushLastCount:
+      type: integer
+      example: 900
+      description: |
+        The number of register data rows that were sent to the server
+        during the last push.  If unavailable, this is zero.
+    sysPushLastStatus:
+      type: integer
+      example: 200
+      description: |
+        The HTTP status returned by the server at the end of the last
+        push.  If unavailable, this is zero.
+    sysPushLastSuccess:
+      type: string
+      example: '1682658499.1'
+      description: |
+        The most recent time push data was successfully sent to the
+        server.  The time is expressed as a decimal [Unix
+        timestamp](/tag/Glossary#section/Unix-Timestamp) string.  If unavailable, this
+        is an empty string.
+    sysPushLastTs:
+      type: string
+      example: '1682658480.0'
+      description: |
+        The time of the last register data row sent to the server.  The
+        time is expressed as a decimal [Unix
+        timestamp](/tag/Glossary#section/Unix-Timestamp) string.  If unavailable, this
+        is an empty string.
+    sysPushLast:
+      type: object
+      properties:
+        attempt:
+          $ref: '#/components/schemas/sysPushLastAttempt'
+        count:
+          $ref: '#/components/schemas/sysPushLastCount'
+        status:
+          $ref: '#/components/schemas/sysPushLastStatus'
+        success:
+          $ref: '#/components/schemas/sysPushLastSuccess'
+        ts:
+          $ref: '#/components/schemas/sysPushLastTs'
+      description: |
+        Information about the last (most recent) push request.
+    sysPush:
+      type: object
+      properties:
+        next:
+          $ref: '#/components/schemas/sysPushNext'
+        last:
+          $ref: '#/components/schemas/sysPushLast'
+      description: |
+        The status of the push (data sharing) service.  See
+        [/config/push](/tag/configpush).
     sysReboot:
       type: boolean
       description: |
@@ -28186,6 +28501,8 @@ components:
           $ref: '#/components/schemas/sysModel'
         net:
           $ref: '#/components/schemas/sysNet'
+        push:
+          $ref: '#/components/schemas/sysPush'
         reboot:
           $ref: '#/components/schemas/sysReboot'
         sn:
@@ -30638,6 +30955,48 @@ tags:
   - name: /sys/net/wlan/net/{idx}/ssid
     description: |
       The SSID (service set identifier) of this WLAN network.
+  - name: /sys/push
+    description: |
+      The status of the push (data sharing) service.  See
+      [/config/push](/tag/configpush).
+  - name: /sys/push/next
+    description: |
+      Information about the next push request.
+  - name: /sys/push/next/attempt
+    description: |
+      The next time the meter will send push data to the server.  The
+      time is expressed as a decimal [Unix
+      timestamp](/tag/Glossary#section/Unix-Timestamp) string.  If unavailable, this
+      is an empty string.
+  - name: /sys/push/last
+    description: |
+      Information about the last (most recent) push request.
+  - name: /sys/push/last/attempt
+    description: |
+      The last time the meter sent (or attempted to send) push data to
+      the server.  The time is expressed as a decimal [Unix
+      timestamp](/tag/Glossary#section/Unix-Timestamp) string.  If unavailable, this
+      is an empty string.
+  - name: /sys/push/last/count
+    description: |
+      The number of register data rows that were sent to the server
+      during the last push.  If unavailable, this is zero.
+  - name: /sys/push/last/status
+    description: |
+      The HTTP status returned by the server at the end of the last
+      push.  If unavailable, this is zero.
+  - name: /sys/push/last/success
+    description: |
+      The most recent time push data was successfully sent to the
+      server.  The time is expressed as a decimal [Unix
+      timestamp](/tag/Glossary#section/Unix-Timestamp) string.  If unavailable, this
+      is an empty string.
+  - name: /sys/push/last/ts
+    description: |
+      The time of the last register data row sent to the server.  The
+      time is expressed as a decimal [Unix
+      timestamp](/tag/Glossary#section/Unix-Timestamp) string.  If unavailable, this
+      is an empty string.
   - name: /sys/reboot
     description: |
       This is `true` if the meter needs to be rebooted, e.g., due to a
