@@ -685,15 +685,20 @@ class OpenAPIBuilder:
         self.log = Logger(prog_name)
         self.link_format = link_format
         self.tags = None
+        self.webapi_version = ""
 
     def build(self, output_dir: Path):
         """Build the OpenAPI 3.1 spec."""
 
         # read input files, patching intra-document links:
+        openapi = YAMLFile("openapi")
         tag_list = YAMLFile("tags")
         params = YAMLFile("params")
         paths = YAMLFile("paths")
         schemas = YAMLFile("schemas")
+
+        webapi_version = openapi.content["info"]["version"]
+        self.webapi_version = f"/v{webapi_version}"
 
         # first, just create a dict of all tag names so map_link can check it:
         self.tags = {}
@@ -757,7 +762,7 @@ class OpenAPIBuilder:
             section = parts[1].replace(" ", "-")
             if self.link_format == LinkFormat.REDOCLY_PREVIEW:
                 return "/tag/Glossary#tag/Glossary/" + section
-            return "/tag/Glossary#section/" + section
+            return self.webapi_version + "/tag/Glossary#section/" + section
 
         if parts[0] == "path" or parts[0] == "op":
             path = parts[1]
@@ -771,7 +776,7 @@ class OpenAPIBuilder:
             if self.link_format == LinkFormat.REDOCLY_PREVIEW:
                 uri = "#tag/" + slug
             else:
-                uri = "/tag/" + slug
+                uri = self.webapi_version + "/tag/" + slug
             if parts[0][0] == "p":
                 return uri
 
@@ -779,7 +784,7 @@ class OpenAPIBuilder:
             if self.link_format == LinkFormat.REDOCLY_PREVIEW:
                 uri += "/operation/" + operation_id
             else:
-                uri += "#operation/" + operation_id
+                uri += self.webapi_version + "#operation/" + operation_id
             return uri
 
         self.log.error(
