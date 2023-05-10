@@ -1774,6 +1774,9 @@
       * `max=n`: Pushed at most `n` rows in a single `POST` request.
         This limit must be in the range from 1 to 900.
 
+      * `msec`: Data will be pushed with millisecond granularity (at
+        most one row of data per millisecond).
+
       * `old_first`: Push the oldest data row first.  By default, the
         youngest data row is pushed first.
 
