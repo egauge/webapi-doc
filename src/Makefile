@@ -15,6 +15,9 @@ all: $(TARGET)
 lint:
 	redocly lint
 
+built:
+	mkdir $@
+
 built/params.yaml: built/tags.yaml
 	@test -f $@ || rm -f built/tags.yaml
 	@test -f $@ || $(MAKE) built/tags.yaml
@@ -30,5 +33,5 @@ built/schemas.yaml: built/tags.yaml
 built/tags.yaml: $(SRC_FILES) ../bin/build_openapi.py
 	$(BUILD_OPENAPI) -l $(LINK_FORMAT) -o built
 
-$(TARGET): $(BUILT_PATHS)
+$(TARGET): built $(BUILT_PATHS)
 	$(BUNDLE) > $(TARGET) && cp $(TARGET) ..
