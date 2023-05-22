@@ -12925,6 +12925,109 @@ paths:
                 $ref: '#/components/schemas/UnauthorizedObject'
       description: |
         Reset to `UDPv4`.
+  /config/net/ptp/interface/{if}/udp_ttl:
+    parameters:
+      - name: if
+        in: path
+        description: |
+          The name of a network interface to use for PTP.
+        required: true
+        schema:
+          type: string
+          example: eth0
+    get:
+      tags:
+        - /config/net/ptp/interface/{if}/udp_ttl
+      summary: Get /config/net/ptp/interface/{if}/udp_ttl
+      operationId: configNetPtpInterfaceIfUdpTtlGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configNetPtpInterfaceIfUdpTtl'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+    put:
+      tags:
+        - /config/net/ptp/interface/{if}/udp_ttl
+      summary: Replace /config/net/ptp/interface/{if}/udp_ttl
+      operationId: configNetPtpInterfaceIfUdpTtlPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configNetPtpInterfaceIfUdpTtl'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/net/ptp/interface/{if}/udp_ttl
+      summary: Update /config/net/ptp/interface/{if}/udp_ttl
+      operationId: configNetPtpInterfaceIfUdpTtlPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configNetPtpInterfaceIfUdpTtl'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/net/ptp/interface/{if}/udp_ttl
+      summary: Delete /config/net/ptp/interface/{if}/udp_ttl
+      operationId: configNetPtpInterfaceIfUdpTtlDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Reset to 1.
   /config/push:
     get:
       tags:
@@ -26064,11 +26167,22 @@ components:
           * `UDPv4`: UDP over IPv4.
           * `UDPv6`: UDP over IPv6.
           * `L2`: Layer-2 transport (e.g., Ethernet).
+    configNetPtpInterfaceIfUdpTtl:
+      type: integer
+      minimum: 1
+      maximum: 255
+      description: |
+        The Time-to-live (TTL) value for IPv4 multicast messages and the
+        hop limit for IPv6 multicast messages.  This value is ignored
+        unless `transport` is either `UDPv4` or `UDPv6`.  The default
+        is 1, which restricts the messages to the same subnet.
     configNetPtpInterfaceIf:
       type: object
       properties:
         transport:
           $ref: '#/components/schemas/configNetPtpInterfaceIfTransport'
+        udp_ttl:
+          $ref: '#/components/schemas/configNetPtpInterfaceIfUdpTtl'
       description: |
         The configuration to use for the named interface.
     configNetPtpInterface:
@@ -26078,6 +26192,7 @@ components:
       example:
         eth0:
           transport: UDPv4
+          udp_ttl: 1
       description: |
         The network interface configurations for PTP. If empty, PTP is disabled.
     configNetPtp:
@@ -26166,6 +26281,9 @@ components:
 
           * `max=n`: Pushed at most `n` rows in a single `POST` request.
             This limit must be in the range from 1 to 900.
+
+          * `msec`: Data will be pushed with millisecond granularity (at
+            most one row of data per millisecond).
 
           * `old_first`: Push the oldest data row first.  By default, the
             youngest data row is pushed first.
@@ -29686,6 +29804,12 @@ tags:
         * `UDPv4`: UDP over IPv4.
         * `UDPv6`: UDP over IPv6.
         * `L2`: Layer-2 transport (e.g., Ethernet).
+  - name: /config/net/ptp/interface/{if}/udp_ttl
+    description: |
+      The Time-to-live (TTL) value for IPv4 multicast messages and the
+      hop limit for IPv6 multicast messages.  This value is ignored
+      unless `transport` is either `UDPv4` or `UDPv6`.  The default
+      is 1, which restricts the messages to the same subnet.
   - name: /config/push
     description: |
       The push service configuration.  This service is used to share the
@@ -29733,6 +29857,9 @@ tags:
 
         * `max=n`: Pushed at most `n` rows in a single `POST` request.
           This limit must be in the range from 1 to 900.
+
+        * `msec`: Data will be pushed with millisecond granularity (at
+          most one row of data per millisecond).
 
         * `old_first`: Push the oldest data row first.  By default, the
           youngest data row is pushed first.
