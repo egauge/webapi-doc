@@ -1690,7 +1690,7 @@
     description: |
       Reset to empty (PTP disabled).
   x-schema:
-    example: {"eth0":{"transport":"UDPv4"}}
+    example: {"eth0":{"transport":"UDPv4","udp_ttl":1}}
   description: |
     The network interface configurations for PTP. If empty, PTP is disabled.
 
@@ -1713,6 +1713,20 @@
       * `UDPv4`: UDP over IPv4.
       * `UDPv6`: UDP over IPv6.
       * `L2`: Layer-2 transport (e.g., Ethernet).
+
+- name: /config/net/ptp/interface/{if}/udp_ttl
+  x-path-method-delete:
+    description: |
+      Reset to 1.
+  x-schema:
+    type: integer
+    minimum: 1
+    maximum: 255
+  description: |
+    The Time-to-live (TTL) value for IPv4 multicast messages and the
+    hop limit for IPv6 multicast messages.  This value is ignored
+    unless `transport` is either `UDPv4` or `UDPv6`.  The default
+    is 1, which restricts the messages to the same subnet.
 
 - name: /config/push
   x-schema:
