@@ -1275,6 +1275,96 @@
               $ref: "./schemas.yaml#/UnauthorizedObject"
 
 
+/log/alert:
+  parameters:
+  - name: ids
+    in: query
+    description: |
+      Restricts the method to apply only to those alerts whose id
+      is listed in the value of this query parameter.
+    schema:
+      type: array
+      items:
+        type: integer
+        minimum: 0
+  - $ref: "./params.yaml#/afterParam"
+    description: |
+      Restricts the method to apply only to those alerts whose
+      `last` timestamp is newer (younger) than the specified timestamp.
+  get:
+    tags:
+    - /log
+    summary: Get alert log
+    operationId: logAlertGet
+    description: |
+      Get the alert log.  It has a fixed maximum length and consists
+      of a sequence of prioritized and time-stamped entries. When the
+      log fills up, older entries are replaced.  Currently up to 50
+      alert log entries are supported.
+    responses:
+      "200":
+        description: Alert log response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/AlertLogObject"
+      "401":
+        description: Unauthorized response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/UnauthorizedObject"
+  post:
+    tags:
+    - /log
+    summary: Update alert log
+    operationId: logAlertPost
+    description: |
+      Acknowledge all or some alerts.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+                enum:
+                - ack
+    responses:
+      "200":
+        description: Status response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/StatusObject"
+      "401":
+        description: Unauthorized response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/UnauthorizedObject"
+  delete:
+    tags:
+    - /log
+    summary: Delete alert log
+    operationId: logAlertDelete
+    description: |
+      Delete all or some alerts.
+    responses:
+      "200":
+        description: Status response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/StatusObject"
+      "401":
+        description: Unauthorized response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/UnauthorizedObject"
+
 /log/kernel:
   get:
     tags:
