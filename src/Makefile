@@ -1,7 +1,8 @@
 BUILD_OPENAPI = ../bin/build_openapi.py
 BUNDLE = redocly bundle
 
-SRC_FILES = openapi.yaml params.yaml tags.yaml url-domains.json
+SRC_FILES = openapi.yaml params.yaml paths.yaml schemas.yaml tags.yaml \
+	url-domains.json
 
 BUILT_FILES = schemas params paths tags
 BUILT_PATHS = $(foreach f,$(BUILT_FILES),built/$f.yaml)
@@ -33,5 +34,5 @@ built/schemas.yaml: built/tags.yaml
 built/tags.yaml: $(SRC_FILES) ../bin/build_openapi.py
 	$(BUILD_OPENAPI) -l $(LINK_FORMAT) -o built
 
-$(TARGET): built $(BUILT_PATHS)
+$(TARGET): built $(BUILT_PATHS) $(SRC_FILES)
 	$(BUNDLE) > $(TARGET) && cp $(TARGET) ..
