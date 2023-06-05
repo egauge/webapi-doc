@@ -408,7 +408,7 @@
   post:
     tags:
     - /cmd
-    summary: Restore factory settings.
+    summary: Restore factory settings
     operationId: cmdFactoryRestore
     description: |
       Restore the factory settings and reboot the meter.
@@ -432,7 +432,7 @@
   post:
     tags:
     - /cmd
-    summary: Reboot the meter.
+    summary: Reboot the meter
     operationId: cmdReboot
     description: |
       Initiate a reboot of the meter. The actual reboot command is
@@ -465,7 +465,7 @@
   post:
     tags:
     - /cmd
-    summary: Set date and time.
+    summary: Set date and time
     operationId: cmdSetTime
     description: |
         Optionally set the date/time of the meter and restart the NTP
@@ -498,7 +498,7 @@
   post:
     tags:
     - /cmd
-    summary: Update the meter.
+    summary: Update the meter
     operationId: cmdUpdate
     description: |
         Update the meter firmware or kernel.
@@ -573,7 +573,7 @@
   post:
     tags:
     - /cmd
-    summary: Manage WLAN (WiFi) connection.
+    summary: Manage WLAN (WiFi) connection
     operationId: cmdWLAN
     description: |
       Manage WLAN (Wi-Fi) connection.  See
@@ -1094,7 +1094,7 @@
   get:
     tags:
     - /local
-    summary: Get local sensor values.
+    summary: Get local sensor values
     operationId: localGet
     parameters:
     - name: values
