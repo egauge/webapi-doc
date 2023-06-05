@@ -1,6 +1,6 @@
 openapi: "3.1.0"
 info:
-  version: "4.4"
+  version: "4.5"
   title: eGauge WebAPI
   description: eGauge Meter API
   license:
