@@ -1277,6 +1277,19 @@
 
 /log/alert:
   parameters:
+  - $ref: "./params.yaml#/afterParam"
+    description: |
+      Restricts the method to apply only to those alerts whose
+      `last` timestamp is newer (younger) than the specified timestamp.
+    example: 1685739455.043332818
+  - name: acked
+    in: query
+    description: |
+      Restrict the method to apply only to those alerts whose
+      acknowledgment status matches the value of this query parameter
+      (`true` for acknowledged, `false` for unacknowledged).
+    schema:
+      type: boolean
   - name: ids
     in: query
     description: |
@@ -1287,10 +1300,15 @@
       items:
         type: integer
         minimum: 0
-  - $ref: "./params.yaml#/afterParam"
+  - name: min_prio
+    in: query
     description: |
-      Restricts the method to apply only to those alerts whose
-      `last` timestamp is newer (younger) than the specified timestamp.
+      Restrict the method to apply only to those alerts whose priority is
+      at least as high as the value of this query parameter.
+    schema:
+      type: integer
+      minimum: 0
+      maximum: 7
   get:
     tags:
     - /log
