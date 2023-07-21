@@ -1,5 +1,5 @@
 apis:
-  main@v4.4:
+  main:
     root: openapi.yaml
 
 extends:

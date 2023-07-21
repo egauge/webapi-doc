@@ -408,7 +408,7 @@
   post:
     tags:
     - /cmd
-    summary: Restore factory settings.
+    summary: Restore factory settings
     operationId: cmdFactoryRestore
     description: |
       Restore the factory settings and reboot the meter.
@@ -428,11 +428,59 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
 
+/cmd/remote:
+  post:
+    tags:
+    - /cmd
+    summary: Remote device operation
+    operationId: cmdRemote
+    description: |
+      Issue an operation related to a remote device.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+                enum:
+                - check
+                description: |
+                  The action to perform.  The only possible value is:
+
+                    * `check`: Attempt to connect to a remote device.
+              address:
+                type: string
+                description: |
+                  The address of the remote device.
+                example: modbus://sunspec.1@USB2
+              link_type:
+                type: string
+                description: |
+                  The [link-type](glossary:Link-Types) to use when
+                  connecting to the device.
+                example: slowd
+            required: [action, address, link_type]
+    responses:
+      "200":
+        description: Remote device operation response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/TokenObject"
+      "401":
+        description: Unauthorized response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/UnauthorizedObject"
+
 /cmd/reboot:
   post:
     tags:
     - /cmd
-    summary: Reboot the meter.
+    summary: Reboot the meter
     operationId: cmdReboot
     description: |
       Initiate a reboot of the meter. The actual reboot command is
@@ -465,7 +513,7 @@
   post:
     tags:
     - /cmd
-    summary: Set date and time.
+    summary: Set date and time
     operationId: cmdSetTime
     description: |
         Optionally set the date/time of the meter and restart the NTP
@@ -498,7 +546,7 @@
   post:
     tags:
     - /cmd
-    summary: Update the meter.
+    summary: Update the meter
     operationId: cmdUpdate
     description: |
         Update the meter firmware or kernel.
@@ -573,7 +621,7 @@
   post:
     tags:
     - /cmd
-    summary: Manage WLAN (WiFi) connection.
+    summary: Manage WLAN (WiFi) connection
     operationId: cmdWLAN
     description: |
       Manage WLAN (Wi-Fi) connection.  See
@@ -1094,7 +1142,7 @@
   get:
     tags:
     - /local
-    summary: Get local sensor values.
+    summary: Get local sensor values
     operationId: localGet
     parameters:
     - name: values
