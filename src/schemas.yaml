@@ -32,6 +32,11 @@ AlertLogObject:
             description: |
               The timestamp of when this alert occurred first.
             $ref: "#/ForeverStamp"
+          id:
+            type: integer
+            minimum: 0
+            description: |
+              An identifier that uniquely identifies this log entry.
           last:
             description: |
               The timestamp of when this alert occurred last.
@@ -41,16 +46,11 @@ AlertLogObject:
               The timestamp of when this alert was last reported.
               Only present if `reported` is `true`.
             $ref: "#/ForeverStamp"
-          id:
-            type: integer
-            minimum: 0
-            description: |
-              An identifier that uniquely identifies this log entry.
           name:
             type: string
             description: |
                 The name of this alert.
-          priority:
+          prio:
             type: integer
             minimum: 0
             maximum: 7
@@ -61,7 +61,7 @@ AlertLogObject:
             type: boolean
             description: |
               True if this alert has been reported already.
-        required: [acked, count, detail, first, last, id, name, priority, reported]
+        required: [acked, count, detail, first, last, id, name, prio, reported]
       example: [{"id":1804289524,"acked":false,"prio":6,"reported":false,"count":1,"first":"1684952450.123","last":"1684952450,123","name":"Device up and running","detail":"software reset"},{"id":1804289527,"acked":true,"prio":3,"reported":true,"count":15,"first":"1684952489.205","last":"1685739471.800","name":"Proxy-connection established","detail":"","last_reported":"1685739472.250"}]
     error:
       $ref: "#/ErrorString"
