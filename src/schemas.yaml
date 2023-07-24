@@ -59,7 +59,7 @@ AlertLogObject:
               Only present if this alert has been reported.
             $ref: "#/ForeverStamp"
         required: [acked, count, detail, first, last, id, name, prio]
-      example: [{"id":1804289524,"acked":false,"prio":6,"count":1,"first":"1684952450.123","last":"1684952450,123","name":"Device up and running","detail":"software reset"},{"id":1804289527,"acked":true,"prio":3,"count":15,"first":"1684952489.205","last":"1685739471.800","name":"Proxy-connection established","detail":"","reported":"1685739472.250"}]
+      example: [{"id":1804289524,"acked":false,"prio":6,"count":1,"first":"1684952450.123","last":"1684952450.123","name":"Device up and running","detail":"software reset"},{"id":1804289527,"acked":true,"prio":3,"count":15,"first":"1684952489.205","last":"1685739471.800","name":"Proxy-connection established","detail":"","reported":"1685739472.250"}]
     error:
       $ref: "#/ErrorString"
 
