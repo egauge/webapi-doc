@@ -1391,12 +1391,9 @@
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              action:
-                type: string
-                enum:
-                - ack
+            type: string
+            enum:
+              - ack
     responses:
       "200":
         description: Status response.
