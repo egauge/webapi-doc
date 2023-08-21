@@ -1781,20 +1781,27 @@ paths:
         - name: ts
           in: query
           description: |
-            This query parameter is ignored unless `format=csv`.
-            Otherwise, the parameter defines how timestamps are returned
-            in a CSV response.  By default, such timestamps are converted
-            using the device-local timezone and the format string `"%F
-            %T"`, which would output July 6, 2016 4:56pm as `2016-07-06
-            16:56:00`.
+            This query parameter controls how timestamps are handled
+            during this `GET` request.  The value must be a string of the
+            form `tz;fmt`, where `tz` is a timezone string and `fmt` is a
+            format string.  Either `tz` or `fmt` may be empty.
 
-            The value of this parameter must be a string of the form
-            `tz;fmt` where `tz` is the timezone to use when converting the
-            timestamp to a human-readable string and `fmt` is a format
-            string as defined by the
-            [strftime()](https://man7.org/linux/man-pages/man3/strftime.3.html)
-            function.  Either `tz` or `fmt` may be empty in which case the
-            respective default value is used.
+            If non-empty, `tz` sets the timezone to use.  If left
+            unspecified or empty, the [device
+            timezone](/v4.5/tag/configtimezone) is used by default.  The
+            selected timezone affects, for example, how [time point
+            names](/v4.5/tag/Glossary#section/Time-Point-Names) such as `sod` (start-of-day)
+            are interpreted and how time is output in the response.  The
+            timezone must be in the format defined by
+            [tzset()](https://man7.org/linux/man-pages/man3/tzset.3.html).
+
+            The `fmt` string is used only when query parameter
+            `format=csv` is in effect.  In that case, `fmt` defines how
+            timestamps are output in the CSV response.  By default, the
+            format string `"%F %T"` is used, which would output July 6,
+            2016 4:56pm as `2016-07-06 16:56:00`.  The full syntax
+            available in the format string is documented in function
+            [strftime()](https://man7.org/linux/man-pages/man3/strftime.3.html).
 
             Note that the format-string typically will need to be
             percent-encoded.  In particular, each `%` character needs to
