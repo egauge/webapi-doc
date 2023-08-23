@@ -1833,6 +1833,9 @@
         are interpreted and how time is output in the response.  The
         timezone must be in the format defined by
         [tzset()](https://man7.org/linux/man-pages/man3/tzset.3.html).
+        This parameter must appear before (to the left of) any `time`
+        parameters that use timezone-dependent time-points such 'sod',
+        for example.
 
         The `fmt` string is used only when query parameter
         `format=csv` is in effect.  In that case, `fmt` defines how
