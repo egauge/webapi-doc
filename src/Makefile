@@ -9,7 +9,8 @@ BUILT_PATHS = $(foreach f,$(BUILT_FILES),built/$f.yaml)
 
 TARGET = built/openapi.yaml
 
-LINK_FORMAT = redocly-hosted
+# Use "make LINK_FORMAT=redocly-preview" for previewing
+LINK_FORMAT := redocly-hosted
 
 all: $(TARGET)
 
