@@ -4108,6 +4108,106 @@
     possible for the modification to take effect even though the
     overall request may end up failing with an error.
 
+    ## Time Expressions
+
+    A time expression defines a single point in time.  An absolute
+    time expression is a number, a time-point name, or a function
+    call.  A number is interpreted as a [Unix
+    timestamp](glossary:Unix-Timestamp).  Time-point names are
+    described [here](glossary:Time-Point-Names).  A function call
+    consists of a name, immediately followed by a time expression in
+    parentheses.  The following supported function names and their
+    meaning are as follows:
+
+      * `soy(t)`: Returns the timestamp of the start of the year in
+        which `t` falls.
+
+      * `soq(t)`: Returns the timestamp of the start of the quarter in
+        which `t` falls.
+
+      * `sob(t)`: Returns the timestamp of the start of the billing
+      cycle in which `t` falls.  [Server-storage](path:/store)
+      variable `global/billing/start_day` establishes the day of the
+      month a new billing period starts.  If that day is greater than
+      the number of days in the current month, the last day of that
+      month is taken as the start of the billing period.  The new
+      billing cycle is assumed to start at 12pm on the billing day
+      (meter-local time).
+
+      * `som(t)`: Returns the timestamp of the start of the month in
+        which time `t` falls.
+
+      * `sow(t)`: Returns the timestamp of the start of the week in
+      which `t` falls.  Monday is considered to be the start of
+      the week.
+
+      * `sod(t)`: Returns the timestamp of the start of the day in
+        which `t` falls.
+
+      * `soh(t)`: Returns the timestamp of the start of the hour in
+        which `t` falls.
+
+      * `soQ(t)`: Returns the timestamp of the start of the quarter
+        hour in which `t` falls.
+
+      * `soM(t)`: Returns the timestamp of the start of the minute in
+        which `t` falls.
+
+      * `sos(t)`: Returns the timestamp of the start of the second in
+        which `t` falls.
+
+    An absolute time expression may be followed by one or more offsets
+    that are added to or subtracted from the value of the absolute
+    time expression.  Each offset starts with a plus or minus sign, an
+    integer number, and an optional unit.  Without a unit, the
+    specified number may contain a fractional part and indicates the
+    number of seconds to be added/subtracted.  Otherwise, the unit may
+    be one of:
+
+      * `y`: years
+      * `q`: quarters
+      * `b`: billing-cycles
+      * `m`: months
+      * `w`: weeks
+      * `d`: days
+      * `h`: hours
+      * `Q`: quarter-hours
+      * `M`: minutes
+
+    For an offset with a unit, the specified number of time periods
+    are added to/subtracted from the timestamp.  For example,
+    `som(now)+1d-1h` would return the start of the last hour of the
+    first day of the current month as `som(now)` returns the start of
+    the current month, `+1d` would add one day to that, and `-1h`
+    would subtract 1 hour from the result.
+
+    Due to irregularities in the Gregorian calendar, normal rules of
+    addition do not apply and the order in which the offsets are
+    applied is significant.  When adding/subtracting months or
+    billing-cycles, the operations ensures that the final date is
+    valid.  For example, adding `1m` to January 31st would yield the
+    last day of February, which would be either February 28th or 29th,
+    depending on whether or not the year is a leap-year.
+
+    ### Formal Definition
+
+    The full syntax for a time expression is given in EBNF syntax below:
+
+      > *TIME* = *ABSOLUTE* {("+" | "-")*OFFSET*} . \
+      > *ABSOLUTE* = *UNIX_TS* | *POINT_NAME* | *FCALL* . \
+      > *UNIX_TS* = ["+"|"-"] *SECONDS* . \
+      > *FCALL* = *FNAME* "(" *TIME* ")" . \
+      > *FNAME* = "soy" | "soq" | "sob" | "som" | "sow" | "sod" | "soh" | "soQ" | "soM" . \
+      > *POINT_NAME* = "now" | "epoch" | *FNAME* . \
+      > *OFFSET* = (*UNSIGNED_INTEGER* *UNIT*) | *SECONDS*. \
+      > *UNIT* = "y" | "q" | "b" | "m" | "w" | "d" | "h" | "Q" | "M". \
+      > *SECONDS* = *UNSIGNED_INTEGER* ["." *UNSIGNED_INTEGER*] .
+
+    A time point name that consists of a function name which is not
+    immediately followed by a left parenthesis is interpreted as if
+    the function of the same name had been called on the current time
+    (`now`).  For example, `sod` is equivalent to `sod(now)`.
+
     ## Time Point Names
 
     Time-point names provide a way to refer to both absolute points in
@@ -4121,29 +4221,24 @@
       data.  This time is user configurable via
       [/config/db/epoch](path:/config/db/epoch).
 
-      * `soy`: The time at which the current year started
-      (start-of-year).
+      * `soy`: Short for [`soy(now)`](glossary:Time-Expressions).
 
-      * `som`: The time at which the current month started
-      (start-of-month).
+      * `soq`: Short for [`soq(now)`](glossary:Time-Expressions).
 
-      * `sow`: The time at which the current week started
-      (start-of-week).
+      * `sob`: Short for [`sob(now)`](glossary:Time-Expressions).
 
-      * `sod`: The time at which the current day started
-      (start-of-day).
+      * `som`: Short for [`som(now)`](glossary:Time-Expressions).
 
-      * `soh`: The time at which the current hour started
-      (start-of-hour).
+      * `sow`: Short for [`sow(now)`](glossary:Time-Expressions).
 
-      * `sob`: The time at which the current billing period started
-      (start-of-bill).  [Server-storage](path:/store) variable
-      `global/billing/start_day` establishes the day of the month a
-      new billing period starts.  If that day is greater than the
-      number of days in the current month, the last day of that month
-      is taken as the start of the billing period.  For simplicity,
-      the new billing period is assumed to start at 12pm on the
-      billing day (meter-local time).
+      * `sod`: Short for [`sod(now)`](glossary:Time-Expressions).
+
+      * `soh`: Short for [`soh(now)`](glossary:Time-Expressions).
+
+      * `soQ`: Short for [`soQ(now)`](glossary:Time-Expressions).
+
+      * `soM`: Short for [`soM(now)`](glossary:Time-Expressions).
+
 
     ## Time Ranges
 
@@ -4166,11 +4261,9 @@
     youngest, then the oldest timestamp will not be in the series of
     generated timestamp.
 
-    The start and stop times of an interval may also be written as one
-    of the [time-point names](glossary:Time-Point-Names) and,
-    optionally, a number (in seconds) can be added or subtracted from
-    such a name.  For example, `now-100` refer to the point in time
-    that is 100 seconds before the current time of the meter.
+    In general, the start and stop time of an interval can be not just
+    a Unix timestamp but an arbitrary [time
+    expression](glossary:Time-Expressions).
 
     When a time range is used to select rows from the database, the
     resulting timestamps may not align with the timestamps of the rows
@@ -4188,10 +4281,10 @@
       > *FROM* = *TIME_WITH_ROUNDING* . \
       > *TO* = *TIME_WITH_ROUNDING* . \
       > *STEP* = *OFFSET* . \
-      > *TIME_WITH_ROUNDING* = ["+"]*TIME* . \
-      > *TIME* = *POINT*[("+"|"-")*OFFSET*] | *OFFSET* . \
-      > *POINT* = "now"|"epoch"|"soy"|"som"|"sow"|"sod"|"soh"|"sob" . \
-      > *OFFSET* = *UNSIGNED_INTEGER*["."*UNSIGNED_INTEGER] .
+      > *TIME_WITH_ROUNDING* = ["+"]*TIME* .
+
+    See section [Time Expressions](glossary:Time-Expression) for a
+    definition of *TIME*.
 
     ## Type Codes
 
