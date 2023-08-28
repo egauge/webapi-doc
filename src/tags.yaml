@@ -4283,7 +4283,7 @@
       > *STEP* = *OFFSET* . \
       > *TIME_WITH_ROUNDING* = ["+"]*TIME* .
 
-    See section [Time Expressions](glossary:Time-Expression) for a
+    See section [Time Expressions](glossary:Time-Expressions) for a
     definition of *TIME*.
 
     ## Type Codes
