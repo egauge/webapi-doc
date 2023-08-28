@@ -1723,14 +1723,14 @@
       in: query
       description: |
         Only return data if the specified condition is `true`.  The
-        string must have the form _tp_ _op_ _val_ where _tp_ is a
-        [named point in time](glossary:Time-Point-Names) (`epoch`,
+        string must have the form _texpr_ _op_ _val_ where _texpr_ is a
+        [time expression](glossary:Time-Expressions) (`epoch`,
         `sob` or similar), _op_ is one of `==` (test for equality) or
         `!=` (test for inequality) and _val_ is a decimal string
         specifying a [Unix timestamp](glossary:Unix-Timestamp).  If
         the condition is `true`, data is returned as usual.  If
         `false`, a current condition object is returned which contains
-        the current value of _tp_.
+        the current value of _texpr_.
       schema:
         type: string
         example: epoch==1675276020
