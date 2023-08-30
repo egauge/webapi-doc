@@ -3208,7 +3208,7 @@ tags:
         > *STEP* = *OFFSET* . \
         > *TIME_WITH_ROUNDING* = ["+"]*TIME* .
 
-      See section [Time Expressions](/v4.6/tag/Glossary#section/Time-Expression) for a
+      See section [Time Expressions](/v4.6/tag/Glossary#section/Time-Expressions) for a
       definition of *TIME*.
 
       ## Type Codes
@@ -5284,14 +5284,14 @@ paths:
           in: query
           description: |
             Only return data if the specified condition is `true`.  The
-            string must have the form _tp_ _op_ _val_ where _tp_ is a
-            [named point in time](/v4.6/tag/Glossary#section/Time-Point-Names) (`epoch`,
+            string must have the form _texpr_ _op_ _val_ where _texpr_ is a
+            [time expression](/v4.6/tag/Glossary#section/Time-Expressions) (`epoch`,
             `sob` or similar), _op_ is one of `==` (test for equality) or
             `!=` (test for inequality) and _val_ is a decimal string
             specifying a [Unix timestamp](/v4.6/tag/Glossary#section/Unix-Timestamp).  If
             the condition is `true`, data is returned as usual.  If
             `false`, a current condition object is returned which contains
-            the current value of _tp_.
+            the current value of _texpr_.
           schema:
             type: string
             example: epoch==1675276020
@@ -5908,7 +5908,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/bacnet:
     get:
       tags:
@@ -6003,7 +6003,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/bacnet/server:
     get:
       tags:
@@ -6098,7 +6098,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/bacnet/server/bip:
     get:
       tags:
@@ -6193,7 +6193,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/bacnet/server/bip/port:
     get:
       tags:
@@ -6770,7 +6770,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/bacnet/server/mstp/mac:
     get:
       tags:
@@ -7144,7 +7144,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/db/epoch:
     get:
       tags:
@@ -7350,7 +7350,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/display/backlight:
     get:
       tags:
@@ -7445,7 +7445,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/display/backlight/brightness:
     get:
       tags:
@@ -7913,7 +7913,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/display/screen/registers:
     get:
       tags:
@@ -9597,7 +9597,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/location/latitude:
     get:
       tags:
@@ -9878,7 +9878,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/log/system:
     get:
       tags:
@@ -9973,7 +9973,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/log/system/size:
     get:
       tags:
@@ -10161,7 +10161,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/lua/script:
     get:
       tags:
@@ -10256,7 +10256,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/lua/script/alertd:
     get:
       tags:
@@ -10828,7 +10828,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/modbus/client:
     get:
       tags:
@@ -10923,7 +10923,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/modbus/client/map:
     get:
       tags:
@@ -12530,7 +12530,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/modbus/server/enable:
     get:
       tags:
@@ -12917,7 +12917,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/modbus/server/rtu/port:
     get:
       tags:
@@ -13105,7 +13105,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/modbus/server/tcp/port:
     get:
       tags:
@@ -13294,7 +13294,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/net/ethernet:
     get:
       tags:
@@ -13389,7 +13389,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/net/ethernet/watchdog:
     get:
       tags:
@@ -13578,7 +13578,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/net/goproxy/enable:
     get:
       tags:
@@ -13859,7 +13859,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/net/homeplug/region:
     get:
       tags:
@@ -14141,7 +14141,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/net/http/client:
     get:
       tags:
@@ -14236,7 +14236,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/net/http/client/insecure:
     get:
       tags:
@@ -14611,7 +14611,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/net/ipv4/dhcp:
     get:
       tags:
@@ -15270,7 +15270,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/net/nameserver/server:
     get:
       tags:
@@ -15563,7 +15563,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/net/ntp/server:
     get:
       tags:
@@ -15856,7 +15856,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/net/proxy/enable:
     get:
       tags:
@@ -16137,7 +16137,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/net/ptp/client_only:
     get:
       tags:
@@ -16732,7 +16732,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/push/interval:
     get:
       tags:
@@ -17773,7 +17773,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/register/physical:
     get:
       tags:
@@ -17868,7 +17868,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/register/physical/{reg}:
     parameters:
       - name: reg
@@ -17971,7 +17971,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/register/physical/{reg}/dev:
     parameters:
       - name: reg
@@ -18471,7 +18471,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/register/virtual/{reg}:
     parameters:
       - name: reg
@@ -18801,7 +18801,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/register/virtual/{reg}/value/{idx}/op:
     parameters:
       - name: reg
@@ -19123,7 +19123,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/time/zone:
     get:
       tags:
@@ -19804,7 +19804,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/alert/custom:
     get:
       tags:
@@ -21016,7 +21016,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/alert/reporter/web/min-priority:
     get:
       tags:
@@ -22188,7 +22188,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /config/alert/reporter/mail/to/{idx}/format:
     parameters:
       - name: idx
@@ -23228,7 +23228,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /lua/var:
     get:
       tags:
@@ -23328,7 +23328,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /lua/var/{name}:
     parameters:
       - name: name
@@ -23428,7 +23428,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-      description: Reset to default.
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0 and booleans are cleared to `false`.  '
   /lua/var/{name}/value:
     parameters:
       - name: name
