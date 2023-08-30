@@ -166,7 +166,10 @@ def delete_desc(json_type: str) -> str:
 
     """
     if json_type == "object":
-        return "Reset to default."
+        return ("Reset to default. See the descriptions of the individual "
+                "endpoints for their default values.  Commonly, arrays "
+                "and strings are cleared to empty, numbers are cleared "
+                "to 0, and booleans are cleared to `false`.  ")
     if json_type == "array":
         return "Reset to empty array."
     if json_type == "string":
