@@ -4243,27 +4243,37 @@
     ## Time Ranges
 
     A time range is an ordered series of [Unix
-    timestamps](glossary:Unix-Timestamp) which are spaced out at
-    a fixed interval starting from an initial, older, point in time to
-    a final, younger point in time.  In this API, time ranges are
+    timestamps](glossary:Unix-Timestamp) which are spaced out at a
+    certain interval between two points in time.  Time ranges are
     written as three decimal numbers, separated by colons:
-    `start:step:stop`, where `start` is the initial timestamp, `step`
-    is the interval between timestamps (in seconds), and `stop` is the
-    final timestamp.  For example, `100:1:103` would correspond to the
+    `start:step:stop`, where `start` is the oldest timestamp, `step`
+    is the interval between timestamps, and `stop` is the youngest
+    timestamp.  For example, `100:1:103` would correspond to the
     timestamp series `[100, 101, 102, 103]`.  If `step` and the
-    following colon are left out, the interval defaults to one second.
-    If the timerange consists of only a single number `stop`, it is
-    interpreted as a singleton consisting of only the specified stop
-    time.
+    subsequent colon are left out, the interval defaults to one
+    second.  If the timerange consists of only a single number, it is
+    interpreted as a singleton consisting of only the specified time.
 
-    The timestamps are generated from youngest to oldest.  Thus, if
-    the oldest timestamp is not an integer-multiple of step apart from
-    youngest, then the oldest timestamp will not be in the series of
-    generated timestamp.
+    The timestamps are generated from `youngest` to `oldest`.  Thus, if
+    the oldest timestamp is not an integer-multiple of `step` apart
+    from `youngest`, then the oldest timestamp will not be in the
+    series of generated timestamps.
 
-    In general, the start and stop time of an interval can be not just
-    a Unix timestamp but an arbitrary [time
-    expression](glossary:Time-Expressions).
+    In general, `start` and `stop` can be not just Unix timestamps
+    but arbitrary [time expressions](glossary:Time-Expressions).
+
+    Similarly, the time step may also be expressed as an integer count
+    followed by a unit character.  The available units are the same as
+    for offsets in time expressions.  For example, `1d` would step
+    through the time range one day at a time, taking daylight savings
+    into account (assuming the correct
+    [timezone](path:/config/time/zone) is set on the meter).
+
+    As a complete example, the time range `som:1d:sod` would generate
+    the timestamps that correspond to midnight each day of the current
+    month to date. `sod` is the start (midnight) of today and from
+    there, the timestamps step back one day at a time until `som`, the
+    start of the month is reached.
 
     When a time range is used to select rows from the database, the
     resulting timestamps may not align with the timestamps of the rows
@@ -4283,8 +4293,8 @@
       > *STEP* = *OFFSET* . \
       > *TIME_WITH_ROUNDING* = ["+"]*TIME* .
 
-    See section [Time Expressions](glossary:Time-Expressions) for a
-    definition of *TIME*.
+    See section [Time Expressions](glossary:Time-Expressions) for
+    definitions of *OFFSET* and *TIME*.
 
     ## Type Codes
 
