@@ -991,19 +991,12 @@ RegisterResponseObject:
           rows:
             type: array
             items:
-              type: array
-              items:
-                $ref: "#/Int64"
+              $ref: "#/RegisterRow"
             description: |
                 An array of register rows ordered from youngest to
                 oldest.  The first row was measured at the timestamp
                 given by member `ts`.  Each subsequent row is `delta`
-                seconds older than its preceeding row.  A row consists
-                of an array of strings which list the register values
-                in order of increasing register index.  Only selected
-                registers are present in this array (see query option
-                `reg`).  The register values are signed 64-bit
-                integers, represented as decimal strings.
+                seconds older than its preceeding row.
     registers:
       type: array
       items:
@@ -1059,7 +1052,54 @@ RegisterResponseObject:
       $ref: "#/ForeverStamp"
   example: {"ts":"1678330813.000129799","registers":[{"name":"use","type":"P","idx":0,"formula":"+\"Grid\"+\"Solar\""},{"name":"Grid","type":"P","idx":17,"did":0,"rate":1798},{"name":"Solar","type":"P","idx":20,"did":1,"rate":-4}],"ranges":[{"ts":"1678298313.000129799","delta":1.000,"rows":[["117607805899","268487638108"],["-224","-480"],["-218","-481"]]},{"ts":"1678298040","delta":60.000,"rows":[["905","-3533"],["7663","-34573"],["12036","-35703"],["8418","-36612"],["6408","-37505"]]}]}
 
+RegisterRow:
+  type: array
+  description: |
+    An array of register values.  The values are listed in order of
+    increasing register index.  Only selected registers are present in
+    this array (see query option `reg`).
+  items:
+    oneOf:
+      - $ref: "#/RegisterValue"
+      - $ref: "#/RegisterDemandObject"
+
+RegisterDemandObject:
+  type: object
+  properties:
+    v:
+      $ref: "#/RegisterValue"
+    peak:
+      type: object
+      description: |
+        This member is present if the peak demand could by calculated
+        for this register.
+      properties:
+        rate:
+          type: number
+          description: |
+            The peak demand of the register for the time period that
+            ended with the row's timestamp.  The physical unit of the
+            demand is the rate unit of the register's [type
+            code](glossary:Type-Codes).  For example, for a register
+            with type code `P`, the unit would be W (watts).
+        dt:
+          type: string
+          description: |
+            The start time of the demand interval that yielded the
+            peak demand rate.  This is expressed as a decimal number
+            string.  The number must by subtracted from the row's
+            timestamp to yield the [Unix
+            timestamp](glossary:Unix-Timestamp) of when the demand
+            interval started.  For example, a value of `"420.0"` would
+            indicate that the peak demand interval started 420 seconds
+            before the timestamp of this row.
+          example: "420.0"
+
+      required: [rate, dt]
+  required: [v]
+
 RegisterConditionObject:
+  type: object
   properties:
     current:
       $ref: "#/ForeverStamp"
@@ -1076,6 +1116,7 @@ RegisterConditionObject:
         been returned.
 
 RightsObject:
+  type: object
   properties:
     usr:
       type: string
@@ -1101,6 +1142,20 @@ RightsObject:
         - save
         - ctrl
       example: ["save", "ctrl"]
+
+RegisterValue:
+  # $ref: "#/Int64"	 this isn't working...
+  type: string
+  description: |
+    The accumulated meter reading of the register as of the time given
+    by the row's timestamp.  This is a signed 64-bit integer number,
+    represented as a decimal string.  Multiplying this number by the
+    [register type's quantum](glossary:Type-Codes) yields the
+    register's physical value in the unit given by the register type's
+    rate unit, multiplied by seconds.  For example, for a register
+    with type code `P` (power), the number would be the number of
+    watt-seconds (W·s) of the register, since the quantum for type
+    code `P` is 1 and the rate unit is W (watts).
 
 ServiceProvidersObject:
   type: object

@@ -1662,38 +1662,68 @@
       description: |
         This parameter may only be specified when output format JSON
         (the default) or CSV is selected (`format=csv`).  If
-        specified, it requests that the result return the _demand_ of
-        the selected registers rather than their accumulated values.
-        _Demand_ is defined as the maximum average rate of change of
-        the register value over a period of time (e.g., 15 minutes).
+        specified, it requests that the result include the _peak
+        demand_ of the selected registers in addition to the normal
+        register values.  Demand is the average rate of change over a
+        period of time called the _demand interval_.  A typical demand
+        interval may be 15 minutes or 30 minutes long.  _Peak demand_
+        is the maximum demand across multiple demand intervals, such
+        as the demand intervals in a billing cycle.
 
-        The value of this parameter must be of the form
-        `type;interval` where `type` is one of:
+        There are two principal methods for subdividing a time period
+        into demand intervals.  With the _set_ demand interval method,
+        the longer time period is subdivided into contiguous,
+        non-overlapping demand intervals.  For example, with 15 minute
+        demand intervals, an hour would be subdivided into four demand
+        intervals: from minute 0 through 14, 15 through 29, 30 through
+        44, and, finally 45 through 59.  In contrast, with the
+        _rolling_ demand interval method, the larger time period is
+        subdivided into overlapping demand intervals.  After each
+        demand calculation, the demand interval is shifted to the
+        right by one minute.  With rolling demand, the first demand
+        interval would span minute 46 from the previous hour up to and
+        including minute 0 of the current hour.  The next interval
+        would span minute 47 from the previous hour up to minute 1 of
+        the current hour, and so on until the last interval would span
+        minute 45 up to and including minute 59 of the current hour.
+
+        The value of the `demand` query parameter specifies the
+        details of how the peak demand is to be calculated.
+        Specifically, the value of this parameter has the form `TPI`
+        where `T` is one of:
 
 
-          * `roll+`: Return the most positive demand.
+          * `roll`: Use the rolling demand method.
 
-          * `roll-`: Return the most negative demand.
+          * `set`: Use the set demand method.
 
-          * `roll|`: Return the absolute value of the most positive or
-          most negative demand, whichever is bigger.
+        `P` indicates what polarity of the demand should be returned:
 
-        `interval` is the number of seconds over which the demand
-        should be calculated.  For example, `demand=roll+;900` would
-        return the maximum positive rolling demand of each register
-        calculated over a 900 second (15 minute) sliding window.
+          * `+`: Return the peak positive demand.
 
-        With this parameter specified, the result returns only one row
-        per demand interval.  The timestamp of each row indicates when
-        the demand interval ended and the value is the maximum rolling
-        demand during that interval.  With `format=csv`, the values
-        are returned directly as the maximum demand rates.  With
-        `format=json`, the values are returned as the maximum demand
-        rates, multiplied by the demand interval (in seconds) and then
-        rounded to the nearest integer.
+          * `-`: Return the peak negative demand.
+
+          * `|`: Return the peak positive or negative demand,
+          whichever is bigger.  That is, the absolute value of the
+          demand is used when determining the peak demand.  For
+          example, if the peak positive demand is 5kW and the peak
+          negative demand is -6kW, this would return -6kW.
+
+        `I` is the length of the demand interval expressed as a number
+        of seconds.  The interval must be an integer multiple of 60
+        and cannot exceed 3600 (one hour).
+
+        For example, query option `demand=set+900` would return the
+        peak positive set demand of the selected registers when using
+        a 900 second (15 minute) demand interval.
+
+        When `format=csv` is in effect, the resulting CSV file
+        contains two additional column for each register which
+        indicate the peak demand value and the starting time of the
+        demand window when that peak was reached.
       schema:
         type: string
-        example: roll|;900
+        example: roll|900
     - name: filename
       in: query
       description: |
