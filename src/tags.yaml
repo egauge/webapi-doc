@@ -4251,8 +4251,11 @@
     timestamp.  For example, `100:1:103` would correspond to the
     timestamp series `[100, 101, 102, 103]`.  If `step` and the
     subsequent colon are left out, the interval defaults to one
-    second.  If the timerange consists of only a single number, it is
-    interpreted as a singleton consisting of only the specified time.
+    second.  If `step` is an empty string, the range consists of only
+    the start and end timestamps.  For example, `100::103` would
+    correspond to `[100, 103]`.  If the timerange consists of only a
+    single number, it is interpreted as a singleton consisting of only
+    the specified time.
 
     The timestamps are generated from `youngest` to `oldest`.  Thus, if
     the oldest timestamp is not an integer-multiple of `step` apart
@@ -4287,7 +4290,7 @@
 
     The full syntax for a time range is given in EBNF syntax below:
 
-      > *TIME_RANGE* = [*FROM* ":" [*STEP* ":"]]*TO* . \
+      > *TIME_RANGE* = [*FROM* ":" [[*STEP*] ":"]]*TO* . \
       > *FROM* = *TIME_WITH_ROUNDING* . \
       > *TO* = *TIME_WITH_ROUNDING* . \
       > *STEP* = *OFFSET* . \
