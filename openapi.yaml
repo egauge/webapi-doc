@@ -5233,13 +5233,13 @@ paths:
           description: |
             This parameter may only be specified when output format JSON
             (the default) or CSV is selected (`format=csv`).  If
-            specified, it requests that the result include the _peak
-            demand_ of the selected registers in addition to the normal
-            register values.  Demand is the average rate of change over a
-            period of time called the _demand interval_.  A typical demand
-            interval may be 15 minutes or 30 minutes long.  _Peak demand_
-            is the maximum demand across multiple demand intervals, such
-            as the demand intervals in a billing cycle.
+            specified, it requests that the result include the _demand_ of
+            the selected registers in addition to the normal register
+            values.  Demand is the average rate of change over a period of
+            time called the _demand interval_.  A typical demand interval
+            may be 15 minutes or 30 minutes long.  _Demand_ is either the
+            maximum or minimum demand across multiple demand intervals,
+            such as the demand intervals in a billing cycle.
 
             There are two principal methods for subdividing a time period
             into demand intervals.  With the _set_ demand interval method,
@@ -5259,39 +5259,38 @@ paths:
             minute 45 up to and including minute 59 of the current hour.
 
             The value of the `demand` query parameter specifies the
-            details of how the peak demand is to be calculated.
-            Specifically, the value of this parameter has the form `TPI`
-            where `T` is one of:
+            details of how the demand is to be calculated.  Specifically,
+            the value of this parameter has the form `TPI` where `T` is
+            one of:
 
 
               * `roll`: Use the rolling demand method.
 
               * `set`: Use the set demand method.
 
-            `P` indicates what polarity of the demand should be returned:
+            `P` indicates which demand should be returned:
 
-              * `+`: Return the peak positive demand.
+              * `+`: Return the maximum demand.
 
-              * `-`: Return the peak negative demand.
+              * `-`: Return the minimum demand.
 
-              * `|`: Return the peak positive or negative demand,
-              whichever is bigger.  That is, the absolute value of the
-              demand is used when determining the peak demand.  For
-              example, if the peak positive demand is 5kW and the peak
-              negative demand is -6kW, this would return -6kW.
+              * `|`: Return the demand with the largest magnitude, whether
+                negative or positive.  For example, if the maximum demand
+                is +5kW and the minimum demand is −6kW, this would return
+                −6kW.
 
             `I` is the length of the demand interval expressed as a number
             of seconds.  The interval must be an integer multiple of 60
             and cannot exceed 3600 (one hour).
 
             For example, query option `demand=set+900` would return the
-            peak positive set demand of the selected registers when using
-            a 900 second (15 minute) demand interval.
+            maximum set demand of the selected registers when using a 900
+            second (15 minute) demand interval.
 
             When `format=csv` is in effect, the resulting CSV file
             contains two additional column for each register which
-            indicate the peak demand value and the starting time of the
-            demand window when that peak was reached.
+            indicate the demand value and the starting time of that demand
+            interval.
           schema:
             type: string
             example: roll|900
@@ -28536,28 +28535,27 @@ components:
         peak:
           type: object
           description: |
-            This member is present if the peak demand could by calculated
-            for this register.
+            This member is present if the demand could by calculated for
+            this register.
           properties:
             rate:
               type: number
               description: |
-                The peak demand of the register for the time period that
-                ended with the row's timestamp.  The physical unit of the
-                demand is the rate unit of the register's [type
+                The demand of the register for the time period that ended
+                at the row's timestamp.  The physical unit of the demand
+                is the rate unit of the register's [type
                 code](/v4.6/tag/Glossary#section/Type-Codes).  For example, for a register
                 with type code `P`, the unit would be W (watts).
             dt:
               type: string
               description: |
-                The start time of the demand interval that yielded the
-                peak demand rate.  This is expressed as a decimal number
-                string.  The number must by subtracted from the row's
-                timestamp to yield the [Unix
-                timestamp](/v4.6/tag/Glossary#section/Unix-Timestamp) of when the demand
-                interval started.  For example, a value of `"420.0"` would
-                indicate that the peak demand interval started 420 seconds
-                before the timestamp of this row.
+                The start time of the interval that yielded the demand
+                rate.  This is expressed as a decimal number string.  The
+                number must by subtracted from the row's timestamp to
+                yield the [Unix timestamp](/v4.6/tag/Glossary#section/Unix-Timestamp) of
+                when the demand interval started.  For example, a value of
+                `"420.0"` would indicate that the demand interval started
+                420 seconds before the timestamp of this row.
               example: '420.0'
           required:
             - rate
