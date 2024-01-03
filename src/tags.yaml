@@ -835,7 +835,8 @@
 - name: /config/display/orientation
   x-schema:
     minimum: 0
-    exclusiveMaximum: 360
+    maximum: 360
+    exclusiveMaximum: true
     example: 90
   description: |
     The angle in degrees by which the orientation of the display
