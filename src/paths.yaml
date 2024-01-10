@@ -250,6 +250,58 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
 
+/cmd/activate:
+  post:
+    tags:
+    - /cmd
+    summary: Activate a service
+    operationId: cmdActivate
+    description: |
+        Activate a service with an external provider.
+
+        This request returns a token which can then be used to monitor
+        the status of the operation.  In particular, on a successful
+        activation,
+        [/sys/status/*token*/result](path:/sys/status/{token}/result)
+        will contain a JSON object whose `activated` member will by
+        `true`.  For services that require a signup procedure, this
+        object will also contain a `signup` member whose value is a
+        URL which needs to be opened to complete the sign up process.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              service:
+                type: string
+                enum:
+                  - alert
+                  - push
+                description: |
+                  The type of service to activate.  This can be `alert` for
+                  the alert reporting service or `push` for the data-sharing
+                  service.
+              provider:
+                type: string
+                description: |
+                  The name of the service provider with which to activate
+                  the service.
+            required: [service, provider]
+    responses:
+      "200":
+        description: Activation response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/TokenObject"
+      "401":
+        description: Unauthorized response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/UnauthorizedObject"
+
 /cmd/clear:
   post:
     tags:
@@ -542,6 +594,72 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
 
+/cmd/test-email:
+  post:
+    tags:
+    - /cmd
+    summary: Test sending email
+    operationId: cmdTestEmail
+    description: |
+        Test sending an email using the mail configuration specified
+        in the body of this request.
+
+        This request returns a token which can then be used to monitor
+        the status of the operation.  In particular,
+        [/sys/status/*token*/result](path:/sys/status/{token}/result)
+        will contain a JSON object whose `log` member is a multi-line
+        string that describes the progress of the test.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              address:
+                type: string
+                description: |
+                  The email address to send the test email to.
+              smarthost:
+                type: string
+                description: |
+                  The hostname of the smart host (mail relay) through
+                  which to send the email.  If this is left
+                  unspecified, the meter will attempt to send the
+                  email directly to the destination address.
+              mailuser:
+                type: string
+                description: |
+                  If a smarthost is defined, this specifies the user
+                  name which is used to log into the smart host.  If
+                  left unspecified, the meter will attempt to send the
+                  email without authentication.
+              mailpass:
+                type: string
+                description: |
+                  If a smarthost is defined, this specifies the password
+                  which is used to log into the smart host.  If
+                  left unspecified, the meter will attempt to send the
+                  email without authentication.
+              fromaddr:
+                type: string
+                description: |
+                  The email address to use as the sender of the email
+                  ("From:" address).
+            required: [address]
+    responses:
+      "200":
+        description: Test email response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/TokenObject"
+      "401":
+        description: Unauthorized response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/UnauthorizedObject"
+
 /cmd/update:
   post:
     tags:
@@ -564,9 +682,13 @@
                 description: |
                   The action to perform. The value `list` requests
                   that the latest available version should be returned
-                  as a version object response. The value `install`
-                  requests that the kernel or firmware should be
-                  updated and a token object response should be returned.
+                  as a version object response.
+
+                  The value `install` requests that the kernel or
+                  firmware should be updated.  In this case, a token
+                  is returned.  With that, the progress of the
+                  installation can be monitor at
+                  [/sys/status/*token*](path:/sys/status/{token}).
               target:
                 type: string
                 enum:
@@ -1522,29 +1644,6 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
 
-/providers/push:
-  get:
-    tags:
-    - /providers
-    summary: Get push service providers
-    operationId: providersPushGet
-    description: |
-      Get a list of available push service providers.
-    responses:
-      "200":
-        description: Push providers response.
-        content:
-          application/json:
-            schema:
-              $ref: "./schemas.yaml#/ServiceProvidersObject"
-            example: {"reply":{"providers": [{"name":"Backup Service","control":"http://backup.com/"},{"name": "Cloudly","control":"http://cloud.com/"}]}}
-      "401":
-        description: Unauthorized response.
-        content:
-          application/json:
-            schema:
-              $ref: "./schemas.yaml#/UnauthorizedObject"
-
 /providers/alert:
   get:
     tags:
@@ -1553,6 +1652,12 @@
     operationId: providersAlertGet
     description: |
       Get a list of available alert service providers.
+
+      Reporting alerts to a service provider requires executing the
+      [service activation command](op:/cmd:cmdActivate) on the meter.
+      That command then uses the [service activation
+      protocol](glossary:Service-Activation) to set up the provider to
+      ensure it is able and willing to accept the alerts.
     responses:
       "200":
         description: Alert providers response.
@@ -1561,6 +1666,35 @@
             schema:
               $ref: "./schemas.yaml#/ServiceProvidersObject"
             example: {"reply":{"providers": [{"name":"Alert Service","control":"http://alert.com/"}]}}
+      "401":
+        description: Unauthorized response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/UnauthorizedObject"
+
+/providers/push:
+  get:
+    tags:
+    - /providers
+    summary: Get push service providers
+    operationId: providersPushGet
+    description: |
+      Get a list of available push service providers.
+
+      Sharing data with a push service provider requires executing the
+      [service activation command](op:/cmd:cmdActivate) on the meter.
+      That command then uses the [service activation
+      protocol](glossary:Service-Activation) to set up the provider to
+      ensure it is able and willing to accept the data.
+    responses:
+      "200":
+        description: Push providers response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/ServiceProvidersObject"
+            example: {"reply":{"providers": [{"name":"Backup Service","control":"http://backup.com/"},{"name": "Cloudly","control":"http://cloud.com/"}]}}
       "401":
         description: Unauthorized response.
         content:

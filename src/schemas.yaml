@@ -1178,8 +1178,24 @@ ServiceProvidersObject:
               control:
                 type: string
                 description: |
-                  The control URL through which a customer can sign up
-                  for this service.
+                  The control URL through which a meter can sign up
+                  for this service.  See [service
+                  activation](glossary:Service-Activation) for
+                  details.
+              version:
+                type: integer
+                minimum: 0
+                description: |
+                  The version of the service activation protocol
+                  supported by this service provider.  For the `push`
+                  service, version 0 indicates that the provider uses
+                  the HTML-form+POST protocol described in Section 5
+                  of [the XML
+                  API](https://www.egauge.net/media/support/docs/egauge-xml-api.pdf).
+                  WebAPI only supports the [JSON activation
+                  protocol](glossary:Service-Activation).  For the
+                  `push` service, this is indicated by version 1.
+            required: [name, control]
 
 StatusObject:
   type: object
@@ -1370,6 +1386,7 @@ TokenObject:
   properties:
     token:
       type: string
+      minLength: 32
       description: |
           A status token.  This token is a hexadecimal string
           (typically 32 characters long) which can be used to check on

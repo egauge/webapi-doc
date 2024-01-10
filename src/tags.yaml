@@ -545,10 +545,14 @@
     example: ""
   description: |
     The name of the alert service provider to use for reporting
-    alerts.  After writing this resource with a non-empty string, the
-    service needs to be activated in a separate step.
+    alerts.
 
-    **TODO**: SHOW HOW TO DO THIS.
+    To set this to a non-empty value please use the [service
+    activation command](op:/cmd:cmdActivate) since that ensures the
+    service provider knows to expect alerts from this meter.  The body
+    of the activation request should contain member `service` set to
+    the string `alert` and `provider` set to name of the desired
+    service provider.
 
 - name: /config/alert/reporter/web/uri
   x-schema:
@@ -1837,11 +1841,14 @@
 
 - name: /config/push/service
   description: |
-    The name of a push service provider to shared data with.  After
-    writing this resource with a non-empty string, the service needs
-    to be activated in a separate step.
+    The name of a push service provider to shared data with.
 
-    **TODO**: SHOW HOW TO DO THIS.
+    To set this to a non-empty value please use the [service
+    activation command](op:/cmd:cmdActivate) since that ensures the
+    push provider knows to expect data from this meter.  The body of
+    the activation request should contain member `service` set to the
+    string `push` and `provider` set to name of the desired push
+    service provider.
 
 - name: /config/push/uri
   x-schema:
@@ -3599,6 +3606,16 @@
     from 0 to 1, where 0 means that the operation has just started and
     1 means the operation is 100% complete.
 
+- name: /sys/status/{token}/result
+  x-schema:
+    example: "{\"log\":\"test successful\"}"
+  description: |
+    A JSON-value encoded as a string. The JSON-value contains the
+    result of the operation.  If the operation is not done yet, this
+    reflects the result up to this point in time.  Once the operation
+    is done, the value of this member is stable and will not change
+    anymore.
+
 - name: /sys/status/{token}/ts
   x-schema:
     example: "1679103764.278772467"
@@ -4109,6 +4126,274 @@
     possible for the modification to take effect even though the
     overall request may end up failing with an error.
 
+    ## Password Hashes
+
+    Passwords are never written directly to this API.  Instead, only
+    hashes are written which are derived from the user name, realm,
+    and password.  Specifically, the hash is calculated as the
+    [MD5](https://en.wikipedia.org/wiki/MD5) sum over the string
+    obtained when concatenating the user name, the realm, and the
+    password while using colons as field-separators.  For example, the
+    hash of user name `jane`, realm `domain`, and password `secret`,
+    would be:
+
+      > MD5("jane:domain:secret") = 251910de04f5eab86859939167d4fded
+
+    ## Physical Register Names
+
+    Physical register names may not be empty, contain control
+    characters, dots (`.`), or commas (`,`).  They may also not
+    consist entirely of digits.
+
+    Register names of locally calculated registers (registers with
+    [`dev`](path:/config/register/physical/{reg}/dev) set to `local`)
+    attach special meaning to the last character (suffix):
+
+      * `+`: Allowed only for power-registers ([type
+        code](glossary:Type-Codes) `P`).  Only positive power will be
+        accumulated.
+
+      * `-`: Allowed only for power-registers ([type
+        code](glossary:Type-Codes) `P`).  Only negative measured
+        power will be accumulated.
+
+      * `|`: Allowed only for power-registers ([type
+        code](glossary:Type-Codes) `P`).  The absolute value of the
+        measured power will be accumulated.
+
+      * `*`: Allowed only and required for apparent-power registers
+        ([type code](glossary:Type-Codes) `S`).
+
+      These suffixes are not allowed for registers whose value is
+      calculated by an [eScript](glossary:eScript) expression.
+
+      If the name of a locally calculated power register does not end
+      with one of the above suffixes, the measured net real power is
+      accumulated.  Net real power may be positive or negative,
+      depending on the direction of the power flow.
+
+    ## Serial Ports
+
+    A serial port may be specified either as a device name or as a USB
+    path.  A device name must have the format `/dev/ttyUSBn`, where
+    `n` is a non-negative integer.  A USB path must have the format
+    `USBpath` where `path` is a sequence of one or more non-negative
+    integers, separated by dots (`.`). Resource
+    [/sys/dev/serial](path:/sys/dev/serial) returns a list of serial
+    ports detected by the meter.
+
+    A serial port string may optionally also specify serial
+    parameters.  The parameters must follow the device name and have
+    the format `:b/8ps` where `b` is the baud rate (positive integer),
+    `8` is the number of bits per character (must be 8), `p` is the
+    parity (`n` for none, `e` for even, `o` for odd), and `s` is the
+    number of stop bits (1 or 2).
+
+    ## Service Activation
+
+    WebAPI provides an automatic mechanism to setup communication
+    between a meter and a service provider (web server).  The
+    resulting communication path can be used, for example, to send
+    register data ("push data") or alerts to the service provider.
+
+    The setup mechanism is called *service activation* and is
+    initiated by posting a request to end-point
+    [/cmd/activate](op:/cmd:cmdActivate).  The command, in turn,
+    executes the follow steps:
+
+      1) Meter sends an activation request to a URL defined by the
+      service provider.  This URL is called the *control URL*.
+
+      1) The service provider may respond with an error, a
+      challenge, or a service URL.  If an error is returned, service
+      activation has failed and an error response is returned.  If a
+      challenge is returned, execution resumes with step 3 below.  If
+      a service URL is returned, execution resumes with step 4.
+
+      1) Given a challenge response, the meter decrypts the challenge
+      using a private key and sends the result to the service
+      provider.  The service provider checks if the result is valid
+      and, if so, responds with a service URL.  Otherwise, it responds
+      with an error and service activation has failed.
+
+      1) The meter extracts the service URL from the service
+      provider's response and starts sending data to that URL.  With
+      this, service activation has completed sucessfully.
+
+    Once activated, the meter will send data to the service URL as
+    needed (e.g., periodically for push data or when an alert occurs
+    for the alert service).  This stops if a post to the service URL
+    returns HTTP status code 418 (I'm a teapot) or if the meter gets
+    reconfigured to deactivate the service.
+
+    The details of the above steps are described below.
+
+    ### Activation Request to Control URL
+
+    The activation request the meter sends to the control URL is a
+    `POST` request with a JSON-body containing the following members:
+
+      * `name` (required): The [hostname](path:/config/net/hostname)
+      of the meter.
+
+      * `sn` (required): The [serial-number](path:/sys/sn) of the
+      meter.
+
+      * `opts`: If present, this is an array of strings specifying the
+      service options that are understood by the meter for the service
+      being activated.  If not present, the service provider must
+      assume that the meter does not understand any service options.
+
+    Additional members may be present in the posted object.  If so,
+    the service provider must ignore any members whose meaning it does
+    not understand.
+
+    #### Example Activation Request
+
+    A typical activation request body is shown below (formatted for
+    readability):
+
+      ```json
+      {
+        "name": "Test1234",
+        "sn": "G13456789",
+        "opts": ["gzip", "json", "secure"]
+      }
+      ```
+
+    ### Challenge Response
+
+    A service provider may choose to return a challenge response to
+    ascertain that the activation request was actually sent by the
+    meter identified in the request.  If the service provider does not
+    require authentication, it can skip to directly returning a
+    service URL response (see below).
+
+    A challenge response consists of a JSON-object with the following
+    members:
+
+      * `nnc` (required): The server nonce.  This must be a string
+      consisting entirely of lowercase hexadecimal digits (0-9, or
+      a-f).  The server creates this nonce by:
+
+        1) generating a sequence of cryptographically random bytes,
+
+        1) encrypting the sequence with the meter's public key, and, finally,
+
+        1) converting the encrypted sequence to a hexadecimal string.
+
+      * `rid` (required): A non-negative integer that uniquely identifies
+      this service activation request.
+
+    Additional members may be present in the returned object.  If so,
+    the meter will ignore any members whose meaning it does not
+    understand.
+
+    Once the meter receives a challenge response, it:
+
+      1) decrypts the server nonce using its private key and
+      converting the resulting byte sequence to a lowercase hex string
+      - we will call this `rnd`,
+
+      1) creates a cryptographically strong random hexadecimal string
+      which we'll call `cnnc` (client nonce),
+
+      1) calculates the MD5 hash of the string obtained by
+      concatenating `rnd`, a colon (`:`), and `cnnc`.
+
+      1) sends a post request to the control URL whose body is a
+      JSON object with the following members:
+
+      * `cnnc` (required): The client nonce.
+
+      * `hash` (required): The calculated MD5 hash as a hexadecimal
+        string.
+
+      * `rid` (required): A copy of the `rid` member as received in
+      the challenge response.
+
+    When the service provider receives the post request, it can check
+    whether the meter is authentic by calculating the MD5 sum of the
+    concatenation of the server's random hexadecimal string `rnd`, a
+    colon, and the client nonce and confirming that it matches the
+    value of `hash` in the posted JSON object.  If there is a
+    mismatch, service activation has failed and the provider returns
+    an error response.
+
+    #### Example of Challenge Response and Resulting Meter Request
+
+    A typical challenge response is shown below (formatted for
+    readability and `nnc` shortened with an ellipsis):
+
+      ```json
+      {
+        "nnc": "76e75...9fbc",
+        "rid": 4102166033
+      }
+      ```
+
+    In return to this challenge, the meter would then send a post
+    request to the control URL with a body that might look like this:
+
+      ```json
+      {
+        "cnnc": "565ce9541eddec103347b5174704e188",
+        "hash": "ce5e308c27da651964de14f65bd8b059",
+        "rid": 4102166033
+      }
+      ```
+
+    If the authentication is successful, the service provider responds
+    with a service URL response.
+
+    ### Service URL Response
+
+    Upon successful service activation, the provider returns a
+    response body containing a JSON object with the following
+    members:
+
+      1) `url` (required): The service URL to which the service's data
+      should be sent.
+
+      1) `options`: The service options to use.  This must be a string
+      containing a comma-separated list of option names.  Certain
+      options may require a value.  For those, the option name must be
+      followed immediately by an equal sign (`=`) and the option value
+      (no whitespace is allowed).
+
+      1) `pw`: If specified, the password to use when sending the post
+      request to the service URL.
+
+      1) `user`: If specified, the username to use when sending the
+      post request to the service URL.  The username and password are
+      sent using an [HTTP basic authentication
+      header](https://datatracker.ietf.org/doc/html/rfc7617).  For
+      security reasons, this should only be used over secure (`https`)
+      connections.
+
+    Additional members may be present in the returned object.  If so,
+    the meter will ignore any members whose meaning it does not
+    understand.
+
+    #### Example Service URL Response
+
+    ```json
+    {
+      "url": "https://provider.com/alert/post/a08b44098",
+      "options": "json,gzip,min_prio=7"
+    }
+    ```
+
+    ### Error Response
+
+    If service activation fails, HTTP status 200 must be returned with
+    a response body which contains member `error`.  The value of
+    `error` must be a string explaining why service activation failed.
+    The string is typically in the locale of the service provider.
+
+    The returned JSON object may contain additional members which the
+    meter must ignore.
+
     ## Time Expressions
 
     A time expression defines a single point in time.  An absolute
@@ -4386,69 +4671,6 @@
     value of [server-storage](path:/store) variable
     `global/default/currency_symbol` for this purpose or, if
     undefined, a dollar sign (`$`).
-
-    ## Password Hashes
-
-    Passwords are never written directly to this API.  Instead, only
-    hashes are written which are derived from the user name, realm,
-    and password.  Specifically, the hash is calculated as the
-    [MD5](https://en.wikipedia.org/wiki/MD5) sum over the string
-    obtained when concatenating the user name, the realm, and the
-    password while using colons as field-separators.  For example, the
-    hash of user name `jane`, realm `domain`, and password `secret`,
-    would be:
-
-      > MD5("jane:domain:secret") = 251910de04f5eab86859939167d4fded
-
-    ## Physical Register Names
-
-    Physical register names may not be empty, contain control
-    characters, dots (`.`), or commas (`,`).  They may also not
-    consist entirely of digits.
-
-    Register names of locally calculated registers (registers with
-    [`dev`](path:/config/register/physical/{reg}/dev) set to `local`)
-    attach special meaning to the last character (suffix):
-
-      * `+`: Allowed only for power-registers ([type
-        code](glossary:Type-Codes) `P`).  Only positive power will be
-        accumulated.
-
-      * `-`: Allowed only for power-registers ([type
-        code](glossary:Type-Codes) `P`).  Only negative measured
-        power will be accumulated.
-
-      * `|`: Allowed only for power-registers ([type
-        code](glossary:Type-Codes) `P`).  The absolute value of the
-        measured power will be accumulated.
-
-      * `*`: Allowed only and required for apparent-power registers
-        ([type code](glossary:Type-Codes) `S`).
-
-      These suffixes are not allowed for registers whose value is
-      calculated by an [eScript](glossary:eScript) expression.
-
-      If the name of a locally calculated power register does not end
-      with one of the above suffixes, the measured net real power is
-      accumulated.  Net real power may be positive or negative,
-      depending on the direction of the power flow.
-
-    ## Serial Ports
-
-    A serial port may be specified either as a device name or as a USB
-    path.  A device name must have the format `/dev/ttyUSBn`, where
-    `n` is a non-negative integer.  A USB path must have the format
-    `USBpath` where `path` is a sequence of one or more non-negative
-    integers, separated by dots (`.`). Resource
-    [/sys/dev/serial](path:/sys/dev/serial) returns a list of serial
-    ports detected by the meter.
-
-    A serial port string may optionally also specify serial
-    parameters.  The parameters must follow the device name and have
-    the format `:b/8ps` where `b` is the baud rate (positive integer),
-    `8` is the number of bits per character (must be 8), `p` is the
-    parity (`n` for none, `e` for even, `o` for odd), and `s` is the
-    number of stop bits (1 or 2).
 
     ## Unix Timestamp
 
