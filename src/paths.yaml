@@ -257,13 +257,13 @@
     summary: Activate a service
     operationId: cmdActivate
     description: |
-        Activate a service with an external provider.
+        Activate a service with an external provider (web server).
 
         This request returns a token which can then be used to monitor
-        the status of the operation.  In particular, on a successful
+        the status of the operation.  In particular, after a successful
         activation,
         [/sys/status/*token*/result](path:/sys/status/{token}/result)
-        will contain a JSON object whose `activated` member will by
+        will contain a JSON object whose `activated` member will be
         `true`.  For services that require a signup procedure, this
         object will also contain a `signup` member whose value is a
         URL which needs to be opened to complete the sign up process.
@@ -284,6 +284,7 @@
                   service.
               provider:
                 type: string
+                example: Cloudly's Alert Service
                 description: |
                   The name of the service provider with which to activate
                   the service.
@@ -617,10 +618,12 @@
             properties:
               address:
                 type: string
+                example: user@domain.com
                 description: |
                   The email address to send the test email to.
               smarthost:
                 type: string
+                example: smtp.domain.com
                 description: |
                   The hostname of the smart host (mail relay) through
                   which to send the email.  If this is left
@@ -628,6 +631,7 @@
                   email directly to the destination address.
               mailuser:
                 type: string
+                example: username
                 description: |
                   If a smarthost is defined, this specifies the user
                   name which is used to log into the smart host.  If
@@ -635,6 +639,7 @@
                   email without authentication.
               mailpass:
                 type: string
+                example: secret-pw
                 description: |
                   If a smarthost is defined, this specifies the password
                   which is used to log into the smart host.  If
@@ -642,6 +647,7 @@
                   email without authentication.
               fromaddr:
                 type: string
+                example: nobody@eGauge123456
                 description: |
                   The email address to use as the sender of the email
                   ("From:" address).
