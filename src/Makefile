@@ -1,5 +1,7 @@
 BUILD_OPENAPI = ../bin/build_openapi.py
 BUNDLE = redocly bundle
+FW_SRC = /home/davidm/egauge/dev/alpha
+PRINT_URL_DOMAINS = $(FW_SRC)/build/host/webapi --print-url-domains
 
 SRC_FILES = openapi.yaml params.yaml paths.yaml schemas.yaml tags.yaml \
 	url-domains.json
@@ -37,3 +39,11 @@ built/tags.yaml: $(SRC_FILES) ../bin/build_openapi.py
 
 $(TARGET): built $(BUILT_PATHS) $(SRC_FILES)
 	$(BUNDLE) > $(TARGET) && cp $(TARGET) ..
+
+url-domains.json: ALWAYS
+	-@tmp=$$(mktemp);			\
+	$(PRINT_URL_DOMAINS) | jq > $$tmp &&	\
+	( cmp -s $@ $$tmp || cp $$tmp $@ );	\
+	rm -f $$tmp
+
+.PHONY: ALWAYS
