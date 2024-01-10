@@ -29413,8 +29413,7 @@ components:
     configDisplayOrientation:
       type: integer
       minimum: 0
-      maximum: 360
-      exclusiveMaximum: true
+      maximum: 359
       example: 90
       description: |
         The angle in degrees by which the orientation of the display
