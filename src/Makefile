@@ -46,4 +46,7 @@ url-domains.json: ALWAYS
 	( cmp -s $@ $$tmp || cp $$tmp $@ );	\
 	rm -f $$tmp
 
+clean: ALWAYS
+	rm -f $(BUILT_PATHS)
+
 .PHONY: ALWAYS
