@@ -4360,6 +4360,74 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
+  /cmd/test-remote:
+    post:
+      tags:
+        - /cmd
+      summary: Test remote device
+      operationId: cmdTestRemote
+      description: |
+        Try connecting to a remote device and, if successful, return
+        the set of registers available on the device.
+
+        This request returns a token which can then be used to monitor
+        the status of the operation.  In particular,
+        [/sys/status/*token*/result](/v4.6/tag/sysstatustokenresult)
+        will contain a JSON-encoded object with the following members:
+
+          * `trace` (required): An array of trace records which track
+            the progress of the operation.  Each record contains the
+            following members:
+
+              * `dt` (required): A number indicating time this record
+                was created.  The number measures seconds since the
+                operation was started.
+
+              * `msg` (required): A localized human readable string
+                that describes what was happening at the time (e.g.,
+                "opening connection to remote device").
+
+          * `regs` (required): The array of registers discovered so
+            far.  Each register entry contains members:
+
+              * `name` (required): The name of the register.
+
+              * `type` (required): The [type
+                code](/v4.6/tag/Glossary#section/Type-Codes) of register.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  type: string
+                  example: modbus://sunspec.1@USB2
+                  description: |
+                    The address of the remote device.  The format of
+                    this string depends on the value of `linktype`.
+                linktype:
+                  type: string
+                  example: slowd
+                  description: |
+                    The [link type](/v4.6/tag/Glossary#section/Link-Types) to use to
+                    connect to the remote device.
+              required:
+                - address
+                - linktype
+      responses:
+        '200':
+          description: Test remote device response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
   /cmd/update:
     post:
       tags:
