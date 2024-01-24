@@ -303,6 +303,43 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
 
+/cmd/cancel:
+  post:
+    tags:
+    - /cmd
+    summary: Cancel pending operation
+    operationId: cmdCancelSLOP
+    description: |
+      Cancel the long-running operation identified by its token.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                minLength: 32
+                description: |
+                  The token of the operation to be cancelled.  This
+                  token is the hexadecimal string (typically 32
+                  characters long) that was returned when the
+                  operation was initiated.
+                example: 473c31462e62848b5352314dfc608669
+    responses:
+      "200":
+        description: Cancel response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/StatusObject"
+      "401":
+        description: Unauthorized response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/UnauthorizedObject"
+
 /cmd/clear:
   post:
     tags:
