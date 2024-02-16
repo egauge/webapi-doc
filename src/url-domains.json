@@ -423,6 +423,22 @@
         "ts": "string"
       }
     },
+    "team": {
+      "lag": "integer",
+      "fft": {
+        "last_update": "string"
+      },
+      "reg": {
+        "{}": {
+          "available": "boolean",
+          "last": {
+            "update": "string",
+            "val": "string"
+          },
+          "excess": "string"
+        }
+      }
+    },
     "time": "string",
     "uptime": "number",
     "version": {
