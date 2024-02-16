@@ -24138,6 +24138,339 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       parameters: []
+  /sys/team:
+    get:
+      tags:
+        - /sys/team
+      summary: Get /sys/team
+      operationId: sysTeamGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysTeam'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/team/lag:
+    get:
+      tags:
+        - /sys/team/lag
+      summary: Get /sys/team/lag
+      operationId: sysTeamLagGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysTeamLag'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/team/fft:
+    get:
+      tags:
+        - /sys/team/fft
+      summary: Get /sys/team/fft
+      operationId: sysTeamFftGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysTeamFft'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/team/fft/last_update:
+    get:
+      tags:
+        - /sys/team/fft/last_update
+      summary: Get /sys/team/fft/last_update
+      operationId: sysTeamFftLastUpdateGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysTeamFftLastUpdate'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/team/reg:
+    get:
+      tags:
+        - /sys/team/reg
+      summary: Get /sys/team/reg
+      operationId: sysTeamRegGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysTeamReg'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/team/reg/{name}:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The register name.
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - /sys/team/reg/{name}
+      summary: Get /sys/team/reg/{name}
+      operationId: sysTeamRegNameGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysTeamRegName'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/team/reg/{name}/available:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The register name.
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - /sys/team/reg/{name}/available
+      summary: Get /sys/team/reg/{name}/available
+      operationId: sysTeamRegNameAvailableGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysTeamRegNameAvailable'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/team/reg/{name}/last:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The register name.
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - /sys/team/reg/{name}/last
+      summary: Get /sys/team/reg/{name}/last
+      operationId: sysTeamRegNameLastGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysTeamRegNameLast'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/team/reg/{name}/last/update:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The register name.
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - /sys/team/reg/{name}/last/update
+      summary: Get /sys/team/reg/{name}/last/update
+      operationId: sysTeamRegNameLastUpdateGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysTeamRegNameLastUpdate'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/team/reg/{name}/last/val:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The register name.
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - /sys/team/reg/{name}/last/val
+      summary: Get /sys/team/reg/{name}/last/val
+      operationId: sysTeamRegNameLastValGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysTeamRegNameLastVal'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/team/reg/{name}/excess:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The register name.
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - /sys/team/reg/{name}/excess
+      summary: Get /sys/team/reg/{name}/excess
+      operationId: sysTeamRegNameExcessGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysTeamRegNameExcess'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
   /sys/time:
     get:
       tags:
@@ -29214,6 +29547,113 @@ components:
         resource always returns an empty object.  That is, only
         applications that know the token of a long-running operation can
         inquire on its status.
+    sysTeamLag:
+      type: integer
+      example: 0.195
+      description: |
+        The number of seconds the register values are lagging behind real
+        time.  If all remote devices are online and responsive, lag should
+        typically be less than 500 milliseconds.
+    sysTeamFftLastUpdate:
+      type: string
+      example: '1708030925.1'
+      description: |
+        The [Unix timestamp](/v4.6/tag/Glossary#section/Unix-Timestamp) of when the FFT
+        calculations were updated most recently.  If `null`, it indicates
+        that no FFT calculations are being performed.  If not `null`, the
+        timestamp typically lags behind the current time by a couple of
+        seconds because FFTs cannot be calculated in real time.
+    sysTeamFft:
+      type: object
+      properties:
+        last_update:
+          $ref: '#/components/schemas/sysTeamFftLastUpdate'
+      description: |
+        The status of the FFT calculations.
+    sysTeamRegNameAvailable:
+      type: boolean
+      description: |
+        True if the register has an up-to-date value.  If false, it typically
+        means that the (remote) device measuring its value is not
+        reachable at the moment.
+    sysTeamRegNameLastUpdate:
+      type: string
+      example: '1708042434'
+      description: |
+        The decimal [Unix timestamp](/v4.6/tag/Glossary#section/Unix-Timestamp) of when this
+        register was last updated.
+    sysTeamRegNameLastVal:
+      type: string
+      example: '-9767738213'
+      description: |
+        The current value of the register as signed 64-bit integer
+        converted to a decimal string.  Except for discrete registers,
+        this is an accumulated value (see Section [Type
+        Codes](/v4.6/tag/Glossary#section/Type-Codes) for details).
+    sysTeamRegNameLast:
+      type: object
+      properties:
+        update:
+          $ref: '#/components/schemas/sysTeamRegNameLastUpdate'
+        val:
+          $ref: '#/components/schemas/sysTeamRegNameLastVal'
+      description: |
+        The info for the most recent (last) update to the register.
+    sysTeamRegNameExcess:
+      type: string
+      example: '0'
+      description: |
+        The pending amount of excess for this register.  For locally
+        measured registers and discrete registers, this is always zero.
+        For remote registers, this becomes non-zero if the rate of change
+        to be recorded is outside of the actual rate plus/minus 10%.  This
+        is being done to prevent recording big spikes when a remote device
+        is offline for some time and then comes back online.  Instead of
+        recording a big jump, an excess is recorded which will then be
+        played back over time by inflating (or deflating) the recorded
+        rate by up to +/-10% of the actual rate until the excess has been
+        drained.  The excess of all registes can be reset to zero with the
+        [clear](/v4.6/tag/cmd/v4.6#operation/cmdClearPost) command.
+    sysTeamRegName:
+      type: object
+      properties:
+        available:
+          $ref: '#/components/schemas/sysTeamRegNameAvailable'
+        last:
+          $ref: '#/components/schemas/sysTeamRegNameLast'
+        excess:
+          $ref: '#/components/schemas/sysTeamRegNameExcess'
+      description: |
+        The current status of the register.
+    sysTeamReg:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/sysTeamRegName'
+      example:
+        Grid:
+          available: true
+          last:
+            update: '1708042434'
+            val: '1190154529'
+          excess: '0'
+        SolarSPR:
+          available: true
+          last:
+            update: '1708042434'
+            val: '12510606428'
+          excess: '0'
+    sysTeam:
+      type: object
+      properties:
+        lag:
+          $ref: '#/components/schemas/sysTeamLag'
+        fft:
+          $ref: '#/components/schemas/sysTeamFft'
+        reg:
+          $ref: '#/components/schemas/sysTeamReg'
+      description: |
+        The team status.  This describes the current status of all registers
+        whether locally measured or obtained from a remote device.
     sysTime:
       type: string
       example: '1679104389.095469'
@@ -29279,6 +29719,8 @@ components:
           $ref: '#/components/schemas/sysSn'
         status:
           $ref: '#/components/schemas/sysStatus'
+        team:
+          $ref: '#/components/schemas/sysTeam'
         time:
           $ref: '#/components/schemas/sysTime'
         uptime:
@@ -31849,6 +32291,60 @@ tags:
     description: |
       The time when this status was created.  It is a decimal [Unix
       timestamp](/v4.6/tag/Glossary#section/Unix-Timestamp) string.
+  - name: /sys/team
+    description: |
+      The team status.  This describes the current status of all registers
+      whether locally measured or obtained from a remote device.
+  - name: /sys/team/lag
+    description: |
+      The number of seconds the register values are lagging behind real
+      time.  If all remote devices are online and responsive, lag should
+      typically be less than 500 milliseconds.
+  - name: /sys/team/fft
+    description: |
+      The status of the FFT calculations.
+  - name: /sys/team/fft/last_update
+    description: |
+      The [Unix timestamp](/v4.6/tag/Glossary#section/Unix-Timestamp) of when the FFT
+      calculations were updated most recently.  If `null`, it indicates
+      that no FFT calculations are being performed.  If not `null`, the
+      timestamp typically lags behind the current time by a couple of
+      seconds because FFTs cannot be calculated in real time.
+  - name: /sys/team/reg
+  - name: /sys/team/reg/{name}
+    description: |
+      The current status of the register.
+  - name: /sys/team/reg/{name}/available
+    description: |
+      True if the register has an up-to-date value.  If false, it typically
+      means that the (remote) device measuring its value is not
+      reachable at the moment.
+  - name: /sys/team/reg/{name}/excess
+    description: |
+      The pending amount of excess for this register.  For locally
+      measured registers and discrete registers, this is always zero.
+      For remote registers, this becomes non-zero if the rate of change
+      to be recorded is outside of the actual rate plus/minus 10%.  This
+      is being done to prevent recording big spikes when a remote device
+      is offline for some time and then comes back online.  Instead of
+      recording a big jump, an excess is recorded which will then be
+      played back over time by inflating (or deflating) the recorded
+      rate by up to +/-10% of the actual rate until the excess has been
+      drained.  The excess of all registes can be reset to zero with the
+      [clear](/v4.6/tag/cmd/v4.6#operation/cmdClearPost) command.
+  - name: /sys/team/reg/{name}/last
+    description: |
+      The info for the most recent (last) update to the register.
+  - name: /sys/team/reg/{name}/last/update
+    description: |
+      The decimal [Unix timestamp](/v4.6/tag/Glossary#section/Unix-Timestamp) of when this
+      register was last updated.
+  - name: /sys/team/reg/{name}/last/val
+    description: |
+      The current value of the register as signed 64-bit integer
+      converted to a decimal string.  Except for discrete registers,
+      this is an accumulated value (see Section [Type
+      Codes](/v4.6/tag/Glossary#section/Type-Codes) for details).
   - name: /sys/time
     description: |
       The current meter time as a decimal [Unix
