@@ -777,16 +777,16 @@ ModbusClientMapObjectOption:
     options:
 
       * `default-modbus-addr`: The Modbus unit-number to use by
-      default.  This must be a decimal string.  For example: `"1"`.
+      default.  This must be a decimal string.  For example: `1`.
 
       * `default-serial-params`: The default serial parameters to use
       when the remote device is connected via a serial port
-      (Modbus/RTU).  This must be a string.  For example: `"9600/8n1"`
+      (Modbus/RTU).  This must be a string.  For example: `9600/8n1`
       for 9600 baud, 8 databits, no parity, 1 stop bit.
 
       * `default-tcp-port`: The default TCP port number to use when
       the remote device is connected via Modbus/TCP.  This must be a
-      decimal string.  For example: `"6001"`.
+      decimal string.  For example: `6001`.
 
 ModbusClientMapObjectOptionObject:
   example: 9600/8n1
@@ -1090,7 +1090,7 @@ RegisterDemandObject:
             number must by subtracted from the row's timestamp to
             yield the [Unix timestamp](glossary:Unix-Timestamp) of
             when the demand interval started.  For example, a value of
-            `"420.0"` would indicate that the demand interval started
+            `420.0` would indicate that the demand interval started
             420 seconds before the timestamp of this row.
           example: "420.0"
 
@@ -1978,7 +1978,7 @@ TariffProvidersObject:
                     be set up to indicated whether or not the contract
                     demand should be billed, regardless of the actual
                     demand.  If the value of this variable is the
-                    string `"true"`, the contract demand needs to be
+                    string `true`, the contract demand needs to be
                     billed.
 
                     * `contract_demand`: If present,
