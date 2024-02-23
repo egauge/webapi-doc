@@ -46,6 +46,9 @@ url-domains.json: ALWAYS
 	( cmp -s $@ $$tmp || cp $$tmp $@ );	\
 	rm -f $$tmp
 
+preview: ALWAYS
+	redocly preview-docs
+
 clean: ALWAYS
 	rm -f $(BUILT_PATHS)
 
