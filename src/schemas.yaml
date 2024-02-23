@@ -443,7 +443,7 @@ ErrorObject:
   type: object
   properties:
     error:
-      $ref: "./schemas.yaml#/ErrorString"
+      $ref: "#/ErrorString"
 
 ErrorString:
   type: string
@@ -591,8 +591,8 @@ KernelLogObject:
             type: number
             description: |
               The timestamp of when the entry was added to
-              the log.  It is measured as seconds since the meter was
-              booted (powered up).
+              the log.  It is measured as [seconds since the meter was
+              booted](path:/sys/uptime) (powered up).
           msg:
             type: string
             description: "The log message."
@@ -1060,8 +1060,8 @@ RegisterRow:
     this array (see query option `reg`).
   items:
     oneOf:
-      - $ref: "#/RegisterValue"
-      - $ref: "#/RegisterDemandObject"
+    - $ref: "#/RegisterValue"
+    - $ref: "#/RegisterDemandObject"
 
 RegisterDemandObject:
   type: object
