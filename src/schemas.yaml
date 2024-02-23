@@ -1197,6 +1197,640 @@ ServiceProvidersObject:
                   `push` service, this is indicated by version 1.
             required: [name, control]
 
+SlowdStatusObject:
+  type: object
+  properties:
+    conns:
+      type: array
+      description: |
+        The list of active connections slowd currently has open.
+      items:
+        type: object
+        properties:
+          addr:
+            type: string
+            description: |
+              The address of the remote device.  If this is
+              `cli-conn`, the connection is to the command-line
+              interface of slowd and not to an actual remote device.
+              Similarly, if the value is `resolver`, it indicates that
+              the connection is used for resolving host names.
+            example: USB1
+          fd:
+            type: integer
+            minimum: -1
+            description: |
+              The file-descriptor slowd is using to communicate with
+              the remote device.  If -1, the connection is closed.
+            example: 9
+          next_tick:
+            type: integer
+            description: |
+              The number of milliseconds that have to elapse before
+              this connection is checked again.
+            example: 619
+          readable:
+            type: boolean
+            description: |
+              Indicates whether the connection to the remote
+              device has pending data that needs to be read by slowd.
+            example: false
+          refcnt:
+            type: integer
+            minimum: 0
+            example: 2
+            description: |
+              The number of references that exist to this connection.
+              The connection is closed when this number reaches zero.
+          writable:
+            type: boolean
+            description: |
+              Indicates whether the connection to the remote
+              device can accept data from slowd.
+          event_mask:
+            type: integer
+            description: |
+              A bit-mask indicating the connection events that slowd is
+              watching for.  The bits have the following meaning:
+
+                * Bit 0: Watching for the connection to become readable.
+                * Bit 1: Watching for the connection to become writable.
+                * Bit 3: Watching for the connection to have errors.
+                * Bit 4: Watching for the connection to close.
+                * Bit 13: Watching for the connection to close for reading.
+            example: 8193
+          serial:
+            type: object
+            description: |
+              The serial port communication parameters used on the
+              connection.
+            properties:
+              baud:
+                type: integer
+                minimum: 50
+                maximum: 230400
+                description: |
+                  The baud-rate used by the serial port.
+                example: 19200
+              parity:
+                description: |
+                  The parity scheme used by the serial port.  `n` for
+                  no parity, `e` for even parity, and `o` for odd
+                  parity.
+                enum:
+                - n
+                - o
+                - e
+                example: n
+              size:
+                type: integer
+                minimum: 5
+                maximum: 8
+                description: |
+                  The number of data bits per serial port character.
+              stop:
+                type: integer
+                minimum: 1
+                maximum: 2
+                description: |
+                  The number of stop bits used by the serial port.
+          stats:
+            type: object
+            description: |
+              This object provides some basic statistics on the
+              communication behavior of the connection.
+            properties:
+              bad:
+                type: integer
+                minimum: 0
+                description: |
+                  The number of bad packets received on this
+                  connection.  "Bad" packets are malformed in some
+                  way, e.g., they may be incomplete or have an
+                  incorrect checksum.
+                example: 13
+              good:
+                type: integer
+                minimum: 0
+                description: |
+                  The number of good packets received on this
+                  connection.
+                example: 3245
+              timedout:
+                type: integer
+                minimum: 0
+                description: |
+                  The number of packets sent that timed out, i.e.,
+                  that have not been acknowledged by the remote device
+                  within a connection-specific period of time.
+                example: 1
+              rx:
+                type: integer
+                minimum: 0
+                description: |
+                  The number of bytes that have been received from the
+                  remote device.
+                example: 34598
+              tx:
+                type: integer
+                minimum: 0
+                description: |
+                  The number of bytes that have been sent to the
+                  remote device.
+                example: 23498
+          ifaces:
+            type: array
+            description: |
+              The list of interfaces which use this connection.
+            items:
+              type: object
+              description: |
+                The parameters and status of an interface.  Depending
+                on the scheme being used, the interface may represent
+                a single remote device or several remote devices.
+              properties:
+                auto_attached:
+                  type: boolean
+                  description: |
+                    Indicates whether the interface was automatically
+                    attached to slowd when a device was discovered.
+                    This can happen for USB devices, e.g., to make
+                    their functionality available to the [control
+                    service](path:/ctrl).
+                name:
+                  type: string
+                  description: |
+                    The name of this interface as assigned by the
+                    user.
+                next_tick:
+                  type: integer
+                  description: |
+                    The number of milliseconds that have to elapse before
+                    this interface is checked again.
+                  example: 145
+                refcnt:
+                  type: integer
+                  minimum: 0
+                  example: 2
+                  description: |
+                    The number of references that exist to this interface.
+                    The interface is closed when this number reaches zero.
+                scheme:
+                  type: string
+                  enum:
+                  - alphatechnics
+                  - modbus
+                  - po
+                  - scpi
+                  - sma
+                  - sony
+                  description: |
+                    The scheme (protocol) that it being used by this
+                    interface.  See [Link Types, item
+                    `slowd`](glossary:Link-Types) for additional
+                    information.
+                details:
+                  description: |
+                    The contents of this object is specific to the
+                    scheme (protocol) in use.  It provides additional
+                    information about the state of the remote
+                    device(s) managed by this interface.
+                  oneOf:
+                  - $ref: "#/SlowdIfaceDetailsAlphaTechnics"
+                  - $ref: "#/SlowdIfaceDetailsModbus"
+                  - $ref: "#/SlowdIfaceDetailsPowerOne"
+                  - $ref: "#/SlowdIfaceDetailsSCPI"
+                  - $ref: "#/SlowdIfaceDetailsSMA"
+                  - $ref: "#/SlowdIfaceDetailsSony"
+
+SlowdIfaceDetailsAlphaTechnics:
+  type: object
+  description: |
+    Details for devices that use the AlphaTechnics-proprietary protocol
+    as implemented by the 5000 Series Precision Thermometers.
+  properties:
+    age:
+      type: number
+      description: |
+        The number of seconds that have elapsed since the remote
+        device readings were last updated.
+      example: 2
+    state:
+      type: integer
+      minimum: 0
+      maximum: 5
+      example: 5
+      description: |
+        The state of the remote device.  The values have the following
+        meaning:
+
+          * 0: The remote device is in an unknown state.  The meter
+            will send a RESET command to put the remote device in a
+            known state.
+
+          * 1: The RESET command has been sent.  The meter will send a
+            BEACON_OFF command next.
+
+          * 2: The BEACON_OFF command has been sent.  The meter will
+            send a BURST_MODE_OFF command next.
+
+          * 3: The BURST_MODE_OFF command has been sent.  The meter
+            will send a DETECT_PROBE command next.
+
+          * 4: The DETECT_PROBE command has been sent.  The meter will
+            send a LOAD_PROBE_CAL command next.
+
+          * 5: The LOAD_PROBE_CAL command has been sent.  The remote
+            device is in the final, operational state.
+    channels:
+      type: array
+      description: |
+        The list of temperature channels supported by the remote
+        device.
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            example: temp0
+            description: |
+              The name of this temperature sensor.  This is always of
+              the form "temp*N*", where *N* is an integer starting
+              at 0.
+          unit:
+            type: string
+            enum:
+              - °C
+            description: |
+              The physical unit of the temperature sensor.  This is
+              always degree Celsius.
+            example: °C
+          $ref: "#/SlowdSubIdTsAndVal"
+
+SlowdIfaceDetailsModbus:
+  type: object
+  description: |
+    Details for devices that use the Modbus protocol.
+  properties:
+    dev_addr:
+      type: integer
+      minimum: 1
+      maximum: 247
+      description: |
+        The Modbus unit number of the remote device.
+      example: 1
+    dev_type:
+      type: string
+      description: |
+        The name of the Modbus address map being used for the remote
+        device.  If this has the special value `sunspec`, the
+        address map is detected automatically using the SunSpec
+        protocol.
+    online:
+      type: boolean
+      description: |
+        Indicates whether communication with the remote device appears
+        to be working correctly.
+    elements:
+      type: array
+      description: |
+        The list of Modbus elements available on the remote device.
+      items:
+        type: object
+        description: |
+            The description and status of a Modbus element (a.k.a,
+            "register").
+        properties:
+          name:
+            type: string
+            description: |
+              The symbolic name of the element.
+            example: voltage
+          unit:
+            type: string
+            description: |
+              The physical unit of the value measured by the element.
+            example: "V"
+          $ref: "#/SlowdSubIdTsAndVal"
+
+SlowdIfaceDetailsPowerOne:
+  type: object
+  description: |
+    Details for remote devices which use the PowerOne proprietary
+    protocol defined by Magnetek document "Aurora RS485 Communication
+    Protocol v 5.0.7" and "Aurora Inverter Series Communication
+    Protocol - rel4.3".
+  properties:
+    target_addr:
+      type: integer
+      minimum: -1
+      maximum: 249
+      description: |
+        The serial (RS485) address of the remote device to connect to
+        or -1 if a scan should be performed to automatically detect
+        all compatible devices.
+    check_addr:
+      minimum: 0
+      maximum: 250
+      description: |
+        If `target_addr` is -1, this specifies the serial (RS485)
+        address that is to be checked next.  If 250, then scan for
+        compatible devices is complete.
+    devs:
+      type: array
+      description: |
+        The list of remote devices connected through this interface.
+      items:
+        type: object
+        description:
+          The description and status of a remote device.
+        properties:
+          age:
+            type: number
+            description: |
+              The number of seconds that have elapsed since a channel
+              value was last updated for this device.
+            example: 3
+          ser_addr:
+            type: integer
+            minimum: -2
+            maximum: 249
+            description: |
+              The serial (RS485) address of this remote device.  A value
+              of -1 indicates that the address is not known yet.  A
+              value of -2 indicates that the meter should assign a new,
+              unique, address to this device.
+          sn:
+            type: integer
+            description: |
+              The serial number of the remote device.
+          offline:
+            $ref: "#/SlowdOfflineStatus"
+          channels:
+            type: array
+            description: |
+              The channels (a.k.a., "registers") supported by this
+              remote device.
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: |
+                    The symbolic name of the channel.
+                  example: Grid_Voltage
+                unit:
+                  type: string
+                  description: |
+                    The physical unit of the value measured by the channel.
+                  example: V
+                $ref: "#/SlowdSubIdTsAndVal"
+
+SlowdIfaceDetailsSCPI:
+  type: object
+  description: |
+    Details for remote devices which use the Standard Commands for
+    Programmable Instruments (SCPI) protocol.
+  properties:
+    mfg:
+      type: string
+      example: eGauge
+      description: |
+        The name of the manufacturer of the remote device.
+    model:
+      type: string
+      example: PRM3
+      description: |
+        The model name of the remote device.
+    channels:
+      type: array
+      description: |
+        The channels (a.k.a., "registers") supported by this remote
+        device.
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            description: |
+              The symbolic name of the channel.
+            example: relay
+          unit:
+            type: string
+            description: |
+              The physical unit of the value measured by the channel.
+              This member is present only for channels that measure
+              a physical quantity.
+          $ref: "#/SlowdSubIdTsAndVal"
+
+SlowdIfaceDetailsSMA:
+  type: object
+  description: |
+    Details for remote devices which use the proprietary SMANet
+    protocol as described by "SMA Data Specification Version 1.25
+    Definition and Description of the Data Telegram Format and
+    Communication Protocol".
+  properties:
+    my_addr:
+      type: integer
+      description: |
+        The address of the meter on the SMANet bus.  Since the meter is
+        always the controller, this is always 1.
+      example: 1
+    iface_state:
+      type: integer
+      minimum: 0
+      maximum: 3
+      description: |
+        The current state of the SMANet bus.  The values have the
+        following meaning:
+
+          * 0: SMANet is being started.  This involves detecting all
+            compatible devices that are connected to the same RS485
+            bus.
+
+          * 1: SMANet has completed auto discovery of compatible
+            devices and is in an operational state.
+
+          * 2: The values of a remote device are being read.
+
+          * 3: The capabilities of a remote device are being queried.
+    read_state:
+      type: integer
+      minimum: 0
+      maximum: 2
+      description: |
+        The current state of the telegram reader.  The values have the
+        following meaning:
+
+          * 0: The reader is scanning for a start-of-frame byte (hex
+            code 7E).
+
+          * 1: The body of a telegram is being read.
+
+          * 2: An escaped character is being read.
+    devs:
+      type: array
+      description: |
+        The list of discovered SMANet devices.
+      items:
+        type: object
+        description: |
+          The description and state of an SMANet device.
+        properties:
+          ser_addr:
+            type: integer
+            minimum: 2
+            maximum: 255
+            description: |
+              The SMANet (RS485) address of the remote device.
+          sn:
+            type: integer
+            minimum: 0
+            description: |
+              The serial number of the remote device.
+            example: 13590
+          channels:
+            type: array
+            description: |
+              The channels (a.k.a., "registers") supported by this
+              remote device.
+            items:
+              type: object
+              description: |
+                The description and state of a channel.
+              properties:
+                name:
+                  type: string
+                  description: |
+                    The symbolic name of the channel.
+                  example: relay
+                unit:
+                  type: string
+                  description: |
+                    The physical unit of the value measured by the channel.
+                    This member is present only for channels that measure
+                    a physical quantity.
+                sub_id:
+                  type: integer
+                  minimum: -1
+                  example: 7
+                  description: |
+                    The subscription index of this channel.  If -1,
+                    the channel is not being recorded by the meter.
+                ts:
+                  type: string
+                  example: 1708626111.0
+                  description: |
+                    The timestamp of when the value of this channel was last
+                    updated.
+                  $ref: "#/ForeverStamp"
+                val:
+                  description: |
+                    The current value of this channel.
+                  oneOf:
+                  - type: number
+                    example: 120.356
+                  - type: string
+          offline:
+            $ref: "#/SlowdOfflineStatus"
+
+SlowdIfaceDetailsSony:
+  type: object
+  description: |
+    Details for remote devices which are compatible with Sony Energy
+    Devices Corp "IJ1004C / IJ5001C Communications Specifications",
+    Spec. No. P5-9 027 Ver. 2.
+  properties:
+    age:
+      type: number
+      description: |
+        The number of seconds that have elapsed since a channel
+        value was last updated for this device.
+      example: 1
+    ctrl_addr:
+      type: integer
+      minimum: 0
+      maximum: 15
+      example: 7
+      description: |
+        The serial bus address of the remote device.
+    sn:
+      type: integer
+      minimum: 0
+      example: 13095
+      description: |
+        The serial number of this remote device.
+    channels:
+      type: array
+      description: |
+        The channels (a.k.a., "registers") supported by this remote
+        device.
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            description: |
+              The symbolic name of the channel.
+            example: Capacity_Remaining
+          unit:
+            type: string
+            description: |
+              The physical unit of the value measured by the channel.
+              This member is present only for channels that measure
+              a physical quantity.
+            example: Ah
+          $ref: "#/SlowdSubIdTsAndVal"
+    offline:
+      $ref: "#/SlowdOfflineStatus"
+
+SlowdOfflineStatus:
+  type: object
+  description: |
+    If the remote device is inaccessible (offline), this object
+    provides some detail about how long the device has been and will
+    remain in that state.
+  properties:
+    since:
+      type: integer
+      minimum: 0
+      example: 3105810
+      description: |
+        The time at which the remote device was detected to be
+        offline.  This time is reported as [number of seconds since the
+        meter was booted last](path:/sys/uptime).
+    timeout:
+      type: integer
+      minimum: 0
+      example: 5
+      description: |
+        The number of seconds for which the device will be considered
+        offline without further checking.  That is, at time `since` +
+        `timeout` (or as soon as possible afterwards), the meter will
+        check on the device again and hopefully bring it back online.
+
+SlowdSubIdTsAndVal:
+  sub_id:
+    type: integer
+    minimum: -1
+    example: 7
+    description: |
+      The subscription index of this channel.  If -1, the channel is
+      not being recorded by the meter.
+  ts:
+    type: string
+    example: 1708626111.0
+    description: |
+      The timestamp of when the value of this channel was last
+      updated.
+    $ref: "#/ForeverStamp"
+  val:
+    type: number
+    example: 120.356
+    description: |
+      The current value of this channel.
+
 StatusObject:
   type: object
   properties:
