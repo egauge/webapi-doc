@@ -1156,6 +1156,28 @@ RegisterValue:
     watt-seconds (W·s) of the register, since the quantum for type
     code `P` is 1 and the rate unit is W (watts).
 
+ServiceActivationResult:
+  type: object
+  description: |
+    The result returned in response to a [service activation
+    command](op:/cmd:cmdActivate).
+  properties:
+    activated:
+      type: boolean
+      description: |
+        Indicates that the service activation was successful.
+        Generally, this member only ever has the value `true` since,
+        if activation fails, an error is indicated instead.
+    signup:
+      type: string
+      description: |
+        If returned by the service provider, the specified URL needs
+        to be opened in order to complete service activation.  For
+        example, the service provider can use this to prompt the user
+        to log into or create a service provider account.
+      example: http://www.example-service.com/activate/3098abf98feedc0de
+  required: [activated]
+
 ServiceProvidersObject:
   type: object
   properties:
@@ -2016,6 +2038,73 @@ TariffProvidersObject:
                     - start_day
                     - surcharges
                     - taxes
+
+TestEmailResult:
+  type: object
+  description: |
+    The result returned in response to a ([send test
+    email command](op:/cmd:cmdTestEmail)).
+  properties:
+    log:
+      type: string
+      example: attempting to send mail through domain smtp.mail.com\nlooking up smtp.mail.com/submission\n
+      description: |
+        A log of informational messages that describe the progress of
+        the command.  This message may consist of multiple lines of
+        text, separated by newline (ASCII linefeed) characters.
+
+TestRemoteResult:
+  type: object
+  description: |
+    The result returned in response to a ([test remote device
+    command](op:/cmd:cmdTestRemote)).
+  properties:
+    trace:
+      type: array
+      description: |
+        A list of trace record describing the progress of the
+        operation.
+      items:
+        type: object
+        properties:
+          dt:
+            type: number
+            description: |
+              A relative timestamp indicating when this trace entry
+              was created.  It measures seconds since the command was
+              initiated.
+            example: 3.607
+          msg:
+            type: string
+            description: |
+              A localized message explaining what happened at the time
+              this trace record was created (e.g., "opening connection
+              to remote device").
+            example: Detected register `Grid`.
+        required: [dt, msg]
+    regs:
+      type: array
+      description: |
+        A list of the registers available on the remote device.  This
+        list is updated as they are being detected.  Once all
+        registers have been detected, the operation is complete.
+      items:
+        type: object
+        description: |
+          A description of the register detected.
+        properties:
+          name:
+            type: string
+            description: |
+              The name of the detected register.
+            example: Grid
+          type:
+            type: string
+            description: |
+              The [type code](glossary:Type-Code) of the detected register.
+            example: P
+        required: [name, type]
+
 TokenObject:
   properties:
     token:

@@ -3616,14 +3616,19 @@
     1 means the operation is 100% complete.
 
 - name: /sys/status/{token}/result
-  x-schema:
-    example: "{\"log\":\"test successful\"}"
   description: |
-    A JSON-value encoded as a string. The JSON-value contains the
-    result of the operation.  If the operation is not done yet, this
-    reflects the result up to this point in time.  Once the operation
-    is done, the value of this member is stable and will not change
-    anymore.
+    The result of the slow operation.  Not all operations provide a
+    result and while the operation is ongoing, the result may be
+    changing over time.  Once the operation is done, the result is
+    stable and won't change anymore.
+  x-schema:
+    oneOf:
+    - $ref: "#/ServiceActivationResult"
+      example: "{\"log\":\"test successful\"}"
+    - $ref: "#/TestEmailResult"
+      example: "wooofi"
+    - $ref: "#/TestRemoteResult"
+      example: "wooofi"
 
 - name: /sys/status/{token}/ts
   x-schema:

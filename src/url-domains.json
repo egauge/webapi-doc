@@ -410,7 +410,7 @@
     },
     "reboot": "boolean",
     "remote": {
-      "slowd": "string"
+      "slowd": "unknown"
     },
     "sn": "string",
     "status": {
@@ -422,7 +422,7 @@
         "error": "string",
         "info": "string",
         "progress": "number",
-        "result": "string",
+        "result": "unknown",
         "ts": "string"
       }
     },

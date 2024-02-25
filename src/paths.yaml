@@ -260,13 +260,9 @@
         Activate a service with an external provider (web server).
 
         This request returns a token which can then be used to monitor
-        the status of the operation.  In particular, after a successful
-        activation,
+        the status of the operation.  See
         [/sys/status/*token*/result](path:/sys/status/{token}/result)
-        will contain a JSON object whose `activated` member will be
-        `true`.  For services that require a signup procedure, this
-        object will also contain a `signup` member whose value is a
-        URL which needs to be opened to complete the sign up process.
+        for details.
     requestBody:
       content:
         application/json:
@@ -643,10 +639,9 @@
         in the body of this request.
 
         This request returns a token which can then be used to monitor
-        the status of the operation.  In particular,
+        the status of the operation.  See
         [/sys/status/*token*/result](path:/sys/status/{token}/result)
-        will contain a JSON object whose `log` member is a multi-line
-        string that describes the progress of the test.
+        for details.
     requestBody:
       content:
         application/json:
@@ -714,30 +709,9 @@
         the set of registers available on the device.
 
         This request returns a token which can then be used to monitor
-        the status of the operation.  In particular,
+        the status of the operation.  See
         [/sys/status/*token*/result](path:/sys/status/{token}/result)
-        will contain a JSON-encoded object with the following members:
-
-          * `trace` (required): An array of trace records which track
-            the progress of the operation.  Each record contains the
-            following members:
-
-              * `dt` (required): A number indicating time this record
-                was created.  The number measures seconds since the
-                operation was started.
-
-              * `msg` (required): A localized human readable string
-                that describes what was happening at the time (e.g.,
-                "opening connection to remote device").
-
-          * `regs` (required): The array of registers discovered so
-            far.  Each register entry contains members:
-
-              * `name` (required): The name of the register.
-
-              * `type` (required): The [type
-                code](glossary:Type-Codes) of register.
-
+        for details.
     requestBody:
       content:
         application/json:
