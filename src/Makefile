@@ -43,6 +43,7 @@ $(TARGET): built $(BUILT_PATHS) $(SRC_FILES)
 url-domains.json: ALWAYS
 	-@tmp=$$(mktemp);			\
 	$(PRINT_URL_DOMAINS) | jq > $$tmp &&	\
+	[ -s $$tmp ] &&				\
 	( cmp -s $@ $$tmp || cp $$tmp $@ );	\
 	rm -f $$tmp
 
