@@ -277,13 +277,9 @@ paths:
         Activate a service with an external provider (web server).
 
         This request returns a token which can then be used to monitor
-        the status of the operation.  In particular, after a successful
-        activation,
+        the status of the operation.  See
         [/sys/status/*token*/result](/v4.6/tag/sysstatustokenresult)
-        will contain a JSON object whose `activated` member will be
-        `true`.  For services that require a signup procedure, this
-        object will also contain a `signup` member whose value is a
-        URL which needs to be opened to complete the sign up process.
+        for details.
       requestBody:
         content:
           application/json:
@@ -658,10 +654,9 @@ paths:
         in the body of this request.
 
         This request returns a token which can then be used to monitor
-        the status of the operation.  In particular,
+        the status of the operation.  See
         [/sys/status/*token*/result](/v4.6/tag/sysstatustokenresult)
-        will contain a JSON object whose `log` member is a multi-line
-        string that describes the progress of the test.
+        for details.
       requestBody:
         content:
           application/json:
@@ -729,29 +724,9 @@ paths:
         the set of registers available on the device.
 
         This request returns a token which can then be used to monitor
-        the status of the operation.  In particular,
+        the status of the operation.  See
         [/sys/status/*token*/result](/v4.6/tag/sysstatustokenresult)
-        will contain a JSON-encoded object with the following members:
-
-          * `trace` (required): An array of trace records which track
-            the progress of the operation.  Each record contains the
-            following members:
-
-              * `dt` (required): A number indicating time this record
-                was created.  The number measures seconds since the
-                operation was started.
-
-              * `msg` (required): A localized human readable string
-                that describes what was happening at the time (e.g.,
-                "opening connection to remote device").
-
-          * `regs` (required): The array of registers discovered so
-            far.  Each register entry contains members:
-
-              * `name` (required): The name of the register.
-
-              * `type` (required): The [type
-                code](/v4.6/tag/Glossary#section/Type-Codes) of register.
+        for details.
       requestBody:
         content:
           application/json:
@@ -30251,15 +30226,109 @@ components:
         action) that has been completed so far.  The value is in the range
         from 0 to 1, where 0 means that the operation has just started and
         1 means the operation is 100% complete.
-    sysStatusTokenResult:
-      type: string
-      example: '{"log":"test successful"}'
+    ServiceActivationResult:
+      type: object
       description: |
-        A JSON-value encoded as a string. The JSON-value contains the
-        result of the operation.  If the operation is not done yet, this
-        reflects the result up to this point in time.  Once the operation
-        is done, the value of this member is stable and will not change
-        anymore.
+        The result returned in response to a [service activation
+        command](/v4.6/tag/cmd/v4.6#operation/cmdActivate).
+      properties:
+        activated:
+          type: boolean
+          description: |
+            Indicates that the service activation was successful.
+            Generally, this member only ever has the value `true` since,
+            if activation fails, an error is indicated instead.
+        signup:
+          type: string
+          description: |
+            If returned by the service provider, the specified URL needs
+            to be opened in order to complete service activation.  For
+            example, the service provider can use this to prompt the user
+            to log into or create a service provider account.
+          example: http://www.example-service.com/activate/3098abf98feedc0de
+      required:
+        - activated
+    TestEmailResult:
+      type: object
+      description: |
+        The result returned in response to a ([send test
+        email command](/v4.6/tag/cmd/v4.6#operation/cmdTestEmail)).
+      properties:
+        log:
+          type: string
+          example: attempting to send mail through domain smtp.mail.com\nlooking up smtp.mail.com/submission\n
+          description: |
+            A log of informational messages that describe the progress of
+            the command.  This message may consist of multiple lines of
+            text, separated by newline (ASCII linefeed) characters.
+    TestRemoteResult:
+      type: object
+      description: |
+        The result returned in response to a ([test remote device
+        command](/v4.6/tag/cmd/v4.6#operation/cmdTestRemote)).
+      properties:
+        trace:
+          type: array
+          description: |
+            A list of trace record describing the progress of the
+            operation.
+          items:
+            type: object
+            properties:
+              dt:
+                type: number
+                description: |
+                  A relative timestamp indicating when this trace entry
+                  was created.  It measures seconds since the command was
+                  initiated.
+                example: 3.607
+              msg:
+                type: string
+                description: |
+                  A localized message explaining what happened at the time
+                  this trace record was created (e.g., "opening connection
+                  to remote device").
+                example: Detected register `Grid`.
+            required:
+              - dt
+              - msg
+        regs:
+          type: array
+          description: |
+            A list of the registers available on the remote device.  This
+            list is updated as they are being detected.  Once all
+            registers have been detected, the operation is complete.
+          items:
+            type: object
+            description: |
+              A description of the register detected.
+            properties:
+              name:
+                type: string
+                description: |
+                  The name of the detected register.
+                example: Grid
+              type:
+                type: string
+                description: |
+                  The [type code](/v4.6/tag/Glossary#section/Type-Code) of the detected register.
+                example: P
+            required:
+              - name
+              - type
+    sysStatusTokenResult:
+      oneOf:
+        - $ref: '#/components/schemas/ServiceActivationResult'
+          example: '{"log":"test successful"}'
+        - $ref: '#/components/schemas/TestEmailResult'
+          example: wooofi
+        - $ref: '#/components/schemas/TestRemoteResult'
+          example: wooofi
+      description: |
+        The result of the slow operation.  Not all operations provide a
+        result and while the operation is ongoing, the result may be
+        changing over time.  Once the operation is done, the result is
+        stable and won't change anymore.
     sysStatusTokenTs:
       type: string
       example: '1679103764.278772467'
@@ -33045,11 +33114,10 @@ tags:
       1 means the operation is 100% complete.
   - name: /sys/status/{token}/result
     description: |
-      A JSON-value encoded as a string. The JSON-value contains the
-      result of the operation.  If the operation is not done yet, this
-      reflects the result up to this point in time.  Once the operation
-      is done, the value of this member is stable and will not change
-      anymore.
+      The result of the slow operation.  Not all operations provide a
+      result and while the operation is ongoing, the result may be
+      changing over time.  Once the operation is done, the result is
+      stable and won't change anymore.
   - name: /sys/status/{token}/ts
     description: |
       The time when this status was created.  It is a decimal [Unix
