@@ -646,7 +646,13 @@ class URLDomainGenerator:
         tag_info: dict,
         path_var_name: str,
     ):
-        schema_entry = {"type": json_type}
+        schema_entry = {}
+
+        # For flat objects (type "unknown"), provide the type via an
+        # x-schema tag in paths.yaml or tags.yaml.  See
+        # /sys/status/{token}/result, for example.
+        if json_type != "unknown":
+            schema_entry["type"] = json_type
 
         if json_type == "object":
             if path_var_name:
