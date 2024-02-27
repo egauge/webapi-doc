@@ -409,9 +409,7 @@
       }
     },
     "reboot": "boolean",
-    "remote": {
-      "slowd": "unknown"
-    },
+    "slowd": "unknown",
     "sn": "string",
     "status": {
       "{}": {

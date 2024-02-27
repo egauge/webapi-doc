@@ -2175,12 +2175,12 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
 
-/sys/remote/slowd:
+/sys/slowd:
   get:
     tags:
-    - /sys/remote
+    - /sys/slowd
     summary: Get slowd status
-    operationId: sysRemoteSlowd
+    operationId: sysSlowd
     description: |
       Get the status of the slowd (serial device) service.
     responses:

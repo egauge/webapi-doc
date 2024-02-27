@@ -3514,11 +3514,7 @@
     command](op:/cmd:cmdReboot) should be issued at the
     next opportune moment.
 
-- name: /sys/remote
-  description: |
-    Get the status of remote devices.
-
-- name: /sys/remote/slowd
+- name: /sys/slowd
   x-schema:
     $ref: "./schemas.yaml#/SlowdStatusObject"
   description: |
