@@ -514,54 +514,6 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
 
-/cmd/remote:
-  post:
-    tags:
-    - /cmd
-    summary: Remote device operation
-    operationId: cmdRemote
-    description: |
-      Issue an operation related to a remote device.
-    requestBody:
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              action:
-                type: string
-                enum:
-                - check
-                description: |
-                  The action to perform.  The only possible value is:
-
-                    * `check`: Attempt to connect to a remote device.
-              address:
-                type: string
-                description: |
-                  The address of the remote device.
-                example: modbus://sunspec.1@USB2
-              link_type:
-                type: string
-                description: |
-                  The [link-type](glossary:Link-Types) to use when
-                  connecting to the device.
-                example: slowd
-            required: [action, address, link_type]
-    responses:
-      "200":
-        description: Remote device operation response.
-        content:
-          application/json:
-            schema:
-              $ref: "./schemas.yaml#/TokenObject"
-      "401":
-        description: Unauthorized response.
-        content:
-          application/json:
-            schema:
-              $ref: "./schemas.yaml#/UnauthorizedObject"
-
 /cmd/reboot:
   post:
     tags:
