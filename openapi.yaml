@@ -529,56 +529,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-  /cmd/remote:
-    post:
-      tags:
-        - /cmd
-      summary: Remote device operation
-      operationId: cmdRemote
-      description: |
-        Issue an operation related to a remote device.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                action:
-                  type: string
-                  enum:
-                    - check
-                  description: |
-                    The action to perform.  The only possible value is:
-
-                      * `check`: Attempt to connect to a remote device.
-                address:
-                  type: string
-                  description: |
-                    The address of the remote device.
-                  example: modbus://sunspec.1@USB2
-                link_type:
-                  type: string
-                  description: |
-                    The [link-type](/v4.6/tag/Glossary#section/Link-Types) to use when
-                    connecting to the device.
-                  example: slowd
-              required:
-                - action
-                - address
-                - link_type
-      responses:
-        '200':
-          description: Remote device operation response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TokenObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
   /cmd/reboot:
     post:
       tags:
@@ -2291,12 +2241,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
-  /sys/remote/slowd:
+  /sys/slowd:
     get:
       tags:
-        - /sys/remote/slowd
-      summary: Get /sys/remote/slowd
-      operationId: sysRemoteSlowdGet
+        - /sys/slowd
+      summary: Get /sys/slowd
+      operationId: sysSlowdGet
       description: |
         Get the status of the slowd (serial device) service.
       responses:
@@ -23779,33 +23729,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       parameters: []
-  /sys/remote:
-    get:
-      tags:
-        - /sys/remote
-      summary: Get /sys/remote
-      operationId: sysRemoteGet
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  result:
-                    $ref: '#/components/schemas/sysRemote'
-                  error:
-                    $ref: '#/components/schemas/ErrorString'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-      parameters:
-        - $ref: '#/components/parameters/maxDepthParam'
-        - $ref: '#/components/parameters/filterParam'
   /sys/sn:
     get:
       tags:
@@ -30162,13 +30085,6 @@ components:
         configuration change.  If so, a [reboot
         command](/v4.6/tag/cmd/v4.6#operation/cmdReboot) should be issued at the
         next opportune moment.
-    sysRemote:
-      type: object
-      properties:
-        slowd:
-          $ref: '#/components/schemas/SlowdStatusObject'
-      description: |
-        Get the status of remote devices.
     sysSn:
       type: string
       example: G10400
@@ -30539,8 +30455,8 @@ components:
           $ref: '#/components/schemas/sysPush'
         reboot:
           $ref: '#/components/schemas/sysReboot'
-        remote:
-          $ref: '#/components/schemas/sysRemote'
+        slowd:
+          $ref: '#/components/schemas/SlowdStatusObject'
         sn:
           $ref: '#/components/schemas/sysSn'
         status:
@@ -33057,10 +32973,7 @@ tags:
       configuration change.  If so, a [reboot
       command](/v4.6/tag/cmd/v4.6#operation/cmdReboot) should be issued at the
       next opportune moment.
-  - name: /sys/remote
-    description: |
-      Get the status of remote devices.
-  - name: /sys/remote/slowd
+  - name: /sys/slowd
     description: |
       The status of slowd (serial) devices.
   - name: /sys/sn
