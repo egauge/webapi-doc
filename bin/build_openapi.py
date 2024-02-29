@@ -451,7 +451,8 @@ class URLDomainGenerator:
         """Translate a domain to is OpenAPI equivalent."""
         tag_info = self.tags.get(path, {})
         if not tag_info:
-            self.log.warning(f"path {path} missing", filename="tags.yaml")
+            self.log.error(f"path {path} missing", filename="tags.yaml")
+            return
 
         xref = tag_info.get(Key.X_SCHEMA_REF)
         if xref:
