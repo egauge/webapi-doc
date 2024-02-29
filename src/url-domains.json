@@ -351,6 +351,19 @@
     },
     "model": "string",
     "net": {
+      "homeplug": {
+        "bridge": [
+          {
+            "mac": "string",
+            "speed": {
+              "rx": "integer",
+              "tx": "integer"
+            },
+            "type": "string",
+            "vendor": "string"
+          }
+        ]
+      },
       "ipv4": {
         "dhcp": "boolean",
         "address": "string",

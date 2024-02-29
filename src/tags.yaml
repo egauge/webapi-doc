@@ -3131,6 +3131,67 @@
     or may not be the same as the configuration established in
     [/config/net](path:/config/net).
 
+- name: /sys/net/homeplug
+  description: |
+    The HomePlug status.
+
+- name: /sys/net/homeplug/bridge
+  x-path-var:
+    name: idx
+    in: path
+    description: |
+      The index of a HomePlug bridge device.
+    required: true
+    schema:
+      type: integer
+      minimum: 0
+  description: |
+    The array of HomePlug bridge devices detected.
+
+- name: /sys/net/homeplug/bridge/{idx}
+  description: |
+    The status of a detected HomePlug bridge device.
+
+- name: /sys/net/homeplug/bridge/{idx}/mac
+  description: |
+    The MAC address of the HomePlug bridge device.
+  x-schema:
+    example: 32:b7:c2:96:c3:78
+
+- name: /sys/net/homeplug/bridge/{idx}/speed
+  description: |
+    Information about the current estimated speed at which
+    communication occurs to this bridge device.
+
+- name: /sys/net/homeplug/bridge/{idx}/speed/rx
+  description: |
+    The current estimated speed at which the meter can receive data
+    from this bridge device.  This is reported as bits/second.
+  x-schema:
+    example: 8934500
+
+- name: /sys/net/homeplug/bridge/{idx}/speed/tx
+  description: |
+    The current estimated speed at which the meter can send data to
+    this bridge device.  This is reported as bits/second.  On egauge2
+    devices, this member is unavailable.
+  x-schema:
+    example: 9000000
+
+- name: /sys/net/homeplug/bridge/{idx}/type
+  description: |
+    The HomePlug chipset used by the bridge device.  This member is
+    available only if the chipset could be identified.
+  x-schema:
+    example: hpav
+
+- name: /sys/net/homeplug/bridge/{idx}/vendor
+  description: |
+    The name of the manufacturer of this HomePlug bridge device.  This
+    member is available only if the chipset could be identified.
+  x-schema:
+    example: TP-Link
+
 - name: /sys/net/ipv4
   x-schema-ref: "./schemas.yaml#/IPv4Object"
 
