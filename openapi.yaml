@@ -22373,6 +22373,302 @@ paths:
       parameters:
         - $ref: '#/components/parameters/maxDepthParam'
         - $ref: '#/components/parameters/filterParam'
+  /sys/net/homeplug:
+    get:
+      tags:
+        - /sys/net/homeplug
+      summary: Get /sys/net/homeplug
+      operationId: sysNetHomeplugGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetHomeplug'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/net/homeplug/bridge:
+    get:
+      tags:
+        - /sys/net/homeplug/bridge
+      summary: Get /sys/net/homeplug/bridge
+      operationId: sysNetHomeplugBridgeGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetHomeplugBridge'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/net/homeplug/bridge/{idx}:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a HomePlug bridge device.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/homeplug/bridge/{idx}
+      summary: Get /sys/net/homeplug/bridge/{idx}
+      operationId: sysNetHomeplugBridgeItemGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetHomeplugBridgeItem'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/net/homeplug/bridge/{idx}/mac:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a HomePlug bridge device.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/homeplug/bridge/{idx}/mac
+      summary: Get /sys/net/homeplug/bridge/{idx}/mac
+      operationId: sysNetHomeplugBridgeItemMacGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetHomeplugBridgeItemMac'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/net/homeplug/bridge/{idx}/speed:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a HomePlug bridge device.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/homeplug/bridge/{idx}/speed
+      summary: Get /sys/net/homeplug/bridge/{idx}/speed
+      operationId: sysNetHomeplugBridgeItemSpeedGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetHomeplugBridgeItemSpeed'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/net/homeplug/bridge/{idx}/speed/rx:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a HomePlug bridge device.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/homeplug/bridge/{idx}/speed/rx
+      summary: Get /sys/net/homeplug/bridge/{idx}/speed/rx
+      operationId: sysNetHomeplugBridgeItemSpeedRxGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetHomeplugBridgeItemSpeedRx'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/net/homeplug/bridge/{idx}/speed/tx:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a HomePlug bridge device.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/homeplug/bridge/{idx}/speed/tx
+      summary: Get /sys/net/homeplug/bridge/{idx}/speed/tx
+      operationId: sysNetHomeplugBridgeItemSpeedTxGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetHomeplugBridgeItemSpeedTx'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/net/homeplug/bridge/{idx}/type:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a HomePlug bridge device.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/homeplug/bridge/{idx}/type
+      summary: Get /sys/net/homeplug/bridge/{idx}/type
+      operationId: sysNetHomeplugBridgeItemTypeGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetHomeplugBridgeItemType'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/net/homeplug/bridge/{idx}/vendor:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a HomePlug bridge device.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/homeplug/bridge/{idx}/vendor
+      summary: Get /sys/net/homeplug/bridge/{idx}/vendor
+      operationId: sysNetHomeplugBridgeItemVendorGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetHomeplugBridgeItemVendor'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
   /sys/net/ipv4:
     get:
       tags:
@@ -29593,6 +29889,72 @@ components:
       type: string
       description: |
         The model name of the meter. For example, `EG4030`.
+    sysNetHomeplugBridgeItemMac:
+      type: string
+      example: 32:b7:c2:96:c3:78
+      description: |
+        The MAC address of the HomePlug bridge device.
+    sysNetHomeplugBridgeItemSpeedRx:
+      type: integer
+      example: 8934500
+      description: |
+        The current estimated speed at which the meter can receive data
+        from this bridge device.  This is reported as bits/second.
+    sysNetHomeplugBridgeItemSpeedTx:
+      type: integer
+      example: 9000000
+      description: |
+        The current estimated speed at which the meter can send data to
+        this bridge device.  This is reported as bits/second.  On egauge2
+        devices, this member is unavailable.
+    sysNetHomeplugBridgeItemSpeed:
+      type: object
+      properties:
+        rx:
+          $ref: '#/components/schemas/sysNetHomeplugBridgeItemSpeedRx'
+        tx:
+          $ref: '#/components/schemas/sysNetHomeplugBridgeItemSpeedTx'
+      description: |
+        Information about the current estimated speed at which
+        communication occurs to this bridge device.
+    sysNetHomeplugBridgeItemType:
+      type: string
+      example: hpav
+      description: |
+        The HomePlug chipset used by the bridge device.  This member is
+        available only if the chipset could be identified.
+    sysNetHomeplugBridgeItemVendor:
+      type: string
+      example: TP-Link
+      description: |
+        The name of the manufacturer of this HomePlug bridge device.  This
+        member is available only if the chipset could be identified.
+    sysNetHomeplugBridgeItem:
+      type: object
+      properties:
+        mac:
+          $ref: '#/components/schemas/sysNetHomeplugBridgeItemMac'
+        speed:
+          $ref: '#/components/schemas/sysNetHomeplugBridgeItemSpeed'
+        type:
+          $ref: '#/components/schemas/sysNetHomeplugBridgeItemType'
+        vendor:
+          $ref: '#/components/schemas/sysNetHomeplugBridgeItemVendor'
+      description: |
+        The status of a detected HomePlug bridge device.
+    sysNetHomeplugBridge:
+      type: array
+      items:
+        $ref: '#/components/schemas/sysNetHomeplugBridgeItem'
+      description: |
+        The array of HomePlug bridge devices detected.
+    sysNetHomeplug:
+      type: object
+      properties:
+        bridge:
+          $ref: '#/components/schemas/sysNetHomeplugBridge'
+      description: |
+        The HomePlug status.
     sysNetIpv4Dhcp:
       type: boolean
       description: |
@@ -29992,6 +30354,8 @@ components:
     sysNet:
       type: object
       properties:
+        homeplug:
+          $ref: '#/components/schemas/sysNetHomeplug'
         ipv4:
           $ref: '#/components/schemas/sysNetIpv4'
         ntp:
@@ -32712,6 +33076,39 @@ tags:
       The network settings that are in use by the meter.  This may
       or may not be the same as the configuration established in
       [/config/net](/v4.6/tag/confignet).
+  - name: /sys/net/homeplug
+    description: |
+      The HomePlug status.
+  - name: /sys/net/homeplug/bridge
+    description: |
+      The array of HomePlug bridge devices detected.
+  - name: /sys/net/homeplug/bridge/{idx}
+    description: |
+      The status of a detected HomePlug bridge device.
+  - name: /sys/net/homeplug/bridge/{idx}/mac
+    description: |
+      The MAC address of the HomePlug bridge device.
+  - name: /sys/net/homeplug/bridge/{idx}/speed
+    description: |
+      Information about the current estimated speed at which
+      communication occurs to this bridge device.
+  - name: /sys/net/homeplug/bridge/{idx}/speed/rx
+    description: |
+      The current estimated speed at which the meter can receive data
+      from this bridge device.  This is reported as bits/second.
+  - name: /sys/net/homeplug/bridge/{idx}/speed/tx
+    description: |
+      The current estimated speed at which the meter can send data to
+      this bridge device.  This is reported as bits/second.  On egauge2
+      devices, this member is unavailable.
+  - name: /sys/net/homeplug/bridge/{idx}/type
+    description: |
+      The HomePlug chipset used by the bridge device.  This member is
+      available only if the chipset could be identified.
+  - name: /sys/net/homeplug/bridge/{idx}/vendor
+    description: |
+      The name of the manufacturer of this HomePlug bridge device.  This
+      member is available only if the chipset could be identified.
   - name: /sys/net/ipv4
     description: |
       The Internet Protocol v4 ([IPv4](https://www.rfc-editor.org/rfc/rfc791))
