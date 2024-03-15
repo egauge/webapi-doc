@@ -2279,6 +2279,7 @@ paths:
           type: string
           example: global
     get:
+      deprecated: true
       tags:
         - /store
       summary: Get section
@@ -2317,6 +2318,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
     put:
+      deprecated: true
       tags:
         - /store
       summary: Update or delete section
@@ -2367,6 +2369,7 @@ paths:
           type: string
           example: dashCfg-default
     get:
+      deprecated: true
       tags:
         - /store
       summary: Get section variable
@@ -2389,6 +2392,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
     put:
+      deprecated: true
       tags:
         - /store
       summary: Update or delete section variable
@@ -2438,6 +2442,7 @@ paths:
           type: string
           example: billing
     get:
+      deprecated: true
       tags:
         - /store
       summary: Get paragraph
@@ -2467,6 +2472,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
     put:
+      deprecated: true
       tags:
         - /store
       summary: Update or delete paragraph
@@ -2525,6 +2531,7 @@ paths:
           type: string
           example: start_day
     get:
+      deprecated: true
       tags:
         - /store
       summary: Get variable
@@ -2547,6 +2554,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
     put:
+      deprecated: true
       tags:
         - /store
       summary: Update or delete variable
@@ -16490,6 +16498,321 @@ paths:
                 $ref: '#/components/schemas/UnauthorizedObject'
       description: |
         Delete this user account.
+  /config/var:
+    get:
+      tags:
+        - /config/var
+      summary: Get /config/var
+      operationId: configVarGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configVar'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+    put:
+      tags:
+        - /config/var
+      summary: Replace /config/var
+      operationId: configVarPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configVar'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/var
+      summary: Update /config/var
+      operationId: configVarPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configVar'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/var
+      summary: Delete /config/var
+      operationId: configVarDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Delete all meter variables.
+  /config/var/{section}:
+    parameters:
+      - name: section
+        in: path
+        description: |
+          The name of the section to access.
+        required: true
+        schema:
+          type: string
+          pattern: ^[a-zA-Z0-9_%-]+$
+        example: global
+    get:
+      tags:
+        - /config/var/{section}
+      summary: Get /config/var/{section}
+      operationId: configVarSectionGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configVarSection'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+    put:
+      tags:
+        - /config/var/{section}
+      summary: Replace /config/var/{section}
+      operationId: configVarSectionPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configVarSection'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/var/{section}
+      summary: Update /config/var/{section}
+      operationId: configVarSectionPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configVarSection'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/var/{section}
+      summary: Delete /config/var/{section}
+      operationId: configVarSectionDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Delete all meter variables in the named section.
+  /config/var/{section}/{var}:
+    parameters:
+      - name: section
+        in: path
+        description: |
+          The name of the section to access.
+        required: true
+        schema:
+          type: string
+          pattern: ^[a-zA-Z0-9_%-]+$
+        example: global
+      - name: var
+        in: path
+        description: |
+          The name of a variable.
+        required: true
+        schema:
+          type: string
+          pattern: ^[a-zA-Z0-9_%.-]+$
+        example: billing.start_day
+    get:
+      tags:
+        - /config/var/{section}/{var}
+      summary: Get /config/var/{section}/{var}
+      operationId: configVarSectionVarGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configVarSectionVar'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+    put:
+      tags:
+        - /config/var/{section}/{var}
+      summary: Replace /config/var/{section}/{var}
+      operationId: configVarSectionVarPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configVarSectionVar'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/var/{section}/{var}
+      summary: Update /config/var/{section}/{var}
+      operationId: configVarSectionVarPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configVarSectionVar'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/var/{section}/{var}
+      summary: Delete /config/var/{section}/{var}
+      operationId: configVarSectionVarDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Delete the named meter variable.
   /config/alert:
     get:
       tags:
@@ -27102,6 +27425,7 @@ components:
     configDisplayScreenRegisters:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: name
         $ref: '#/components/schemas/configDisplayScreenRegistersName'
       description: The register screen configuration.
     configDisplayScreen:
@@ -27269,6 +27593,7 @@ components:
     configLocalSensor:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: name
         $ref: '#/components/schemas/configLocalSensorName'
       example:
         L1:
@@ -27425,6 +27750,7 @@ components:
     configLuaCtrld:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: script
         $ref: '#/components/schemas/configLuaCtrldScript'
       example:
         test: print("this is control script test");
@@ -27451,6 +27777,7 @@ components:
     configModbusClientMapNameOption:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: opt
         $ref: '#/components/schemas/configModbusClientMapNameOptionOpt'
       example:
         default-modbus-addr: '2'
@@ -27693,6 +28020,7 @@ components:
     configModbusClientMap:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: name
         $ref: '#/components/schemas/configModbusClientMapName'
       example:
         user_dev:
@@ -28097,6 +28425,7 @@ components:
     configNetPtpInterface:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: if
         $ref: '#/components/schemas/configNetPtpInterfaceIf'
       example:
         eth0:
@@ -28313,6 +28642,7 @@ components:
     configRemote:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: name
         $ref: '#/components/schemas/configRemoteName'
       example:
         PRM3:
@@ -28402,6 +28732,7 @@ components:
     configRegisterPhysical:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: reg
         $ref: '#/components/schemas/configRegisterPhysicalReg'
       description: |
         The physical register configuration of the meter.
@@ -28520,6 +28851,7 @@ components:
     configRegisterVirtual:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: reg
         $ref: '#/components/schemas/configRegisterVirtualReg'
       example:
         use:
@@ -28597,6 +28929,7 @@ components:
     configUser:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: name
         $ref: '#/components/schemas/configUserName'
       example:
         jsmith:
@@ -28608,6 +28941,35 @@ components:
             - view_settings
       description: |
         The user accounts.
+    configVarSectionVar:
+      type: string
+      example: '6'
+      description: |
+        The value of the named meter variable.  Complex values can be
+        stored, e.g., by JSON-encoding them.
+    configVarSection:
+      type: object
+      additionalProperties:
+        x-additionalPropertiesName: var
+        $ref: '#/components/schemas/configVarSectionVar'
+      example:
+        billing.start_day: '6'
+        billing.interval: '15'
+      description: |
+        The meter variables in the named section.
+    configVar:
+      type: object
+      additionalProperties:
+        x-additionalPropertiesName: section
+        $ref: '#/components/schemas/configVarSection'
+      description: |
+        The set of meter variable sections.
+      example:
+        global:
+          billing.start_day: '6'
+          billing.interval: '15'
+        health:
+          last_check: '1682200804'
     configAlertCustomItemName:
       type: string
       example: temperature alert
@@ -28996,6 +29358,8 @@ components:
           $ref: '#/components/schemas/configTime'
         user:
           $ref: '#/components/schemas/configUser'
+        var:
+          $ref: '#/components/schemas/configVar'
         alert:
           $ref: '#/components/schemas/configAlert'
       description: The meter configuration.
@@ -29112,6 +29476,7 @@ components:
     ctrlInterface:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: if
         $ref: '#/components/schemas/ctrlInterfaceIf'
       example:
         modbus:
@@ -29179,6 +29544,7 @@ components:
     luaVar:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: name
         $ref: '#/components/schemas/luaVarName'
       description: |
         The persistent Lua variables.  Such variables are non-volatile.
@@ -29470,6 +29836,7 @@ components:
     sysFuncBasic:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: name
         $ref: '#/components/schemas/sysFuncBasicName'
       example:
         max:
@@ -29562,6 +29929,7 @@ components:
     sysFuncAlert:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: name
         $ref: '#/components/schemas/sysFuncAlertName'
       example:
         dayavg:
@@ -29600,6 +29968,7 @@ components:
     sysModbusClientMapNameOption:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: opt
         $ref: '#/components/schemas/sysModbusClientMapNameOptionOpt'
       example:
         default-modbus-addr: '2'
@@ -29842,6 +30211,7 @@ components:
     sysModbusClientMap:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: name
         $ref: '#/components/schemas/sysModbusClientMapName'
       example:
         sys_dev:
@@ -30644,6 +31014,7 @@ components:
     sysStatus:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: token
         $ref: '#/components/schemas/sysStatusToken'
       example: {}
       description: |
@@ -30732,6 +31103,7 @@ components:
     sysTeamReg:
       type: object
       additionalProperties:
+        x-additionalPropertiesName: name
         $ref: '#/components/schemas/sysTeamRegName'
       example:
         Grid:
@@ -32315,6 +32687,94 @@ tags:
       Writing an empty hash string disables the account.
 
       This resource is write-only.
+  - name: /config/var
+    description: |
+      Meter variables provide a means to store arbitrary name/value
+      pairs on the meter itself.  These variables can be employed by a
+      WebAPI user to customize behavior.  For example, the preferred
+      currency symbol is stored in a meter variable so that all WebAPI
+      users can consistenty display monetary values.
+
+      Any authenticated user can read meter variables but only users who
+      have the [privilege to save settings](/v4.6/tag/Glossary#section/User-Privileges)
+      can create or update them.
+
+      Variable names must be at least one character long and may consist
+      of lower- and upper-case ASCII letters, digits, dashes (`-`),
+      underscores (`_`), and percent signs (`%`).  Note that when using
+      a variable name as part of a URL path, any percent sign must be
+      encoded as %25 (25 is the hexadecimal value of the ASCII code of
+      `%`).
+
+      For backwards-compatibility, a variable name may also contain a
+      single dot (`.`) if it does not appear as the first or last
+      character in the name.  When a dot is present, the string before
+      the dot is called the _paragraph name_.
+
+      Variable values may contain any UTF-8 points except ASCII control
+      characters.
+
+      ## Sections
+
+      Meter variables are organized into _sections_.  Each section has a
+      name and contains zero or more variables.  Typically, groups of
+      related meter variables are stored together in a single section.
+      Variables can be accessed individually or by section.
+
+      For example, the `global` section contains variables that apply to
+      the meter in general, such as billing information or the currency
+      symbol to use for monetary values.  Other sections are specific to
+      particular applications (in the widest sense of the word).  For
+      example, the `health` section contains variables that define the
+      behavior of the meter's health checker service.
+
+      Section names must be at at least 1 and at most 63 bytes long and
+      may consist of lower- and upper-case ASCII letters, digits, dashes
+      (`-`), underscores (`_`), and percent signs (`%`).
+
+      ## Well-known Variables
+
+      What distinguishes meter variables from normal configuration
+      settings is that the former are generally not used by the meter
+      firmware. In other words, meter variables are used primarily by
+      users of WebAPI.  There are a few exceptions, however, for the
+      `global` section:
+
+        * `billing.interval`: The meter firmware interprets this as the
+          length of the demand interval in minutes (see description of
+          [/register](/v4.6/tag/register/v4.6#operation/registerGet) query parameter
+          `demand`).
+
+        * `billing.start_day`: The meter firmware interprets this as the
+          day of the month on which the utility company reads the
+          utility meter.  The assumption is that the meter is read at
+          noon on that day.  The value must be a decimal integer string
+          in the range from 1-31.  If the billing day number is greater
+          than the number of days in a particular month, it is assumed
+          that utility meter is read on the last day of that month.
+
+          The meter-firmware uses this, for example, to implement the
+          `sob` [time point](/v4.6/tag/Glossary#section/Time-Point-Names).
+
+        * `billing.tariff_uri`: If not an empty string, this is
+          interpreted as the URL from which to fetch a [Lua
+          script](/v4.6/tag/Glossary#section/Lua-Scripts) that calculates energy cost.
+          The meter will periodically poll this URL and download any
+          available updates to the script.
+
+        * `default.currency_symbol`: This is interpreted as the symbol
+          to use for currency values.  This may be a single Unicode
+          symbol such as `$` (Dollar) or `€` (Euro), or it may be a
+          multi character string, such as `CHF` for Swiss Franc.  The
+          meter firmware uses the value of this variable when outputting
+          the unit of monetary values.
+  - name: /config/var/{section}
+    description: |
+      The meter variables in the named section.
+  - name: /config/var/{section}/{var}
+    description: |
+      The value of the named meter variable.  Complex values can be
+      stored, e.g., by JSON-encoding them.
   - name: /ctid
     description: |
       This service provides access to the
@@ -32502,6 +32962,9 @@ tags:
       properly.
   - name: /store
     description: |
+      **Note** _This service is deprecated and will be removed in the
+        future.  Please use [/config/var](/v4.6/tag/configvar) instead._
+
       This service provides the ability to store arbitrary name/value
       pairs on the meter.  This is called server-side storage.
 
@@ -32557,12 +33020,6 @@ tags:
           be a multi character string, such as `CHF` for Swiss Franc.
           The meter firmware uses the value of this variable when
           outputting the unit of monetary values.
-
-      ## Size Limits
-
-      Section names are limited to 64 bytes.  The total size of any
-      section may not exceed 16 KiB.  The total size of the data in the
-      store may not exceed 128 KiB.
   - name: /register
     description: |
       This service provides access to both current and past register
