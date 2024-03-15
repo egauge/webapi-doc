@@ -2160,6 +2160,7 @@
       type: string
       example: global
   get:
+    deprecated: true
     tags:
     - /store
     summary: Get section
@@ -2185,6 +2186,7 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
   put:
+    deprecated: true
     tags:
     - /store
     summary: Update or delete section
@@ -2234,6 +2236,7 @@
       type: string
       example: dashCfg-default
   get:
+    deprecated: true
     tags:
     - /store
     summary: Get section variable
@@ -2253,6 +2256,7 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
   put:
+    deprecated: true
     tags:
     - /store
     summary: Update or delete section variable
@@ -2302,6 +2306,7 @@
       type: string
       example: billing
   get:
+    deprecated: true
     tags:
     - /store
     summary: Get paragraph
@@ -2321,6 +2326,7 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
   put:
+    deprecated: true
     tags:
     - /store
     summary: Update or delete paragraph
@@ -2378,6 +2384,7 @@
       type: string
       example: start_day
   get:
+    deprecated: true
     tags:
     - /store
     summary: Get variable
@@ -2397,6 +2404,7 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
   put:
+    deprecated: true
     tags:
     - /store
     summary: Update or delete variable
