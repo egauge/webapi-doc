@@ -2214,6 +2214,134 @@
 
     This resource is write-only.
 
+- name: /config/var
+  description: |
+    Meter variables provide a means to store arbitrary name/value
+    pairs on the meter itself.  These variables can be employed by a
+    WebAPI user to customize behavior.  For example, the preferred
+    currency symbol is stored in a meter variable so that all WebAPI
+    users can consistenty display monetary values.
+
+    Any authenticated user can read meter variables but only users who
+    have the [privilege to save settings](glossary:User-Privileges)
+    can create or update them.
+
+    Variable names must be at least one character long and may consist
+    of lower- and upper-case ASCII letters, digits, dashes (`-`),
+    underscores (`_`), and percent signs (`%`).  Note that when using
+    a variable name as part of a URL path, any percent sign must be
+    encoded as %25 (25 is the hexadecimal value of the ASCII code of
+    `%`).
+
+    For backwards-compatibility, a variable name may also contain a
+    single dot (`.`) if it does not appear as the first or last
+    character in the name.  When a dot is present, the string before
+    the dot is called the _paragraph name_.
+
+    Variable values may contain any UTF-8 points except ASCII control
+    characters.
+
+    ## Sections
+
+    Meter variables are organized into _sections_.  Each section has a
+    name and contains zero or more variables.  Typically, groups of
+    related meter variables are stored together in a single section.
+    Variables can be accessed individually or by section.
+
+    For example, the `global` section contains variables that apply to
+    the meter in general, such as billing information or the currency
+    symbol to use for monetary values.  Other sections are specific to
+    particular applications (in the widest sense of the word).  For
+    example, the `health` section contains variables that define the
+    behavior of the meter's health checker service.
+
+    Section names must be at at least 1 and at most 63 bytes long and
+    may consist of lower- and upper-case ASCII letters, digits, dashes
+    (`-`), underscores (`_`), and percent signs (`%`).
+
+    ## Well-known Variables
+
+    What distinguishes meter variables from normal configuration
+    settings is that the former are generally not used by the meter
+    firmware. In other words, meter variables are used primarily by
+    users of WebAPI.  There are a few exceptions, however, for the
+    `global` section:
+
+      * `billing.interval`: The meter firmware interprets this as the
+        length of the demand interval in minutes (see description of
+        [/register](op:/register:registerGet) query parameter
+        `demand`).
+
+      * `billing.start_day`: The meter firmware interprets this as the
+        day of the month on which the utility company reads the
+        utility meter.  The assumption is that the meter is read at
+        noon on that day.  The value must be a decimal integer string
+        in the range from 1-31.  If the billing day number is greater
+        than the number of days in a particular month, it is assumed
+        that utility meter is read on the last day of that month.
+
+        The meter-firmware uses this, for example, to implement the
+        `sob` [time point](glossary:Time-Point-Names).
+
+      * `billing.tariff_uri`: If not an empty string, this is
+        interpreted as the URL from which to fetch a [Lua
+        script](glossary:Lua-Scripts) that calculates energy cost.
+        The meter will periodically poll this URL and download any
+        available updates to the script.
+
+      * `default.currency_symbol`: This is interpreted as the symbol
+        to use for currency values.  This may be a single Unicode
+        symbol such as `$` (Dollar) or `€` (Euro), or it may be a
+        multi character string, such as `CHF` for Swiss Franc.  The
+        meter firmware uses the value of this variable when outputting
+        the unit of monetary values.
+  x-schema:
+    description: |
+      The set of meter variable sections.
+    example: {"global":{"billing.start_day":"6","billing.interval":"15"},"health":{"last_check":"1682200804"}}
+  x-path-method-delete:
+    description: |
+      Delete all meter variables.
+  x-path-var:
+    name: section
+    in: path
+    description: |
+      The name of the section to access.
+    required: true
+    schema:
+      type: string
+      pattern: "^[a-zA-Z0-9_%-]+$"
+    example: global
+
+- name: /config/var/{section}
+  x-schema:
+    example: {"billing.start_day":"6","billing.interval":"15"}
+  x-path-method-delete:
+    description: |
+      Delete all meter variables in the named section.
+  x-path-var:
+    name: var
+    in: path
+    description: |
+      The name of a variable.
+    required: true
+    schema:
+      type: string
+      pattern: "^[a-zA-Z0-9_%.-]+$"
+    example: billing.start_day
+  description: |
+    The meter variables in the named section.
+
+- name: /config/var/{section}/{var}
+  x-schema:
+    example: "6"
+  x-path-method-delete:
+    description: |
+      Delete the named meter variable.
+  description: |
+    The value of the named meter variable.  Complex values can be
+    stored, e.g., by JSON-encoding them.
+
 - name: /ctid
   description: |
     This service provides access to the

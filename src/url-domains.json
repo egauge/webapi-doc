@@ -201,6 +201,11 @@
         "hash": "string"
       }
     },
+    "var": {
+      "{}": {
+        "{}": "string"
+      }
+    },
     "alert": {
       "custom": [
         {
