@@ -142,6 +142,8 @@ class Logger:
 
 def key_is_internal(key: str) -> bool:
     """Return True if the YAML key is used only by this program."""
+    if key == 'x-additionalPropertiesName':	# keep redocly extension...
+        return False
     return key.startswith("x-")
 
 
@@ -295,7 +297,7 @@ class YAMLFile:
 
     def _strip_extension_keys(self, content):
         """Recurse through the content and remove all extension keys (keys
-        starting with `x-').
+        starting with `x-', except for x-additionalPropertiesName).
 
         """
         if isinstance(content, list):
@@ -659,6 +661,7 @@ class URLDomainGenerator:
             if path_var_name:
                 subdomain_schema_name = schema_name + camel_case(path_var_name)
                 schema_entry["additionalProperties"] = {
+                    "x-additionalPropertiesName": path_var_name,
                     "$ref": f"#/{subdomain_schema_name}"
                 }
             else:
