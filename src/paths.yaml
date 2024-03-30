@@ -514,6 +514,68 @@
             schema:
               $ref: "./schemas.yaml#/UnauthorizedObject"
 
+/cmd/homeplug:
+  post:
+    tags:
+    - /cmd
+    summary: Manage HomePlug
+    operationId: cmdHomePlug
+    description: |
+      Manage one or more HomePlug devices.
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+                enum:
+                - setpwd
+                description: |
+                  The action to perform.  The only action currently
+                  supported is `setpwd`.  It establishes a new encryption
+                  password on the meter's HomePlug bridge and one or more
+                  remote bridges.
+              password:
+                type: string
+                example: HomePlugAV
+                minLength: 4
+                maxLength: 24
+                description: |
+                  The password to use for encrypting the HomePlug
+                  traffic.  The password may consist of any characters
+                  except for double-quote or control characters.
+              targets:
+                type: array
+                minLength: 1
+                example: [11:22:33:44:55:66/ABCD-EFGH-IJKL-MNOP,78:9a:bc:de:f0:01/TPED-PBTX-BLRQ-CPER]
+                description: |
+                  The list of bridges on which to set the new
+                  password.  Each bridge is identified by a string
+                  that specifies its MAC address (in the form
+                  `xx:xx:xx:xx:xx:xx` where `x` is a hexadecimal
+                  digit), followed by a slash character (`/`),
+                  followed by the bridge's device encryption key
+                  (DEK).  The latter can be found printed on the label
+                  of the bridge.
+                items:
+                  type: string
+            required: [action, password, targets]
+    responses:
+      "200":
+        description: Manage HomePlug response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/StatusObject"
+      "401":
+        description: Unauthorized response.
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yaml#/UnauthorizedObject"
+
 /cmd/reboot:
   post:
     tags:
