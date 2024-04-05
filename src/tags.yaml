@@ -1629,6 +1629,30 @@
   description: |
     The hostname or an IPv4 or IPv6 address of an NTP server.
 
+- name: /config/net/option
+  description: |
+    Options that have a system-wide effect on the network services.
+
+- name: /config/net/option/secure_only
+  x-schema:
+    example: false
+  description: |
+      If `true`, network services which do not encrypt data are
+      disabled.  At present, turning on this option disables the
+      following services:
+
+        * The web-server's plain HTTP service (port 80).
+
+        * The service that provides the meter data via
+          [link-type](glossary:Link-Types) `udp`.  Thus, it other
+          meters will not be able to read this meters data via this
+          link type anymore.
+
+      This resource is **not** updated
+      [transactionally](glossary:Non-Transactional-Updates) and after
+      changing its value, the web server will be unavailable
+      temporarily.
+
 - name: /config/net/proxy
   description: |
     The proxy configuration of the meter.

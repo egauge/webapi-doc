@@ -142,6 +142,9 @@
           "string"
         ]
       },
+      "option": {
+        "secure_only": "boolean"
+      },
       "proxy": {
         "enable": "boolean",
         "server": "string"
