@@ -12616,6 +12616,194 @@ paths:
                 $ref: '#/components/schemas/UnauthorizedObject'
       description: |
         Remove this NTP server.
+  /config/net/option:
+    get:
+      tags:
+        - /config/net/option
+      summary: Get /config/net/option
+      operationId: configNetOptionGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configNetOption'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+    put:
+      tags:
+        - /config/net/option
+      summary: Replace /config/net/option
+      operationId: configNetOptionPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configNetOption'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/net/option
+      summary: Update /config/net/option
+      operationId: configNetOptionPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configNetOption'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/net/option
+      summary: Delete /config/net/option
+      operationId: configNetOptionDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: 'Reset to default. See the descriptions of the individual endpoints for their default values.  Commonly, arrays and strings are cleared to empty, numbers are cleared to 0, and booleans are cleared to `false`.  '
+  /config/net/option/secure_only:
+    get:
+      tags:
+        - /config/net/option/secure_only
+      summary: Get /config/net/option/secure_only
+      operationId: configNetOptionSecureOnlyGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configNetOptionSecureOnly'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+    put:
+      tags:
+        - /config/net/option/secure_only
+      summary: Replace /config/net/option/secure_only
+      operationId: configNetOptionSecureOnlyPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configNetOptionSecureOnly'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/net/option/secure_only
+      summary: Update /config/net/option/secure_only
+      operationId: configNetOptionSecureOnlyPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configNetOptionSecureOnly'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/net/option/secure_only
+      summary: Delete /config/net/option/secure_only
+      operationId: configNetOptionSecureOnlyDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: Reset to `false`.
   /config/net/proxy:
     get:
       tags:
@@ -28434,6 +28622,32 @@ components:
       description: |
         The Network Time Protocol
         ([NTP](https://www.rfc-editor.org/rfc/rfc5905)) configuration.
+    configNetOptionSecureOnly:
+      type: boolean
+      example: false
+      description: |
+        If `true`, network services which do not encrypt data are
+        disabled.  At present, turning on this option disables the
+        following services:
+
+          * The web-server's plain HTTP service (port 80).
+
+          * The service that provides the meter data via
+            [link-type](/v4.6/tag/Glossary#section/Link-Types) `udp`.  Thus, it other
+            meters will not be able to read this meters data via this
+            link type anymore.
+
+        This resource is **not** updated
+        [transactionally](/v4.6/tag/Glossary#section/Non-Transactional-Updates) and after
+        changing its value, the web server will be unavailable
+        temporarily.
+    configNetOption:
+      type: object
+      properties:
+        secure_only:
+          $ref: '#/components/schemas/configNetOptionSecureOnly'
+      description: |
+        Options that have a system-wide effect on the network services.
     configNetProxyEnable:
       type: boolean
       description: |
@@ -28529,6 +28743,8 @@ components:
           $ref: '#/components/schemas/configNetNameserver'
         ntp:
           $ref: '#/components/schemas/configNetNtp'
+        option:
+          $ref: '#/components/schemas/configNetOption'
         proxy:
           $ref: '#/components/schemas/configNetProxy'
         ptp:
@@ -32394,6 +32610,26 @@ tags:
   - name: /config/net/ntp/server/{idx}
     description: |
       The hostname or an IPv4 or IPv6 address of an NTP server.
+  - name: /config/net/option
+    description: |
+      Options that have a system-wide effect on the network services.
+  - name: /config/net/option/secure_only
+    description: |
+      If `true`, network services which do not encrypt data are
+      disabled.  At present, turning on this option disables the
+      following services:
+
+        * The web-server's plain HTTP service (port 80).
+
+        * The service that provides the meter data via
+          [link-type](/v4.6/tag/Glossary#section/Link-Types) `udp`.  Thus, it other
+          meters will not be able to read this meters data via this
+          link type anymore.
+
+      This resource is **not** updated
+      [transactionally](/v4.6/tag/Glossary#section/Non-Transactional-Updates) and after
+      changing its value, the web server will be unavailable
+      temporarily.
   - name: /config/net/proxy
     description: |
       The proxy configuration of the meter.
