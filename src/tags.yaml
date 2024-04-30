@@ -1863,6 +1863,7 @@
     This resource is write-only.
 
 - name: /config/push/service
+  x-path-methods: [get, delete]
   description: |
     The name of a push service provider to shared data with.
 
