@@ -14056,52 +14056,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       parameters: []
-    put:
-      tags:
-        - /config/push/service
-      summary: Replace /config/push/service
-      operationId: configPushServicePut
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configPushService'
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
-    post:
-      tags:
-        - /config/push/service
-      summary: Update /config/push/service
-      operationId: configPushServicePost
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/configPushService'
-      responses:
-        '200':
-          description: Normal response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusObject'
-        '401':
-          description: Unauthorized response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedObject'
     delete:
       tags:
         - /config/push/service
