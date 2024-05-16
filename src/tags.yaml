@@ -325,7 +325,7 @@
     description: |
       Reset to `<`.
   x-schema:
-    enum: ["<", "<=", "==", "!=", ">=", ">"]
+    enum: ["<", "<=", "=", "!=", ">=", ">"]
   description: |
     The comparison-operator to use for comparing the left-hand-side
     expression `lhs` against the right-hand side expression `rhs`.  It
@@ -333,7 +333,7 @@
 
       * `<`: Condition is true if `lhs` is less than `rhs`.
       * `<=`: Condition is true if `lhs` is less-than-or-equal to `rhs`.
-      * `==`: Condition is true if `lhs` is equal to `rhs`.
+      * `=`: Condition is true if `lhs` is equal to `rhs`.
       * `!=`: Condition is true if `lhs` differs from `rhs`.
       * `>=`: Condition is true if `lhs` is greater-than-or-equal to `rhs`.
       * `>`: Condition is true if `lhs` is greater than `rhs`.
