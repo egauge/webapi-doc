@@ -1981,6 +1981,13 @@
         type: string
         enum: [backup, csv, json]
       example: csv
+    - name: max-rows
+      in: query
+      description: |
+        Limit the response to the specified maximum number of rows.
+      schema:
+        type: number
+        minimum: 1
     - name: if
       in: query
       description: |
