@@ -2099,6 +2099,13 @@ paths:
               - csv
               - json
           example: csv
+        - name: max-rows
+          in: query
+          description: |
+            Limit the response to the specified maximum number of rows.
+          schema:
+            type: number
+            minimum: 1
         - name: if
           in: query
           description: |
@@ -29262,7 +29269,7 @@ components:
       enum:
         - <
         - <=
-        - '=='
+        - '='
         - '!='
         - '>='
         - '>'
@@ -29273,7 +29280,7 @@ components:
 
           * `<`: Condition is true if `lhs` is less than `rhs`.
           * `<=`: Condition is true if `lhs` is less-than-or-equal to `rhs`.
-          * `==`: Condition is true if `lhs` is equal to `rhs`.
+          * `=`: Condition is true if `lhs` is equal to `rhs`.
           * `!=`: Condition is true if `lhs` differs from `rhs`.
           * `>=`: Condition is true if `lhs` is greater-than-or-equal to `rhs`.
           * `>`: Condition is true if `lhs` is greater than `rhs`.
@@ -31726,7 +31733,7 @@ tags:
 
         * `<`: Condition is true if `lhs` is less than `rhs`.
         * `<=`: Condition is true if `lhs` is less-than-or-equal to `rhs`.
-        * `==`: Condition is true if `lhs` is equal to `rhs`.
+        * `=`: Condition is true if `lhs` is equal to `rhs`.
         * `!=`: Condition is true if `lhs` differs from `rhs`.
         * `>=`: Condition is true if `lhs` is greater-than-or-equal to `rhs`.
         * `>`: Condition is true if `lhs` is greater than `rhs`.
