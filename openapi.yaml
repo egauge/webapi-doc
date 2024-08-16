@@ -1052,6 +1052,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /ctid
+      summary: Delete CTid® info of all sensors
+      operationId: ctidDelete
+      description: |
+        Delete the CTid® info of all sensor ports from the meter.
+        This also terminates any pending `scan` or `flash` operations.
+
+        The CTid® info stored in the sensor is not affected by this
+        operation.
+      responses:
+        '200':
+          description: CTid® delete response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
   /ctid/{port}:
     parameters:
       - description: |
