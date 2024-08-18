@@ -2163,7 +2163,6 @@
   x-path-method-delete:
     description: |
       Reset to [`UTC`](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)  x-schema:
-  x-schema:
     example: "LST7LDT6,M3.2.0/02:00,M11.1.0/02:00"
   description: |
     The timezone the meter is located in.  The string is interpreted
