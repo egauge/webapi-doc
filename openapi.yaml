@@ -16244,7 +16244,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       description: |
-        Reset to [`UTC`](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)  x-schema:
+        Reset to
+        [`UTC`](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).
   /config/user:
     get:
       tags:
