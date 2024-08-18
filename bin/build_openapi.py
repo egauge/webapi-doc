@@ -59,10 +59,7 @@ from pathlib import Path
 from typing import Union
 
 
-from ruamel.yaml.main import (
-    round_trip_load as yaml_load,
-    round_trip_dump as yaml_dump,
-)
+from ruamel.yaml.main import YAML
 
 
 URLDomain = Union[str, dict, list]
@@ -245,8 +242,10 @@ class YAMLFile:
 
         """
         self.filename = basename + ".yaml"
+        self.yaml = YAML()
+        self.yaml.preserve_quotes = True
         with open(self.filename, encoding="utf-8") as f:
-            self.content = yaml_load(f, preserve_quotes=True)
+            self.content = self.yaml.load(f)
 
     def patch_relative_links(self, map_link):
         """Patch the link target of relative links in descriptions so that
@@ -263,7 +262,7 @@ class YAMLFile:
         self._strip_extension_keys(self.content)
 
         with open(output_dir / self.filename, "w", encoding="utf-8") as f:
-            yaml_dump(self.content, f)
+            self.yaml.dump(self.content, f)
 
     def _patch(self, map_link, content):
         """Recurse through contents and patch all relative links found in
