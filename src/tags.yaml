@@ -2981,13 +2981,21 @@
       type: integer
       minimum: 0
   x-schema:
-    example: [{"interval":1000,"row-count":32768,"volatile":true},{"interval":60000,"row-count":527040,"volatile":false},{"interval":900000,"row-count":350640,"volatile":false},{"interval":86400000,"row-count":21914,"volatile":false}]
+    example: [{"head":"1726686333","interval":1000,"row-count":32768,"volatile":true},{"head":"1726686300","interval":60000,"row-count":527040,"volatile":false},{"head":"1726686000","interval":900000,"row-count":350640,"volatile":false},{"head":null,"interval":86400000,"row-count":21914,"volatile":false}]
   description: |
     Definition of the available database storage levels.
 
 - name: /sys/db/level/{idx}
   description: |
     Definition of a database storage level.
+
+- name: /sys/db/level/{idx}/head
+  x-schema:
+    example: "1726675935"
+  description: |
+    The [Unix timestamp](glossary:Unix-Timestamp) of the most recent
+    data row stored at this level of the database.  If `null`, no row
+    is currently available at this database level.
 
 - name: /sys/db/level/{idx}/interval
   x-schema:

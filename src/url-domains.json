@@ -291,6 +291,7 @@
       "max-registers": "integer",
       "level": [
         {
+          "head": "string",
           "interval": "integer",
           "row-count": "integer",
           "volatile": "boolean"
