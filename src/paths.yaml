@@ -699,6 +699,7 @@
             properties:
               info:
                 type: array
+                minItems: 1
                 items:
                   $ref: "./schemas.yaml#/CTidInfoObject"
     responses:
