@@ -548,7 +548,7 @@
                   except for double-quote or control characters.
               targets:
                 type: array
-                minLength: 1
+                minItems: 1
                 example: [11:22:33:44:55:66/ABCD-EFGH-IJKL-MNOP,78:9a:bc:de:f0:01/TPED-PBTX-BLRQ-CPER]
                 description: |
                   The list of bridges on which to set the new
@@ -968,6 +968,7 @@
             properties:
               info:
                 type: array
+                minItems: 1
                 items:
                   $ref: "./schemas.yaml#/CTidInfoObject"
     responses:
