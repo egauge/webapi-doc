@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2023 eGauge Systems LLC
+# Copyright (c) 2023-2024 eGauge Systems LLC
 # 	1644 Conestoga St, Suite 2
 # 	Boulder, CO 80301
 # 	voice: 720-545-9767
@@ -41,13 +41,14 @@ Reads the following input files from the current working directory:
 The program generates the following output files in the output directory:
 
   params.yaml, tags.yaml
-	(same as the respective input file, except that relative links
-	have been remapped according to the output format),
+        (same as the respective input file, except that relative links
+        have been remapped according to the output format),
 
   paths.yaml, schemas.yaml:
-	(updated with paths and schemas generated from url-domains.json
-	and relative links are also remapped according to the output format).
+        (updated with paths and schemas generated from url-domains.json
+        and relative links are also remapped according to the output format).
 """
+
 import argparse
 import json
 import re
@@ -56,13 +57,12 @@ import sys
 from copy import copy
 from enum import Enum
 from pathlib import Path
-from typing import Union
 
-
+from ruamel.yaml.comments import CommentedMap
 from ruamel.yaml.main import YAML
 
 
-URLDomain = Union[str, dict, list]
+URLDomain = str | dict | list
 
 
 class StrEnum(str, Enum):
@@ -139,7 +139,7 @@ class Logger:
 
 def key_is_internal(key: str) -> bool:
     """Return True if the YAML key is used only by this program."""
-    if key == 'x-additionalPropertiesName':	# keep redocly extension...
+    if key == "x-additionalPropertiesName":  # keep redocly extension...
         return False
     return key.startswith("x-")
 
@@ -165,10 +165,12 @@ def delete_desc(json_type: str) -> str:
 
     """
     if json_type == "object":
-        return ("Reset to default. See the descriptions of the individual "
-                "endpoints for their default values.  Commonly, arrays "
-                "and strings are cleared to empty, numbers are cleared "
-                "to 0, and booleans are cleared to `false`.  ")
+        return (
+            "Reset to default. See the descriptions of the individual "
+            "endpoints for their default values.  Commonly, arrays "
+            "and strings are cleared to empty, numbers are cleared "
+            "to 0, and booleans are cleared to `false`.  "
+        )
     if json_type == "array":
         return "Reset to empty array."
     if json_type == "string":
@@ -272,7 +274,7 @@ class YAMLFile:
         if isinstance(content, list):
             for item in content:
                 self._patch(map_link, item)
-        elif isinstance(content, dict):
+        elif isinstance(content, CommentedMap):
             for key, val in content.items():
                 if key == Key.DESCRIPTION:
                     desc = ""
@@ -325,7 +327,7 @@ class InheritedContext:
         # path-variables:
         self.path_vars = path_vars or {}
         # supported methods:
-        self.methods = methods or []
+        self.methods = methods or {}
 
         # query parameters and extra headers that apply to all methods:
         self.path_info = path_info or {}
@@ -351,13 +353,13 @@ class URLDomainGenerator:
         self,
         log: Logger,
         tags: dict,
-        paths: YAMLFile = None,
-        schemas: YAMLFile = None,
+        paths: YAMLFile,
+        schemas: YAMLFile,
     ):
         self.log = log
         self.tags = tags
-        self.paths = paths or []
-        self.schemas = schemas or []
+        self.paths = paths
+        self.schemas = schemas
         self.context_stack = [InheritedContext()]
 
     def push_context(self):
@@ -463,27 +465,33 @@ class URLDomainGenerator:
             if xref_filename != "./schemas.yaml":
                 self.log.error("x-schema-ref file must be schemas.yaml")
                 return
-            xref_value = self.schemas.content.get(xref_name)
-            if not xref_value:
-                self.log.error(
-                    "x-schema-ref name `%s' does not exist",
-                    filename="schemas.yaml",
-                    line=xref.lc.line,
-                )
-                return
 
-            if Key.X_SCHEMA in tag_info:
-                update(
-                    tag_info[str(Key.X_SCHEMA)], xref_value, update_all=True
-                )
-            else:
-                tag_info[str(Key.X_SCHEMA)] = xref_value
+            if isinstance(self.schemas, YAMLFile):
+                xref_value = self.schemas.content.get(xref_name)
+                if not xref_value:
+                    self.log.error(
+                        "x-schema-ref name `%s' does not exist",
+                        filename="schemas.yaml",
+                        line=xref.lc.line,
+                    )
+                    return
 
-            if (
-                Key.DESCRIPTION in xref_value
-                and Key.DESCRIPTION not in tag_info
-            ):
-                tag_info[str(Key.DESCRIPTION)] = xref_value[Key.DESCRIPTION]
+                if Key.X_SCHEMA in tag_info:
+                    update(
+                        tag_info[str(Key.X_SCHEMA)],
+                        xref_value,
+                        update_all=True,
+                    )
+                else:
+                    tag_info[str(Key.X_SCHEMA)] = xref_value
+
+                if (
+                    Key.DESCRIPTION in xref_value
+                    and Key.DESCRIPTION not in tag_info
+                ):
+                    tag_info[str(Key.DESCRIPTION)] = xref_value[
+                        Key.DESCRIPTION
+                    ]
 
         json_type = domain_to_json_type(domain)
 
@@ -506,6 +514,8 @@ class URLDomainGenerator:
         # generate the subdomains:
 
         if json_type == "object":
+            if not isinstance(domain, dict):
+                raise Error("dict expected", domain)
             for key, subdomain in domain.items():
                 if key == "{}":
                     if not path_var_name:
@@ -646,7 +656,7 @@ class URLDomainGenerator:
         schema_name: str,
         json_type: str,
         tag_info: dict,
-        path_var_name: str,
+        path_var_name: str | None,
     ):
         schema_entry = {}
 
@@ -657,11 +667,14 @@ class URLDomainGenerator:
             schema_entry["type"] = json_type
 
         if json_type == "object":
+            if not isinstance(domain, dict):
+                raise Error("dict expected", domain)
+
             if path_var_name:
                 subdomain_schema_name = schema_name + camel_case(path_var_name)
                 schema_entry["additionalProperties"] = {
                     "x-additionalPropertiesName": path_var_name,
-                    "$ref": f"#/{subdomain_schema_name}"
+                    "$ref": f"#/{subdomain_schema_name}",
                 }
             else:
                 props = {}
@@ -696,7 +709,7 @@ class OpenAPIBuilder:
     def __init__(self, prog_name: str, link_format: LinkFormat):
         self.log = Logger(prog_name)
         self.link_format = link_format
-        self.tags = None
+        self.tags = {}
         self.webapi_version = ""
 
     def build(self, output_dir: Path):
