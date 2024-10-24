@@ -2727,6 +2727,8 @@ tags:
       timestamp typically lags behind the current time by a couple of
       seconds because FFTs cannot be calculated in real time.
   - name: /sys/team/reg
+    description: |
+      The current status of all registers (physical and virtual).
   - name: /sys/team/reg/{name}
     description: |
       The current status of the register.
@@ -35311,6 +35313,8 @@ components:
             update: '1708042434'
             val: '12510606428'
           excess: '0'
+      description: |
+        The current status of all registers (physical and virtual).
     sysTeam:
       type: object
       properties:
