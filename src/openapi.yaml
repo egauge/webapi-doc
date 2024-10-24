@@ -7,7 +7,7 @@ info:
     name: Common Documentation License 1.0
     url: https://spdx.org/licenses/CDL-1.0.html
 servers:
-  - url: https://{devname}.d.egauge.net/api
+  - url: https://{devname}.egauge.io/api
     description: The WebAPI server
     variables:
       devname:
