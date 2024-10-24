@@ -53,14 +53,12 @@ import argparse
 import json
 import re
 import sys
-
 from copy import copy
 from enum import Enum
 from pathlib import Path
 
 from ruamel.yaml.comments import CommentedMap
 from ruamel.yaml.main import YAML
-
 
 URLDomain = str | dict | list
 
@@ -88,7 +86,8 @@ class Key(StrEnum):
 
 class LinkFormat(StrEnum):
     REDOCLY_PREVIEW = "redocly-preview"
-    REDOCLY_HOSTED = "redocly-hosted"
+    REDOCLY_HOSTED = "redocly-hosted"  # legacy (reflow?)
+    REDOCLY_REUNITE = "redocly-reunite"
 
 
 class Method(StrEnum):
@@ -135,6 +134,33 @@ class Logger:
     def error(self, msg, filename=None, line=None, col=None):
         self.error_count += 1
         self.message("error", msg, filename=filename, line=line, col=col)
+
+
+def operation_id(path: str, method: str) -> str:
+    """Return the operationId tag for a given path and HTTP method.
+    This is formed from the path by removing all non-letter characters
+    from the path components and then camel-casing each component and
+    concatening them.  Finally, the capitalized method name is appended.
+
+    Required arguments:
+
+    path -- The resource path (e.g., /cmd/activate)
+
+    method -- The HTTP method name (typically one of "get", "put",
+        "post", or "delete".
+
+    """
+    op_id = ""
+    first = True
+    components = path.split("/")[1:]
+    for component in components:
+        slug = re.sub(r"[^a-z]", "", component, flags=re.IGNORECASE)
+        if first:
+            first = False
+            op_id = slug.lower()
+        else:
+            op_id += slug.capitalize()
+    return op_id + method.capitalize()
 
 
 def key_is_internal(key: str) -> bool:
@@ -709,49 +735,50 @@ class OpenAPIBuilder:
     def __init__(self, prog_name: str, link_format: LinkFormat):
         self.log = Logger(prog_name)
         self.link_format = link_format
-        self.tags = {}
         self.webapi_version = ""
+
+        # read input files, patching intra-document links:
+        self.openapi = YAMLFile("openapi")
+        self.tag_list = YAMLFile("tags")
+        self.tags = {}
+        self.params = YAMLFile("params")
+        self.paths = YAMLFile("paths")
+        self.schemas = YAMLFile("schemas")
 
     def build(self, output_dir: Path):
         """Build the OpenAPI 3.1 spec."""
 
-        # read input files, patching intra-document links:
-        openapi = YAMLFile("openapi")
-        tag_list = YAMLFile("tags")
-        params = YAMLFile("params")
-        paths = YAMLFile("paths")
-        schemas = YAMLFile("schemas")
-
-        webapi_version = openapi.content["info"]["version"]
-        self.webapi_version = f"/v{webapi_version}"
+        version = self.openapi.content["info"]["version"]
+        if self.link_format == LinkFormat.REDOCLY_HOSTED:
+            version = "v" + version
+        self.webapi_version = "/" + version
 
         # first, just create a dict of all tag names so map_link can check it:
-        self.tags = {}
-        for tag in tag_list.content:
+        for tag in self.tag_list.content:
             path = tag["name"]
             self.tags[path] = True
 
-        tag_list.patch_relative_links(self.map_link)
+        self.tag_list.patch_relative_links(self.map_link)
 
         # now create actual tags info dictionary:
-        for tag in tag_list.content:
+        for tag in self.tag_list.content:
             item = copy(tag)
             path = item["name"]
             del item["name"]
             self.tags[path] = item
 
-        params.patch_relative_links(self.map_link)
-        paths.patch_relative_links(self.map_link)
-        schemas.patch_relative_links(self.map_link)
+        self.params.patch_relative_links(self.map_link)
+        self.paths.patch_relative_links(self.map_link)
+        self.schemas.patch_relative_links(self.map_link)
 
         with open("url-domains.json", encoding="utf-8") as f:
             url_domains = json.load(f)
-        gen = URLDomainGenerator(self.log, self.tags, paths, schemas)
+        gen = URLDomainGenerator(self.log, self.tags, self.paths, self.schemas)
         gen.translate(url_domains)
 
         # pick up additional tag descriptions from x-schema-ref:
 
-        for tag in tag_list.content:
+        for tag in self.tag_list.content:
             path = tag["name"]
             if Key.DESCRIPTION not in tag:
                 desc = self.tags[path].get(Key.DESCRIPTION)
@@ -760,10 +787,10 @@ class OpenAPIBuilder:
 
         # write out the patched file, removing any extension tags:
 
-        params.strip_and_write(output_dir)
-        paths.strip_and_write(output_dir)
-        schemas.strip_and_write(output_dir)
-        tag_list.strip_and_write(output_dir)
+        self.params.strip_and_write(output_dir)
+        self.paths.strip_and_write(output_dir)
+        self.schemas.strip_and_write(output_dir)
+        self.tag_list.strip_and_write(output_dir)
 
         if self.log.error_count:
             print(f"{self.log.prog_name}: {self.log.error_count} errors found")
@@ -784,38 +811,84 @@ class OpenAPIBuilder:
         parts = target.split(":")
 
         if parts[0] == "glossary":
-            section = parts[1].replace(" ", "-")
+            slug = parts[1].replace(" ", "-")
             if self.link_format == LinkFormat.REDOCLY_PREVIEW:
-                return "/tag/Glossary#tag/Glossary/" + section
-            return self.webapi_version + "/tag/Glossary#section/" + section
+                return "/tag/Glossary#tag/Glossary/" + slug
+            if self.link_format == LinkFormat.REDOCLY_HOSTED:
+                return self.webapi_version + "/tag/Glossary#section/" + slug
+            return "/webapi/openapi/glossary#section/" + slug
 
         if parts[0] == "path" or parts[0] == "op":
             path = parts[1]
+            uri = self.path_uri(path)
+
+            if parts[0][0] == "p":
+                if path not in self.tags:
+                    self.log.error(
+                        f"path link target {path} does not exist in tags.yaml!",
+                        filename=filename,
+                        line=line,
+                    )
+                return uri  # return link for path
+
+            # form link for operation:
+
+            method = parts[2]
+
+            target_path = path
+
+            path_entry = self.paths.content.get(path)
+            if path_entry:
+                path = path_entry.get(method, {}).get("tags", [])[0]
+                if path:
+                    uri = self.path_uri(path)
+
             if path not in self.tags:
                 self.log.error(
-                    f"link target {path} does not exist in tags.yaml!",
+                    f"op link target {path} does not exist in tags.yaml!",
                     filename=filename,
                     line=line,
                 )
-            slug = re.sub(r"[^a-z]", "", path, flags=re.IGNORECASE)
-            if self.link_format == LinkFormat.REDOCLY_PREVIEW:
-                uri = "#tag/" + slug
-            else:
-                uri = self.webapi_version + "/tag/" + slug
-            if parts[0][0] == "p":
-                return uri
 
-            operation_id = parts[2]
-            if self.link_format == LinkFormat.REDOCLY_PREVIEW:
-                uri += "/operation/" + operation_id
+            if self.link_format in [
+                LinkFormat.REDOCLY_PREVIEW,
+                LinkFormat.REDOCLY_HOSTED,
+            ]:
+                op_id = operation_id(target_path, method)
+
+                if self.link_format == LinkFormat.REDOCLY_PREVIEW:
+                    uri += "/operation/" + op_id
+                else:
+                    uri += self.webapi_version + "#operation/" + op_id
             else:
-                uri += self.webapi_version + "#operation/" + operation_id
+                slug = re.sub(r"[^a-z]", "", target_path, flags=re.IGNORECASE)
+                uri += "/" + slug + method
             return uri
 
         self.log.error(
             f"invalid link target `{target}'", filename=filename, line=line
         )
         return target
+
+    def path_uri(self, path: str) -> str:
+        """Return the URI for a given resource path.  The result
+        depends on the selected link-format.
+
+        Required arguments.
+
+        path -- The resource path (e.g., /cmd/activate)
+
+        """
+
+        slug = re.sub(r"[^-a-z]", "", path, flags=re.IGNORECASE)
+
+        if self.link_format == LinkFormat.REDOCLY_PREVIEW:
+            uri = "#tag/" + slug
+        elif self.link_format == LinkFormat.REDOCLY_HOSTED:
+            uri = self.webapi_version + "/tag/" + slug
+        else:
+            uri = "/webapi/openapi/" + slug
+        return uri
 
 
 def run():
