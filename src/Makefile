@@ -35,4 +35,4 @@ built/tags.yaml: $(SRC_FILES) ../bin/build_openapi.py
 	$(BUILD_OPENAPI) -l $(LINK_FORMAT) -o built
 
 $(TARGET): built $(BUILT_PATHS)
-	$(BUNDLE) > $(TARGET) && cp $(TARGET) ..
+	$(BUNDLE) > $(TARGET)

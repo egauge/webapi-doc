@@ -69,7 +69,7 @@ tags:
       The official GIT repository for this package is at
       [https://bitbucket.org/egauge/python/](https://bitbucket.org/egauge/python/).
       Various code examples can be found in the
-      [examples](https://bitbucket.org/egauge/python/src/master/examples/)
+      [examples](https://bitbucket.org/egauge/python/src/main/egauge/examples/)
       directory.
   - name: /auth
     description: |
@@ -180,7 +180,7 @@ tags:
       ## Python Example
 
       A Python program illustrating the use of this service can be found
-      [here](https://bitbucket.org/egauge/python/src/master/examples/test_capture.py).
+      [here](https://bitbucket.org/egauge/python/src/main/egauge/examples/test_capture.py).
       This program takes advantage of class
       `egauge.webapi.device.Capture` to handle the details of encoding
       the HTTP requests and decoding the responses.
@@ -1498,7 +1498,7 @@ tags:
       ## Python Example
 
       A Python program illustrating the use of this service can be found
-      [here](https://bitbucket.org/egauge/python/src/master/examples/test_ctid.py).
+      [here](https://bitbucket.org/egauge/python/src/main/egauge/examples/test_ctid.py).
       This program takes advantage of class
       `egauge.webapi.device.CTidInfo` to handle the details of encoding
       the HTTP requests and decoding the responses.
@@ -1610,7 +1610,7 @@ tags:
       ## Python Example
 
       A Python program illustrating the use of this service can be found
-      [here](https://bitbucket.org/egauge/python/src/master/examples/test_local.py).
+      [here](https://bitbucket.org/egauge/python/src/main/egauge/examples/test_local.py).
       This program takes advantage of class `egauge.webapi.device.Local`
       to handle the details of encoding the HTTP requests and decoding
       the responses.
@@ -1848,7 +1848,7 @@ tags:
       ## Python Example
 
       A Python program illustrating the use of this service can be found
-      [here](https://bitbucket.org/egauge/python/src/master/examples/test_register.py).
+      [here](https://bitbucket.org/egauge/python/src/main/egauge/examples/test_register.py).
       This program takes advantage of class
       `egauge.webapi.device.Register` to handle the details of encoding
       the HTTP requests and decoding the responses.  The class also takes
