@@ -6,9 +6,10 @@ SRC_FILES = openapi.yaml params.yaml tags.yaml url-domains.json
 BUILT_FILES = schemas params paths tags
 BUILT_PATHS = $(foreach f,$(BUILT_FILES),built/$f.yaml)
 
-TARGET = built/openapi.yaml
+TARGET = ../output/openapi.yaml
 
-LINK_FORMAT = redocly-hosted
+# Use "make LINK_FORMAT=redocly-preview" for previewing
+LINK_FORMAT := redocly-reunite
 
 all: $(TARGET)
 

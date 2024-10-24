@@ -7,7 +7,7 @@ afterParam:
     decimal number and may include a fractional part.  The number is
     interpreted as seconds since the epoch.  For most logs, the epoch
     is the Unix epoch (i.e., seconds since the start of Jan 1, 1970
-    UTC).  However, for the [kernel log](op:/log:logKernelGet),
+    UTC).  However, for the [kernel log](op:/log/kernel:get),
     the epoch is the time the meter was powered up (booted).
   schema:
     type: number

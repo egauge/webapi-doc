@@ -315,7 +315,7 @@
     tags:
     - /cmd
     summary: Manipulate database
-    operationId: cmdDB
+    operationId: cmdDbPost
     description: |
       This command supports restoring the database from a backup file,
       zeroing of all or parts of the database, as well as splitting
@@ -408,8 +408,8 @@
   post:
     tags:
     - /cmd
-    summary: Restore factory settings.
-    operationId: cmdFactoryRestore
+    summary: Restore factory settings
+    operationId: cmdFactoryRestorePost
     description: |
       Restore the factory settings and reboot the meter.
 
@@ -432,8 +432,8 @@
   post:
     tags:
     - /cmd
-    summary: Reboot the meter.
-    operationId: cmdReboot
+    summary: Reboot the meter
+    operationId: cmdRebootPost
     description: |
       Initiate a reboot of the meter. The actual reboot command is
       delayed by one second to increase the likelihood that the reply
@@ -465,8 +465,8 @@
   post:
     tags:
     - /cmd
-    summary: Set date and time.
-    operationId: cmdSetTime
+    summary: Set date and time
+    operationId: cmdSetTimePost
     description: |
         Optionally set the date/time of the meter and restart the NTP
         and/or the PTP services, if configured.
@@ -498,8 +498,8 @@
   post:
     tags:
     - /cmd
-    summary: Update the meter.
-    operationId: cmdUpdate
+    summary: Update the meter
+    operationId: cmdUpdatePost
     description: |
         Update the meter firmware or kernel.
     requestBody:
@@ -573,8 +573,8 @@
   post:
     tags:
     - /cmd
-    summary: Manage WLAN (WiFi) connection.
-    operationId: cmdWLAN
+    summary: Manage WLAN (WiFi) connection
+    operationId: cmdWlanPost
     description: |
       Manage WLAN (Wi-Fi) connection.  See
       [/sys/net/wlan](path:/sys/net/wlan) to get the currently
