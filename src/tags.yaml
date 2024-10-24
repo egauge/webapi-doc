@@ -179,7 +179,7 @@
     their side effects, such as rebooting the meter.  Unless stated
     otherwise, the resources in this service are available only to
     users with the save right (see
-    [/auth/rights](op:/auth:authRightsGet)).
+    [/auth/rights](op:/auth/rights:get)).
 
 - name: /config
   x-path-methods: [get, put, post, delete]
@@ -2213,7 +2213,7 @@
     this service primarily during device setup.
 
     All methods other than `GET` required a user with the [save
-    right](op:/auth:authRightsGet).
+    right](op:/auth/rights:get).
 
     ## Python Example
 
@@ -2412,7 +2412,7 @@
     Provides access to various logs.  Since logs may contain sensitive
     information, this service is available only to users with the
     `save` privilege (see
-    [/auth/rights](op:/auth:authRightsGet)).
+    [/auth/rights](op:/auth/rights:get)).
 
 - name: /lua
   x-path-methods: [get, put, post, delete]
@@ -3427,7 +3427,7 @@
   description: |
     This is `true` if the meter needs to be rebooted, e.g., due to a
     configuration change.  If so, a [reboot
-    command](op:/cmd:cmdReboot) should be issued at the
+    command](op:/cmd/reboot:post) should be issued at the
     next opportune moment.
 
 - name: /sys/sn
