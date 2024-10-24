@@ -1987,16 +1987,16 @@ TariffProvidersObject:
                   defined for this tariff provider.  User interfaces
                   need to make sure that the listed parameters are
                   filled in by the user and then save them in the
-                  corresponding [server-storage](path:/store) variables
-                  before activating the tariff.  The Lua tariff script
-                  can then rely on these variables to correctly
-                  calculate cost.
+                  corresponding [server-storage](path:/config/var)
+                  variables before activating the tariff.  The Lua
+                  tariff script can then rely on these variables to
+                  correctly calculate cost.
 
                   The parameters have the following meaning:
 
                     * `bill_contracted_demand`: If present,
-                    [server-storage](path:/store) variable
-                    `global/billing/bill_contracted_demand` needs to
+                    [server-storage](path:/config/var) variable
+                    `global.billing.bill_contracted_demand` needs to
                     be set up to indicated whether or not the contract
                     demand should be billed, regardless of the actual
                     demand.  If the value of this variable is the
@@ -2004,29 +2004,29 @@ TariffProvidersObject:
                     billed.
 
                     * `contract_demand`: If present,
-                    [server-storage](path:/store) variable
-                    `global/billing/contract_demand` needs to be set
+                    [server-storage](path:/config/var) variable
+                    `global.billing.contract_demand` needs to be set
                     up to indicate the demand (typically in kilowatts)
                     that was contracted from the utility.  This must
                     be a decimal number string.
 
                     * `start_day`: If present,
-                    [server-storage](path:/store) variable
-                    `global/billing/start_day` needs to be set up to
+                    [server-storage](path:/config/var) variable
+                    `global.billing.start_day` needs to be set up to
                     indicate the day of the month that the meter is
                     read.  This must be a decimal integer string in
                     the range from 1 to 31.
 
                     * `surcharges`: If present,
-                    [server-storage](path:/store) variable
-                    `global/billing/surcharges` needs to be set up to
+                    [server-storage](path:/config/var) variable
+                    `global.billing.surcharges` needs to be set up to
                     indicate energy surcharges as a cost per unit
                     energy (e.g., dollars per kWh).  This must be a
                     decimal number string.
 
                     * `taxes`: If present,
-                    [server-storage](path:/store) variable
-                    `global/billing/taxes` needs to be set up to
+                    [server-storage](path:/config/var) variable
+                    `global.billing.taxes` needs to be set up to
                     indicate the percentage of taxes to add to the
                     calculated energy cost.  This must be a positive
                     decimal number string.
