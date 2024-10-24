@@ -3891,6 +3891,8 @@
       type: string
   x-schema:
     example: {"Grid":{"available":true,"last":{"update":"1708042434","val":"1190154529"},"excess":"0"},"SolarSPR":{"available":true,"last":{"update":"1708042434","val":"12510606428"},"excess":"0"}}
+  description: |
+    The current status of all registers (physical and virtual).
 
 - name: /sys/team/reg/{name}
   description: |
