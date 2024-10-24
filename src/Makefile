@@ -9,10 +9,10 @@ SRC_FILES = openapi.yaml params.yaml paths.yaml schemas.yaml tags.yaml \
 BUILT_FILES = schemas params paths tags
 BUILT_PATHS = $(foreach f,$(BUILT_FILES),built/$f.yaml)
 
-TARGET = built/openapi.yaml
+TARGET = ../output/openapi.yaml
 
 # Use "make LINK_FORMAT=redocly-preview" for previewing
-LINK_FORMAT := redocly-hosted
+LINK_FORMAT := redocly-reunite
 
 all: $(TARGET)
 
@@ -38,7 +38,7 @@ built/tags.yaml: $(SRC_FILES) ../bin/build_openapi.py
 	$(BUILD_OPENAPI) -l $(LINK_FORMAT) -o built
 
 $(TARGET): built $(BUILT_PATHS) $(SRC_FILES)
-	$(BUNDLE) > $(TARGET) && cp $(TARGET) ..
+	$(BUNDLE) > $(TARGET)
 
 url-domains.json: ALWAYS
 	-@tmp=$$(mktemp);			\

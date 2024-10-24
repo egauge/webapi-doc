@@ -1160,7 +1160,7 @@ ServiceActivationResult:
   type: object
   description: |
     The result returned in response to a [service activation
-    command](op:/cmd:cmdActivate).
+    command](op:/cmd/activate:post).
   properties:
     activated:
       type: boolean
@@ -2043,7 +2043,7 @@ TestEmailResult:
   type: object
   description: |
     The result returned in response to a ([send test
-    email command](op:/cmd:cmdTestEmail)).
+    email command](op:/cmd/test-email:post).
   properties:
     log:
       type: string
@@ -2057,7 +2057,7 @@ TestRemoteResult:
   type: object
   description: |
     The result returned in response to a ([test remote device
-    command](op:/cmd:cmdTestRemote)).
+    command](op:/cmd/test-remote:post)).
   properties:
     trace:
       type: array

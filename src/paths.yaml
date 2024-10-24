@@ -255,7 +255,7 @@
     tags:
     - /cmd
     summary: Activate a service
-    operationId: cmdActivate
+    operationId: cmdActivatePost
     description: |
         Activate a service with an external provider (web server).
 
@@ -304,7 +304,7 @@
     tags:
     - /cmd
     summary: Cancel pending operation
-    operationId: cmdCancelSLOP
+    operationId: cmdCancelPost
     description: |
       Cancel the long-running operation identified by its token.
     requestBody:
@@ -401,7 +401,7 @@
     tags:
     - /cmd
     summary: Manipulate database
-    operationId: cmdDB
+    operationId: cmdDbPost
     description: |
       This command supports restoring the database from a backup file,
       zeroing of all or parts of the database, as well as splitting
@@ -495,7 +495,7 @@
     tags:
     - /cmd
     summary: Restore factory settings
-    operationId: cmdFactoryRestore
+    operationId: cmdFactoryRestorePost
     description: |
       Restore the factory settings and reboot the meter.
 
@@ -519,7 +519,7 @@
     tags:
     - /cmd
     summary: Manage HomePlug
-    operationId: cmdHomePlug
+    operationId: cmdHomePlugPost
     description: |
       Manage one or more HomePlug devices.
     requestBody:
@@ -581,7 +581,7 @@
     tags:
     - /cmd
     summary: Reboot the meter
-    operationId: cmdReboot
+    operationId: cmdRebootPost
     description: |
       Initiate a reboot of the meter. The actual reboot command is
       delayed by one second to increase the likelihood that the reply
@@ -614,7 +614,7 @@
     tags:
     - /cmd
     summary: Set date and time
-    operationId: cmdSetTime
+    operationId: cmdSetTimePost
     description: |
         Optionally set the date/time of the meter and restart the NTP
         and/or the PTP services, if configured.
@@ -647,7 +647,7 @@
     tags:
     - /cmd
     summary: Test sending email
-    operationId: cmdTestEmail
+    operationId: cmdTestemailPost
     description: |
         Test sending an email using the mail configuration specified
         in the body of this request.
@@ -717,7 +717,7 @@
     tags:
     - /cmd
     summary: Test remote device
-    operationId: cmdTestRemote
+    operationId: cmdTestremotePost
     description: |
         Try connecting to a remote device and, if successful, return
         the set of registers available on the device.
@@ -764,7 +764,7 @@
     tags:
     - /cmd
     summary: Update the meter
-    operationId: cmdUpdate
+    operationId: cmdUpdatePost
     description: |
         Update the meter firmware or kernel.
     requestBody:
@@ -843,7 +843,7 @@
     tags:
     - /cmd
     summary: Manage WLAN (WiFi) connection
-    operationId: cmdWLAN
+    operationId: cmdWlanPost
     description: |
       Manage WLAN (Wi-Fi) connection.  See
       [/sys/net/wlan](path:/sys/net/wlan) to get the currently
@@ -1754,7 +1754,7 @@
       Get a list of available alert service providers.
 
       Reporting alerts to a service provider requires executing the
-      [service activation command](op:/cmd:cmdActivate) on the meter.
+      [service activation command](op:/cmd/activate:post) on the meter.
       That command then uses the [service activation
       protocol](glossary:Service-Activation) to set up the provider to
       ensure it is able and willing to accept the alerts.
@@ -1783,7 +1783,7 @@
       Get a list of available push service providers.
 
       Sharing data with a push service provider requires executing the
-      [service activation command](op:/cmd:cmdActivate) on the meter.
+      [service activation command](op:/cmd/activate:post) on the meter.
       That command then uses the [service activation
       protocol](glossary:Service-Activation) to set up the provider to
       ensure it is able and willing to accept the data.
