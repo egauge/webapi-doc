@@ -152,7 +152,7 @@ tags:
       therefore the response contains sample values. The frequency of
       the counter used to generate the timestamps is 1MHz (`"ts_freq":
       1000000`) and the realtime [Unix
-      timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) of the first sample is 28
+      timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) of the first sample is 28
       April 2021, 19:14:48 UTC (`first_sample": "1619637288.061"`). The
       `ch_mask` member is an array of 32-bit integers.  If a bit is set
       in this mask, data for that channel is included in the response.
@@ -273,7 +273,7 @@ tags:
       operator.
   - name: /config/alert/custom/{idx}/cond/lhs
     description: |
-      An [eScript](/webapi/openapi/glossary#section/eScript) expression that returns the
+      An [eScript](/webapi/latest/openapi/glossary#section/eScript) expression that returns the
       value to use on the left hand side of the comparison.
   - name: /config/alert/custom/{idx}/cond/op
     description: |
@@ -289,7 +289,7 @@ tags:
         * `>`: Condition is true if `lhs` is greater than `rhs`.
   - name: /config/alert/custom/{idx}/cond/rhs
     description: |
-      An [eScript](/webapi/openapi/glossary#section/eScript) expression that returns the
+      An [eScript](/webapi/latest/openapi/glossary#section/eScript) expression that returns the
       value that to use on the right hand side of the comparison.
   - name: /config/alert/custom/{idx}/detail
     description: |
@@ -328,7 +328,7 @@ tags:
     description: |
       The configuration for reporting alerts via email server.  If alert
       reporting via web server is enabled
-      ([/config/alert/reporter/web/uri](/webapi/openapi/glossary#section/configalertreporterweburi)
+      ([/config/alert/reporter/web/uri](/webapi/latest/openapi/glossary#section/configalertreporterweburi)
       is not empty), reporting via email server is disabled.
   - name: /config/alert/reporter/mail/server
     description: |
@@ -506,7 +506,7 @@ tags:
       performance.
   - name: /config/bacnet/server/mstp/port
     description: |
-      The [serial-port](/webapi/openapi/glossary#section/Serial-Ports) to use for the MS/TP
+      The [serial-port](/webapi/latest/openapi/glossary#section/Serial-Ports) to use for the MS/TP
       protocol.
   - name: /config/db
     description: |
@@ -514,7 +514,7 @@ tags:
   - name: /config/db/epoch
     description: |
       The time when the meter started recording data.  This is a decimal
-      [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.
+      [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.
 
       The relevance of this resource is that other services in this API
       by default return accumulated register values relative to this
@@ -983,7 +983,7 @@ tags:
       The RTU protocol configuration.
   - name: /config/modbus/server/rtu/port
     description: |
-      The [serial-port](/webapi/openapi/glossary#section/Serial-Ports) to use for the RTU
+      The [serial-port](/webapi/latest/openapi/glossary#section/Serial-Ports) to use for the RTU
       protocol.
   - name: /config/modbus/server/tcp
     description: |
@@ -1042,7 +1042,7 @@ tags:
 
       Modification requests (`PUT`, `POST`, and `DELETE`) to this
       resource are not executed
-      [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates).
+      [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates).
   - name: /config/net/http/certificate
     description: |
       The certificate used by the web server to identify itself over
@@ -1133,12 +1133,12 @@ tags:
         * The web-server's plain HTTP service (port 80).
 
         * The service that provides the meter data via
-          [link-type](/webapi/openapi/glossary#section/Link-Types) `udp`.  Thus, it other
+          [link-type](/webapi/latest/openapi/glossary#section/Link-Types) `udp`.  Thus, it other
           meters will not be able to read this meters data via this
           link type anymore.
 
       This resource is **not** updated
-      [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates) and after
+      [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates) and after
       changing its value, the web server will be unavailable
       temporarily.
   - name: /config/net/proxy
@@ -1351,7 +1351,7 @@ tags:
       automatically get remapped to an unused index.
   - name: /config/register/physical/{reg}/type
     description: |
-      The [type code](/webapi/openapi/glossary#section/Type-Codes) of the register.
+      The [type code](/webapi/latest/openapi/glossary#section/Type-Codes) of the register.
   - name: /config/register/physical/{reg}/value
     description: |
       Defines the how the register value is obtained or calculated.  For
@@ -1374,7 +1374,7 @@ tags:
           by `S1*L2`.
 
         * An equal sign (`=`) followed by an
-          [eScript](/webapi/openapi/glossary#section/eScript) expression.  The register
+          [eScript](/webapi/latest/openapi/glossary#section/eScript) expression.  The register
           value is obtained by evaluating the eScript expression once
           per [update interval](/webapi/latest/openapi/configlocalupdate-interval).
           Non-finite numbers (e.g., not-a-number, or infinities) are
@@ -1443,7 +1443,7 @@ tags:
         * `-`: The physical register value is to be subtracted.
 
         * `+max0`, `-max0`, `+min0`, `-min0`:
-        **[Deprecated](/webapi/openapi/glossary#section/Deprecated)**. These operators do
+        **[Deprecated](/webapi/latest/openapi/glossary#section/Deprecated)**. These operators do
         not work correctly and remain only to preserve compatibility
         with existing, old, device configurations.  Attempting to write
         these operators with a `PUT` or `POST` request will result in an
@@ -1465,10 +1465,10 @@ tags:
   - name: /config/remote/{name}/address
     description: |
       The address of the remote device.  The meaning of this value
-      depends on the [link-type](/webapi/openapi/glossary#section/Link-Types).
+      depends on the [link-type](/webapi/latest/openapi/glossary#section/Link-Types).
   - name: /config/remote/{name}/link_type
     description: |
-      The [link-type](/webapi/openapi/glossary#section/Link-Types) of the remote device.
+      The [link-type](/webapi/latest/openapi/glossary#section/Link-Types) of the remote device.
   - name: /config/time
     description: |
       Time related configurations.
@@ -1483,20 +1483,20 @@ tags:
       The user accounts.
 
       Each user account has a name, a set of
-      [privileges](/webapi/openapi/glossary#section/User-Privileges), and the credentials
+      [privileges](/webapi/latest/openapi/glossary#section/User-Privileges), and the credentials
       (password) required to log into the account.
   - name: /config/user/{name}
     description: |
       A user configuration (account).
   - name: /config/user/{name}/priv
     description: |
-      The list of [privileges](/webapi/openapi/glossary#section/User-Privileges) the user possesses.
+      The list of [privileges](/webapi/latest/openapi/glossary#section/User-Privileges) the user possesses.
   - name: /config/user/{name}/priv/{idx}
     description: |
-      A [privilege](/webapi/openapi/glossary#section/User-Privileges) the user possesses.
+      A [privilege](/webapi/latest/openapi/glossary#section/User-Privileges) the user possesses.
   - name: /config/user/{name}/hash
     description: |
-      The [hash](/webapi/openapi/glossary#section/Password-Hashes) of the user's password.
+      The [hash](/webapi/latest/openapi/glossary#section/Password-Hashes) of the user's password.
       Writing an empty hash string disables the account.
 
       This resource is write-only.
@@ -1509,7 +1509,7 @@ tags:
       users can consistenty display monetary values.
 
       Any authenticated user can read meter variables but only users who
-      have the [privilege to save settings](/webapi/openapi/glossary#section/User-Privileges)
+      have the [privilege to save settings](/webapi/latest/openapi/glossary#section/User-Privileges)
       can create or update them.
 
       Variable names must be at least one character long and may consist
@@ -1567,11 +1567,11 @@ tags:
           that utility meter is read on the last day of that month.
 
           The meter-firmware uses this, for example, to implement the
-          `sob` [time point](/webapi/openapi/glossary#section/Time-Point-Names).
+          `sob` [time point](/webapi/latest/openapi/glossary#section/Time-Point-Names).
 
         * `billing.tariff_uri`: If not an empty string, this is
           interpreted as the URL from which to fetch a [Lua
-          script](/webapi/openapi/glossary#section/Lua-Scripts) that calculates energy cost.
+          script](/webapi/latest/openapi/glossary#section/Lua-Scripts) that calculates energy cost.
           The meter will periodically poll this URL and download any
           available updates to the script.
 
@@ -1633,7 +1633,7 @@ tags:
       Provides information about devices that can
       accept control calls.  Each device is described by a set of
       name/value pairs called [device
-      attributes](/webapi/openapi/glossary#section/Device-Attributes).
+      attributes](/webapi/latest/openapi/glossary#section/Device-Attributes).
   - name: /ctrl/interface
     description: |
       The names and descriptions of control interfaces detected by the
@@ -1804,7 +1804,7 @@ tags:
         ```
 
       Member `ts` returns the time as decimal string.  It is a [Unix
-      timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) that, converted to a
+      timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) that, converted to a
       human-readable format, corresponds to March 10, 2023, 19:12:24 and
       123ms in the UTC timezone.  If the meter is connected to the
       Internet, its time should usually be accurate (see
@@ -1832,7 +1832,7 @@ tags:
 
         Member `registers` contains information about the registers
         configured on the meter.  The response shows that each register
-        has a `name`, a [`type`](/webapi/openapi/glossary#section/Type-Codes) which defines
+        has a `name`, a [`type`](/webapi/latest/openapi/glossary#section/Type-Codes) which defines
         the physical unit of that register, and several other attributes
         which will be explained in more detail later. In our example,
         there are registers called `V1`, measuring a voltage, `grid`
@@ -1854,7 +1854,7 @@ tags:
         ```
 
         If we look up type `T` in the [type code
-        table](/webapi/openapi/glossary#section/Type-Codes), we find that the rate unit is
+        table](/webapi/latest/openapi/glossary#section/Type-Codes), we find that the rate unit is
         °C, so the response indicates that the current temperature is
         about 13.6 °C or 56.4 °F.
 
@@ -1886,7 +1886,7 @@ tags:
         from 7,033,149,079 to 7,494,425,049 during that time &mdash; an
         increase of 461,275,970.  That's a big number, but what does it
         mean?  If we look up type code `T` in the [type
-        code](/webapi/openapi/glossary#section/Type-Codes) table again, we see that the
+        code](/webapi/latest/openapi/glossary#section/Type-Codes) table again, we see that the
         temperature quantum is 0.001 and the description there also
         explains how values are accumulated over time.  Thus, if we
         multiply the increase in value by the quantum and then divide
@@ -1964,11 +1964,11 @@ tags:
           that utility meter is read on the last day of that month.
 
           The meter-firmware uses this, for example, to implement the
-          `sob` [time point](/webapi/openapi/glossary#section/Time-Point-Names).
+          `sob` [time point](/webapi/latest/openapi/glossary#section/Time-Point-Names).
 
         * `global/billing/tariff_uri`: If not an empty string, this is
           interpreted as the URL from which to fetch a [Lua
-          script](/webapi/openapi/glossary#section/Lua-Scripts) that calculates energy
+          script](/webapi/latest/openapi/glossary#section/Lua-Scripts) that calculates energy
           cost.  The meter will periodically poll this URL and download
           any available updates to the script.
 
@@ -1983,7 +1983,7 @@ tags:
       System information.  Everything here is read-only.
 
       Accessing this service requires the [view_settings
-      privilege](/webapi/openapi/glossary#section/User-Privileges).
+      privilege](/webapi/latest/openapi/glossary#section/User-Privileges).
   - name: /sys/alert
     description: |
       Descriptions of the system-generated alerts.
@@ -2024,7 +2024,7 @@ tags:
   - name: /sys/boot/time
     description: |
       The time of the last user-initiated reboot.  It is a decimal [Unix
-      timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string or `null` if
+      timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string or `null` if
       unavailable.  Unanticipated reboots, e.g., due to power failure or
       watchdog-timeouts do not update this resource.
   - name: /sys/db
@@ -2042,7 +2042,7 @@ tags:
       Definition of a database storage level.
   - name: /sys/db/level/{idx}/head
     description: |
-      The [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) of the most recent
+      The [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) of the most recent
       data row stored at this level of the database.  If `null`, no row
       is currently available at this database level.
   - name: /sys/db/level/{idx}/interval
@@ -2088,11 +2088,11 @@ tags:
       The version of the serial port hardware.
   - name: /sys/func
     description: |
-      Documents the [eScript](/webapi/openapi/glossary#section/eScript) functions built
+      Documents the [eScript](/webapi/latest/openapi/glossary#section/eScript) functions built
       into the meter.
   - name: /sys/func/basic
     description: |
-      Documents the *basic* [eScript](/webapi/openapi/glossary#section/eScript) functions.  Basic
+      Documents the *basic* [eScript](/webapi/latest/openapi/glossary#section/eScript) functions.  Basic
       functions are available any place eScript expressions may appear.
   - name: /sys/func/basic/{name}
     description: |
@@ -2115,7 +2115,7 @@ tags:
       (member `help`).  Other than that, the name has no significance.
   - name: /sys/func/basic/{name}/arg/{idx}/type
     description: |
-      A [type code](/webapi/openapi/glossary#section/Type-Codes) indicating the type of the
+      A [type code](/webapi/latest/openapi/glossary#section/Type-Codes) indicating the type of the
       argument.  The special value `string` indicates that the value
       must be a string.
   - name: /sys/func/basic/{name}/help
@@ -2134,7 +2134,7 @@ tags:
       member `arg`.
   - name: /sys/func/alert
     description: |
-      Documents the *alert* [eScript](/webapi/openapi/glossary#section/eScript) functions.  These
+      Documents the *alert* [eScript](/webapi/latest/openapi/glossary#section/eScript) functions.  These
       functions are available only for eScript expressions evaluated as
       part of alert conditions.
   - name: /sys/func/alert/{name}
@@ -2158,7 +2158,7 @@ tags:
       (member `help`).  Other than that, the name has no significance.
   - name: /sys/func/alert/{name}/arg/{idx}/type
     description: |
-      A [type code](/webapi/openapi/glossary#section/Type-Codes) indicating the type of the
+      A [type code](/webapi/latest/openapi/glossary#section/Type-Codes) indicating the type of the
       argument.  The special value `string` indicates that the value
       must be a string.
   - name: /sys/func/alert/{name}/help
@@ -2608,7 +2608,7 @@ tags:
     description: |
       The next time the meter will send push data to the server.  The
       time is expressed as a decimal [Unix
-      timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
+      timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
       is an empty string.
   - name: /sys/push/last
     description: |
@@ -2617,7 +2617,7 @@ tags:
     description: |
       The last time the meter sent (or attempted to send) push data to
       the server.  The time is expressed as a decimal [Unix
-      timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
+      timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
       is an empty string.
   - name: /sys/push/last/count
     description: |
@@ -2631,13 +2631,13 @@ tags:
     description: |
       The most recent time push data was successfully sent to the
       server.  The time is expressed as a decimal [Unix
-      timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
+      timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
       is an empty string.
   - name: /sys/push/last/ts
     description: |
       The time of the last register data row sent to the server.  The
       time is expressed as a decimal [Unix
-      timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
+      timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
       is an empty string.
   - name: /sys/reboot
     description: |
@@ -2706,7 +2706,7 @@ tags:
   - name: /sys/status/{token}/ts
     description: |
       The time when this status was created.  It is a decimal [Unix
-      timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.
+      timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.
   - name: /sys/team
     description: |
       The team status.  This describes the current status of all registers
@@ -2721,7 +2721,7 @@ tags:
       The status of the FFT calculations.
   - name: /sys/team/fft/last_update
     description: |
-      The [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) of when the FFT
+      The [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) of when the FFT
       calculations were updated most recently.  If `null`, it indicates
       that no FFT calculations are being performed.  If not `null`, the
       timestamp typically lags behind the current time by a couple of
@@ -2755,18 +2755,18 @@ tags:
       The info for the most recent (last) update to the register.
   - name: /sys/team/reg/{name}/last/update
     description: |
-      The decimal [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) of when this
+      The decimal [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) of when this
       register was last updated.
   - name: /sys/team/reg/{name}/last/val
     description: |
       The current value of the register as signed 64-bit integer
       converted to a decimal string.  Except for discrete registers,
       this is an accumulated value (see Section [Type
-      Codes](/webapi/openapi/glossary#section/Type-Codes) for details).
+      Codes](/webapi/latest/openapi/glossary#section/Type-Codes) for details).
   - name: /sys/time
     description: |
       The current meter time as a decimal [Unix
-      timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.
+      timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.
   - name: /sys/uptime
     description: |
       The number of seconds the device has been running since the last
@@ -2896,7 +2896,7 @@ tags:
       available at [/sys/func](/webapi/latest/openapi/sysfunc).
 
       An eScript expression which starts with a colon (`:`) is
-      interpreted as a [Lua](/webapi/openapi/glossary#section/Lua-Scripts) expression.
+      interpreted as a [Lua](/webapi/latest/openapi/glossary#section/Lua-Scripts) expression.
 
       ## Filter-Spec
 
@@ -3053,7 +3053,7 @@ tags:
 
               The serial port parameters default to 57600 baud, no
               parity, and one stop bit. `devaddr` must be a
-              [serial-port](/webapi/openapi/glossary#section/Serial-Ports) name and optional
+              [serial-port](/webapi/latest/openapi/glossary#section/Serial-Ports) name and optional
               serial parameters.
 
               An example address is `alphatechnics://USB2` which would
@@ -3081,7 +3081,7 @@ tags:
                  `default-modbus-addr` or 0 if the option is not
                  present.
 
-                 * `serdev`: The [serial port](/webapi/openapi/glossary#section/Serial-Ports)
+                 * `serdev`: The [serial port](/webapi/latest/openapi/glossary#section/Serial-Ports)
                  and optional serial parameters of the meter which is
                  wired to the RS485 bus.  The serial parameters default
                  to the values given by map option
@@ -3114,7 +3114,7 @@ tags:
             * `scpi`: Implements the
               [SCPI](https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments)
               (skippy) protocol.  `devaddr` must be a
-              [serial-port](/webapi/openapi/glossary#section/Serial-Ports) name and optional
+              [serial-port](/webapi/latest/openapi/glossary#section/Serial-Ports) name and optional
               serial parameters or a hostname or IP-address of
               serial-to-Ethernet adapter to which the SCPI-compatible
               device is connected.
@@ -3214,7 +3214,7 @@ tags:
 
       ## Lua Scripts
 
-      In addition to [eScript](/webapi/openapi/glossary#section/eScript), the meter firmware also
+      In addition to [eScript](/webapi/latest/openapi/glossary#section/eScript), the meter firmware also
       supports the more powerful [Lua](https://www.lua.org/manual/5.3/)
       language.  All eScript functions can be called directly from Lua.
       Conversely, eScript may also call Lua functions as long as they
@@ -3272,22 +3272,22 @@ tags:
       attach special meaning to the last character (suffix):
 
         * `+`: Allowed only for power-registers ([type
-          code](/webapi/openapi/glossary#section/Type-Codes) `P`).  Only positive power will be
+          code](/webapi/latest/openapi/glossary#section/Type-Codes) `P`).  Only positive power will be
           accumulated.
 
         * `-`: Allowed only for power-registers ([type
-          code](/webapi/openapi/glossary#section/Type-Codes) `P`).  Only negative measured
+          code](/webapi/latest/openapi/glossary#section/Type-Codes) `P`).  Only negative measured
           power will be accumulated.
 
         * `|`: Allowed only for power-registers ([type
-          code](/webapi/openapi/glossary#section/Type-Codes) `P`).  The absolute value of the
+          code](/webapi/latest/openapi/glossary#section/Type-Codes) `P`).  The absolute value of the
           measured power will be accumulated.
 
         * `*`: Allowed only and required for apparent-power registers
-          ([type code](/webapi/openapi/glossary#section/Type-Codes) `S`).
+          ([type code](/webapi/latest/openapi/glossary#section/Type-Codes) `S`).
 
         These suffixes are not allowed for registers whose value is
-        calculated by an [eScript](/webapi/openapi/glossary#section/eScript) expression.
+        calculated by an [eScript](/webapi/latest/openapi/glossary#section/eScript) expression.
 
         If the name of a locally calculated power register does not end
         with one of the above suffixes, the measured net real power is
@@ -3521,8 +3521,8 @@ tags:
       A time expression defines a single point in time.  An absolute
       time expression is a number, a time-point name, or a function
       call.  A number is interpreted as a [Unix
-      timestamp](/webapi/openapi/glossary#section/Unix-Timestamp).  Time-point names are
-      described [here](/webapi/openapi/glossary#section/Time-Point-Names).  A function call
+      timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp).  Time-point names are
+      described [here](/webapi/latest/openapi/glossary#section/Time-Point-Names).  A function call
       consists of a name, immediately followed by a time expression in
       parentheses.  The following supported function names and their
       meaning are as follows:
@@ -3629,29 +3629,29 @@ tags:
         data.  This time is user configurable via
         [/config/db/epoch](/webapi/latest/openapi/configdbepoch).
 
-        * `soy`: Short for [`soy(now)`](/webapi/openapi/glossary#section/Time-Expressions).
+        * `soy`: Short for [`soy(now)`](/webapi/latest/openapi/glossary#section/Time-Expressions).
 
-        * `soq`: Short for [`soq(now)`](/webapi/openapi/glossary#section/Time-Expressions).
+        * `soq`: Short for [`soq(now)`](/webapi/latest/openapi/glossary#section/Time-Expressions).
 
-        * `sob`: Short for [`sob(now)`](/webapi/openapi/glossary#section/Time-Expressions).
+        * `sob`: Short for [`sob(now)`](/webapi/latest/openapi/glossary#section/Time-Expressions).
 
-        * `som`: Short for [`som(now)`](/webapi/openapi/glossary#section/Time-Expressions).
+        * `som`: Short for [`som(now)`](/webapi/latest/openapi/glossary#section/Time-Expressions).
 
-        * `sow`: Short for [`sow(now)`](/webapi/openapi/glossary#section/Time-Expressions).
+        * `sow`: Short for [`sow(now)`](/webapi/latest/openapi/glossary#section/Time-Expressions).
 
-        * `sod`: Short for [`sod(now)`](/webapi/openapi/glossary#section/Time-Expressions).
+        * `sod`: Short for [`sod(now)`](/webapi/latest/openapi/glossary#section/Time-Expressions).
 
-        * `soh`: Short for [`soh(now)`](/webapi/openapi/glossary#section/Time-Expressions).
+        * `soh`: Short for [`soh(now)`](/webapi/latest/openapi/glossary#section/Time-Expressions).
 
-        * `soQ`: Short for [`soQ(now)`](/webapi/openapi/glossary#section/Time-Expressions).
+        * `soQ`: Short for [`soQ(now)`](/webapi/latest/openapi/glossary#section/Time-Expressions).
 
-        * `soM`: Short for [`soM(now)`](/webapi/openapi/glossary#section/Time-Expressions).
+        * `soM`: Short for [`soM(now)`](/webapi/latest/openapi/glossary#section/Time-Expressions).
 
 
       ## Time Ranges
 
       A time range is an ordered series of [Unix
-      timestamps](/webapi/openapi/glossary#section/Unix-Timestamp) which are spaced out at a
+      timestamps](/webapi/latest/openapi/glossary#section/Unix-Timestamp) which are spaced out at a
       certain interval between two points in time.  Time ranges are
       written as three decimal numbers, separated by colons:
       `start:step:stop`, where `start` is the oldest timestamp, `step`
@@ -3671,7 +3671,7 @@ tags:
       series of generated timestamps.
 
       In general, `start` and `stop` can be not just Unix timestamps
-      but arbitrary [time expressions](/webapi/openapi/glossary#section/Time-Expressions).
+      but arbitrary [time expressions](/webapi/latest/openapi/glossary#section/Time-Expressions).
 
       Similarly, the time step may also be expressed as an integer count
       followed by a unit character.  The available units are the same as
@@ -3704,7 +3704,7 @@ tags:
         > *STEP* = *OFFSET* . \
         > *TIME_WITH_ROUNDING* = ["+"]*TIME* .
 
-      See section [Time Expressions](/webapi/openapi/glossary#section/Time-Expressions) for
+      See section [Time Expressions](/webapi/latest/openapi/glossary#section/Time-Expressions) for
       definitions of *OFFSET* and *TIME*.
 
       ## Type Codes
@@ -3823,7 +3823,7 @@ tags:
 
         * `restricted_view`: The user only has restricted access to the
           meter data. Specifically, the user may only view registers in
-          the [view](/webapi/openapi/glossary#section/View-Names) that matches the user
+          the [view](/webapi/latest/openapi/glossary#section/View-Names) that matches the user
           name.
 
         While access to the device is generally governed by these
@@ -4638,7 +4638,7 @@ paths:
                   type: string
                   example: slowd
                   description: |
-                    The [link type](/webapi/openapi/glossary#section/Link-Types) to use to
+                    The [link type](/webapi/latest/openapi/glossary#section/Link-Types) to use to
                     connect to the remote device.
               required:
                 - address
@@ -5180,7 +5180,7 @@ paths:
       operationId: ctrlCallPost
       description: |
         Issue a control call to a device identified by a set of [device
-        attributes](/webapi/openapi/glossary#section/Device-Attributes).
+        attributes](/webapi/latest/openapi/glossary#section/Device-Attributes).
       requestBody:
         content:
           application/json:
@@ -5191,7 +5191,7 @@ paths:
                   $ref: '#/components/schemas/DeviceAttributesWithIndexObject'
                   description: |
                     The [device
-                    attributes](/webapi/openapi/glossary#section/Device-Attributes) that
+                    attributes](/webapi/latest/openapi/glossary#section/Device-Attributes) that
                     identify the device on which to initiate the control
                     action.
 
@@ -5411,7 +5411,7 @@ paths:
         - name: type
           in: query
           description: |
-            If present, the [type code](/webapi/openapi/glossary#section/Type-Codes) (physical
+            If present, the [type code](/webapi/latest/openapi/glossary#section/Type-Codes) (physical
             unit) of each sensor is included in the response (members
             `type`).
           schema:
@@ -5755,7 +5755,7 @@ paths:
         Reporting alerts to a service provider requires executing the
         [service activation command](/webapi/latest/openapi/cmd/cmdactivatepost) on the meter.
         That command then uses the [service activation
-        protocol](/webapi/openapi/glossary#section/Service-Activation) to set up the provider to
+        protocol](/webapi/latest/openapi/glossary#section/Service-Activation) to set up the provider to
         ensure it is able and willing to accept the alerts.
       responses:
         '200':
@@ -5787,7 +5787,7 @@ paths:
         Sharing data with a push service provider requires executing the
         [service activation command](/webapi/latest/openapi/cmd/cmdactivatepost) on the meter.
         That command then uses the [service activation
-        protocol](/webapi/openapi/glossary#section/Service-Activation) to set up the provider to
+        protocol](/webapi/latest/openapi/glossary#section/Service-Activation) to set up the provider to
         ensure it is able and willing to accept the data.
       responses:
         '200':
@@ -6015,10 +6015,10 @@ paths:
           description: |
             Only return data if the specified condition is `true`.  The
             string must have the form _texpr_ _op_ _val_ where _texpr_ is a
-            [time expression](/webapi/openapi/glossary#section/Time-Expressions) (`epoch`,
+            [time expression](/webapi/latest/openapi/glossary#section/Time-Expressions) (`epoch`,
             `sob` or similar), _op_ is one of `==` (test for equality) or
             `!=` (test for inequality) and _val_ is a decimal string
-            specifying a [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp).  If
+            specifying a [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp).  If
             the condition is `true`, data is returned as usual.  If
             `false`, a current condition object is returned which contains
             the current value of _texpr_.
@@ -6100,7 +6100,7 @@ paths:
         - name: time
           in: query
           description: |
-            A comma-separated list of [time ranges](/webapi/openapi/glossary#section/Time-Ranges).
+            A comma-separated list of [time ranges](/webapi/latest/openapi/glossary#section/Time-Ranges).
             Only data for rows that fall within the specified time ranges
             are returned.  Each time-range is processed independently and
             in the order specified.  That is, if overlapping time-ranges
@@ -6120,7 +6120,7 @@ paths:
             unspecified or empty, the [device
             timezone](/webapi/latest/openapi/configtimezone) is used by default.  The
             selected timezone affects, for example, how [time point
-            names](/webapi/openapi/glossary#section/Time-Point-Names) such as `sod` (start-of-day)
+            names](/webapi/latest/openapi/glossary#section/Time-Point-Names) such as `sod` (start-of-day)
             are interpreted and how time is output in the response.  The
             timezone must be in the format defined by
             [tzset()](https://man7.org/linux/man-pages/man3/tzset.3.html).
@@ -6146,7 +6146,7 @@ paths:
           in: query
           description: |
             Select registers to be included in the result by the [view
-            name](/webapi/openapi/glossary#section/View-Names) specified as the value of this
+            name](/webapi/latest/openapi/glossary#section/View-Names) specified as the value of this
             parameter.  The view name must be prefixed by one of
             characters:
 
@@ -6170,7 +6170,7 @@ paths:
 
               * `formula`: Virtual registers are returned via the
               `formula` member in the `registers` section.  See [virtual
-              register formulas](/webapi/openapi/glossary#section/Virtual-Register-Formulas) for
+              register formulas](/webapi/latest/openapi/glossary#section/Virtual-Register-Formulas) for
               details.
 
               * `value`: The value of virtual registers is calculated by
@@ -7969,7 +7969,7 @@ paths:
         Update the epoch with the value passed in the request body.
 
         This resource is **not** updated
-        [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates).
+        [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates).
     post:
       tags:
         - /config/db/epoch
@@ -7997,7 +7997,7 @@ paths:
         Update the epoch with the value passed in the request body.
 
         This resource is **not** updated
-        [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates).
+        [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates).
     delete:
       tags:
         - /config/db/epoch
@@ -8020,7 +8020,7 @@ paths:
         Reset the database epoch to the current time of the meter.
 
         This resource is **not** updated
-        [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates).
+        [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates).
   /config/display:
     get:
       tags:
@@ -15123,7 +15123,7 @@ paths:
         Set the HTTP certificate to the one passed in the request body.
 
         This resource is **not** updated
-        [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates).
+        [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates).
     post:
       tags:
         - /config/net/http/certificate
@@ -15151,7 +15151,7 @@ paths:
         Set the HTTP certificate to the one passed in the request body.
 
         This resource is **not** updated
-        [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates).
+        [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates).
     delete:
       tags:
         - /config/net/http/certificate
@@ -15174,7 +15174,7 @@ paths:
         Reset to a factory-installed self-signed certificate.
 
         This resource is **not** updated
-        [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates).
+        [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates).
   /config/net/http/cgi-bin:
     get:
       tags:
@@ -15230,7 +15230,7 @@ paths:
         Set CGI-BIN support according to the value passed in the request body.
 
         This resource is **not** updated
-        [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates).
+        [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates).
     post:
       tags:
         - /config/net/http/cgi-bin
@@ -15258,7 +15258,7 @@ paths:
         Set CGI-BIN support according to the value passed in the request body.
 
         This resource is **not** updated
-        [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates).
+        [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates).
     delete:
       tags:
         - /config/net/http/cgi-bin
@@ -15281,7 +15281,7 @@ paths:
         Reset to `disable`.
 
         This resource is **not** updated
-        [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates).
+        [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates).
   /config/net/ipv4:
     get:
       tags:
@@ -18781,7 +18781,7 @@ paths:
       - name: reg
         in: path
         description: |
-          The [name of a register](/webapi/openapi/glossary#section/Physical-Register-Names).
+          The [name of a register](/webapi/latest/openapi/glossary#section/Physical-Register-Names).
         required: true
         schema:
           type: string
@@ -18884,7 +18884,7 @@ paths:
       - name: reg
         in: path
         description: |
-          The [name of a register](/webapi/openapi/glossary#section/Physical-Register-Names).
+          The [name of a register](/webapi/latest/openapi/glossary#section/Physical-Register-Names).
         required: true
         schema:
           type: string
@@ -18986,7 +18986,7 @@ paths:
       - name: reg
         in: path
         description: |
-          The [name of a register](/webapi/openapi/glossary#section/Physical-Register-Names).
+          The [name of a register](/webapi/latest/openapi/glossary#section/Physical-Register-Names).
         required: true
         schema:
           type: string
@@ -19087,7 +19087,7 @@ paths:
       - name: reg
         in: path
         description: |
-          The [name of a register](/webapi/openapi/glossary#section/Physical-Register-Names).
+          The [name of a register](/webapi/latest/openapi/glossary#section/Physical-Register-Names).
         required: true
         schema:
           type: string
@@ -19188,7 +19188,7 @@ paths:
       - name: reg
         in: path
         description: |
-          The [name of a register](/webapi/openapi/glossary#section/Physical-Register-Names).
+          The [name of a register](/webapi/latest/openapi/glossary#section/Physical-Register-Names).
         required: true
         schema:
           type: string
@@ -19388,7 +19388,7 @@ paths:
           commas (`,`), and may not consist entirely of digits. Virtual
           register names may contain a single dot (`.`) between a prefix
           and a suffix.  The prefix is called the [view
-          name](/webapi/openapi/glossary#section/View-Names).
+          name](/webapi/latest/openapi/glossary#section/View-Names).
         required: true
         schema:
           type: string
@@ -19496,7 +19496,7 @@ paths:
           commas (`,`), and may not consist entirely of digits. Virtual
           register names may contain a single dot (`.`) between a prefix
           and a suffix.  The prefix is called the [view
-          name](/webapi/openapi/glossary#section/View-Names).
+          name](/webapi/latest/openapi/glossary#section/View-Names).
         required: true
         schema:
           type: string
@@ -19603,7 +19603,7 @@ paths:
           commas (`,`), and may not consist entirely of digits. Virtual
           register names may contain a single dot (`.`) between a prefix
           and a suffix.  The prefix is called the [view
-          name](/webapi/openapi/glossary#section/View-Names).
+          name](/webapi/latest/openapi/glossary#section/View-Names).
         required: true
         schema:
           type: string
@@ -19718,7 +19718,7 @@ paths:
           commas (`,`), and may not consist entirely of digits. Virtual
           register names may contain a single dot (`.`) between a prefix
           and a suffix.  The prefix is called the [view
-          name](/webapi/openapi/glossary#section/View-Names).
+          name](/webapi/latest/openapi/glossary#section/View-Names).
         required: true
         schema:
           type: string
@@ -19832,7 +19832,7 @@ paths:
           commas (`,`), and may not consist entirely of digits. Virtual
           register names may contain a single dot (`.`) between a prefix
           and a suffix.  The prefix is called the [view
-          name](/webapi/openapi/glossary#section/View-Names).
+          name](/webapi/latest/openapi/glossary#section/View-Names).
         required: true
         schema:
           type: string
@@ -29367,7 +29367,7 @@ components:
     maxDepthParam:
       name: max-depth
       in: query
-      description: Limit output depth of the response.  See [Max-Depth](/webapi/openapi/glossary#section/Max-Depth).
+      description: Limit output depth of the response.  See [Max-Depth](/webapi/latest/openapi/glossary#section/Max-Depth).
       schema:
         type: integer
         minimum: 1
@@ -29375,7 +29375,7 @@ components:
     filterParam:
       name: filter
       in: query
-      description: Response filter string. See [Filter-Spec](/webapi/openapi/glossary#section/Filter-Spec).
+      description: Response filter string. See [Filter-Spec](/webapi/latest/openapi/glossary#section/Filter-Spec).
       schema:
         type: string
       example: '{foo,bar}'
@@ -29636,7 +29636,7 @@ components:
     ForeverStamp:
       type: string
       description: |
-        A [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) expressed as a
+        A [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) expressed as a
         decimal string that may contain a fractional value for sub-second
         resolution.  A string is used here since most JSON libraries store
         numbers as IEEE-754 double-precision numbers and the 54-bit
@@ -29809,7 +29809,7 @@ components:
             information.
         ts:
           description: |
-            The [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) of when the
+            The [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) of when the
             information was scanned.
           $ref: '#/components/schemas/ForeverStamp'
         version:
@@ -30025,7 +30025,7 @@ components:
           properties:
             type:
               description: |
-                [Type code](/webapi/openapi/glossary#section/Type-Codes) indicating physical unit.
+                [Type code](/webapi/latest/openapi/glossary#section/Type-Codes) indicating physical unit.
               type: string
             cumul:
               description: Accumulated sensor values.
@@ -30240,7 +30240,7 @@ components:
             properties:
               ts:
                 description: |
-                  The [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) indicating
+                  The [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) indicating
                   when the entry was added to the log.
                 $ref: '#/components/schemas/ForeverStamp'
               msg:
@@ -30302,7 +30302,7 @@ components:
                     description: |
                       The control URL through which a meter can sign up
                       for this service.  See [service
-                      activation](/webapi/openapi/glossary#section/Service-Activation) for
+                      activation](/webapi/latest/openapi/glossary#section/Service-Activation) for
                       details.
                   version:
                     type: integer
@@ -30315,7 +30315,7 @@ components:
                       of [the XML
                       API](https://www.egauge.net/media/support/docs/egauge-xml-api.pdf).
                       WebAPI only supports the [JSON activation
-                      protocol](/webapi/openapi/glossary#section/Service-Activation).  For the
+                      protocol](/webapi/latest/openapi/glossary#section/Service-Activation).  For the
                       `push` service, this is indicated by version 1.
                 required:
                   - name
@@ -30351,7 +30351,7 @@ components:
                   tariffs:
                     type: string
                     description: |
-                      The URL of a [Lua](/webapi/openapi/glossary#section/Lua-Scripts) script
+                      The URL of a [Lua](/webapi/latest/openapi/glossary#section/Lua-Scripts) script
                       which calculates the applicable rate.
                   params:
                     type: array
@@ -30417,7 +30417,7 @@ components:
         The accumulated meter reading of the register as of the time given
         by the row's timestamp.  This is a signed 64-bit integer number,
         represented as a decimal string.  Multiplying this number by the
-        [register type's quantum](/webapi/openapi/glossary#section/Type-Codes) yields the
+        [register type's quantum](/webapi/latest/openapi/glossary#section/Type-Codes) yields the
         register's physical value in the unit given by the register type's
         rate unit, multiplied by seconds.  For example, for a register
         with type code `P` (power), the number would be the number of
@@ -30440,7 +30440,7 @@ components:
                 The demand of the register for the time period that ended
                 at the row's timestamp.  The physical unit of the demand
                 is the rate unit of the register's [type
-                code](/webapi/openapi/glossary#section/Type-Codes).  For example, for a register
+                code](/webapi/latest/openapi/glossary#section/Type-Codes).  For example, for a register
                 with type code `P`, the unit would be W (watts).
             dt:
               type: string
@@ -30448,7 +30448,7 @@ components:
                 The start time of the interval that yielded the demand
                 rate.  This is expressed as a decimal number string.  The
                 number must by subtracted from the row's timestamp to
-                yield the [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) of
+                yield the [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) of
                 when the demand interval started.  For example, a value of
                 `420.0` would indicate that the demand interval started
                 420 seconds before the timestamp of this row.
@@ -30526,7 +30526,7 @@ components:
                   This member is present for virtual registers but only if
                   query parameter `virtual=formula` is specified.  It
                   provides the
-                  [formula](/webapi/openapi/glossary#section/Virtual-Register-Formulas) that
+                  [formula](/webapi/latest/openapi/glossary#section/Virtual-Register-Formulas) that
                   is used to calculate the value of the virtual register.
               idx:
                 type: integer
@@ -30548,7 +30548,7 @@ components:
               type:
                 type: string
                 description: |
-                  The [type code](/webapi/openapi/glossary#section/Type-Codes) of the register.
+                  The [type code](/webapi/latest/openapi/glossary#section/Type-Codes) of the register.
             required:
               - name
               - type
@@ -31294,7 +31294,7 @@ components:
                       description: |
                         The scheme (protocol) that it being used by this
                         interface.  See [Link Types, item
-                        `slowd`](/webapi/openapi/glossary#section/Link-Types) for additional
+                        `slowd`](/webapi/latest/openapi/glossary#section/Link-Types) for additional
                         information.
                     details:
                       description: |
@@ -31427,7 +31427,7 @@ components:
       type: string
       example: USB1:19200/8n1
       description: |
-        The [serial-port](/webapi/openapi/glossary#section/Serial-Ports) to use for the MS/TP
+        The [serial-port](/webapi/latest/openapi/glossary#section/Serial-Ports) to use for the MS/TP
         protocol.
     configBacnetServerMstp:
       type: object
@@ -31471,7 +31471,7 @@ components:
       example: '1675276020'
       description: |
         The time when the meter started recording data.  This is a decimal
-        [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.
+        [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.
 
         The relevance of this resource is that other services in this API
         by default return accumulated register values relative to this
@@ -32251,7 +32251,7 @@ components:
       type: string
       example: USB2:9600/8o2
       description: |
-        The [serial-port](/webapi/openapi/glossary#section/Serial-Ports) to use for the RTU
+        The [serial-port](/webapi/latest/openapi/glossary#section/Serial-Ports) to use for the RTU
         protocol.
     configModbusServerRtu:
       type: object
@@ -32423,7 +32423,7 @@ components:
 
         Modification requests (`PUT`, `POST`, and `DELETE`) to this
         resource are not executed
-        [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates).
+        [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates).
     configNetIpv4Dhcp:
       type: boolean
       description: |
@@ -32533,12 +32533,12 @@ components:
           * The web-server's plain HTTP service (port 80).
 
           * The service that provides the meter data via
-            [link-type](/webapi/openapi/glossary#section/Link-Types) `udp`.  Thus, it other
+            [link-type](/webapi/latest/openapi/glossary#section/Link-Types) `udp`.  Thus, it other
             meters will not be able to read this meters data via this
             link type anymore.
 
         This resource is **not** updated
-        [transactionally](/webapi/openapi/glossary#section/Non-Transactional-Updates) and after
+        [transactionally](/webapi/latest/openapi/glossary#section/Non-Transactional-Updates) and after
         changing its value, the web server will be unavailable
         temporarily.
     configNetOption:
@@ -32806,12 +32806,12 @@ components:
       example: modbus://sunspec.1@USB2
       description: |
         The address of the remote device.  The meaning of this value
-        depends on the [link-type](/webapi/openapi/glossary#section/Link-Types).
+        depends on the [link-type](/webapi/latest/openapi/glossary#section/Link-Types).
     configRemoteNameLinkType:
       type: string
       example: slowd
       description: |
-        The [link-type](/webapi/openapi/glossary#section/Link-Types) of the remote device.
+        The [link-type](/webapi/latest/openapi/glossary#section/Link-Types) of the remote device.
     configRemoteName:
       type: object
       properties:
@@ -32861,7 +32861,7 @@ components:
       type: string
       example: P
       description: |
-        The [type code](/webapi/openapi/glossary#section/Type-Codes) of the register.
+        The [type code](/webapi/latest/openapi/glossary#section/Type-Codes) of the register.
     configRegisterPhysicalRegValue:
       type: string
       example: S16*L1+S17*L2
@@ -32886,7 +32886,7 @@ components:
             by `S1*L2`.
 
           * An equal sign (`=`) followed by an
-            [eScript](/webapi/openapi/glossary#section/eScript) expression.  The register
+            [eScript](/webapi/latest/openapi/glossary#section/eScript) expression.  The register
             value is obtained by evaluating the eScript expression once
             per [update interval](/webapi/latest/openapi/configlocalupdate-interval).
             Non-finite numbers (e.g., not-a-number, or infinities) are
@@ -32959,7 +32959,7 @@ components:
           * `-`: The physical register value is to be subtracted.
 
           * `+max0`, `-max0`, `+min0`, `-min0`:
-          **[Deprecated](/webapi/openapi/glossary#section/Deprecated)**. These operators do
+          **[Deprecated](/webapi/latest/openapi/glossary#section/Deprecated)**. These operators do
           not work correctly and remain only to preserve compatibility
           with existing, old, device configurations.  Attempting to write
           these operators with a `PUT` or `POST` request will result in an
@@ -33080,7 +33080,7 @@ components:
     configUserNamePrivItem:
       type: string
       description: |
-        A [privilege](/webapi/openapi/glossary#section/User-Privileges) the user possesses.
+        A [privilege](/webapi/latest/openapi/glossary#section/User-Privileges) the user possesses.
     configUserNamePriv:
       type: array
       items:
@@ -33089,12 +33089,12 @@ components:
         - unlimited_save
         - view_settings
       description: |
-        The list of [privileges](/webapi/openapi/glossary#section/User-Privileges) the user possesses.
+        The list of [privileges](/webapi/latest/openapi/glossary#section/User-Privileges) the user possesses.
     configUserNameHash:
       type: string
       example: 251910de04f5eab86859939167d4fded
       description: |
-        The [hash](/webapi/openapi/glossary#section/Password-Hashes) of the user's password.
+        The [hash](/webapi/latest/openapi/glossary#section/Password-Hashes) of the user's password.
         Writing an empty hash string disables the account.
 
         This resource is write-only.
@@ -33201,7 +33201,7 @@ components:
       type: string
       example: temp_internal()
       description: |
-        An [eScript](/webapi/openapi/glossary#section/eScript) expression that returns the
+        An [eScript](/webapi/latest/openapi/glossary#section/eScript) expression that returns the
         value to use on the left hand side of the comparison.
     configAlertCustomItemCondOp:
       type: string
@@ -33227,7 +33227,7 @@ components:
       type: string
       example: '30'
       description: |
-        An [eScript](/webapi/openapi/glossary#section/eScript) expression that returns the
+        An [eScript](/webapi/latest/openapi/glossary#section/eScript) expression that returns the
         value that to use on the right hand side of the comparison.
     configAlertCustomItemCond:
       type: object
@@ -33449,7 +33449,7 @@ components:
       description: |
         The configuration for reporting alerts via email server.  If alert
         reporting via web server is enabled
-        ([/config/alert/reporter/web/uri](/webapi/openapi/glossary#section/configalertreporterweburi)
+        ([/config/alert/reporter/web/uri](/webapi/latest/openapi/glossary#section/configalertreporterweburi)
         is not empty), reporting via email server is disabled.
     configAlertReporter:
       type: object
@@ -33804,7 +33804,7 @@ components:
       example: '1677287880.350'
       description: |
         The time of the last user-initiated reboot.  It is a decimal [Unix
-        timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string or `null` if
+        timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string or `null` if
         unavailable.  Unanticipated reboots, e.g., due to power failure or
         watchdog-timeouts do not update this resource.
     sysBoot:
@@ -33827,7 +33827,7 @@ components:
       type: string
       example: '1726675935'
       description: |
-        The [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) of the most recent
+        The [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) of the most recent
         data row stored at this level of the database.  If `null`, no row
         is currently available at this database level.
     sysDbLevelItemInterval:
@@ -33969,7 +33969,7 @@ components:
       type: string
       example: '#'
       description: |
-        A [type code](/webapi/openapi/glossary#section/Type-Codes) indicating the type of the
+        A [type code](/webapi/latest/openapi/glossary#section/Type-Codes) indicating the type of the
         argument.  The special value `string` indicates that the value
         must be a string.
     sysFuncBasicNameArgItem:
@@ -34049,7 +34049,7 @@ components:
           help: Returns sine of <arg>x</arg>, where <arg>x</arg> is an angle in degrees.
           min-args: 1
       description: |
-        Documents the *basic* [eScript](/webapi/openapi/glossary#section/eScript) functions.  Basic
+        Documents the *basic* [eScript](/webapi/latest/openapi/glossary#section/eScript) functions.  Basic
         functions are available any place eScript expressions may appear.
     sysFuncAlertNameArgItemName:
       type: string
@@ -34064,7 +34064,7 @@ components:
       type: string
       example: string
       description: |
-        A [type code](/webapi/openapi/glossary#section/Type-Codes) indicating the type of the
+        A [type code](/webapi/latest/openapi/glossary#section/Type-Codes) indicating the type of the
         argument.  The special value `string` indicates that the value
         must be a string.
     sysFuncAlertNameArgItem:
@@ -34142,7 +34142,7 @@ components:
           help: Returns the cumulative value of register named <arg>reg</arg> at time <arg>time</arg>.  If <arg>time</arg> is not specified, the current time is used.
           min-args: 1
       description: |
-        Documents the *alert* [eScript](/webapi/openapi/glossary#section/eScript) functions.  These
+        Documents the *alert* [eScript](/webapi/latest/openapi/glossary#section/eScript) functions.  These
         functions are available only for eScript expressions evaluated as
         part of alert conditions.
     sysFunc:
@@ -34153,7 +34153,7 @@ components:
         alert:
           $ref: '#/components/schemas/sysFuncAlert'
       description: |
-        Documents the [eScript](/webapi/openapi/glossary#section/eScript) functions built
+        Documents the [eScript](/webapi/latest/openapi/glossary#section/eScript) functions built
         into the meter.
     sysModbusClientMapNameOptionOpt:
       type: string
@@ -34937,7 +34937,7 @@ components:
       description: |
         The next time the meter will send push data to the server.  The
         time is expressed as a decimal [Unix
-        timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
+        timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
         is an empty string.
     sysPushNext:
       type: object
@@ -34952,7 +34952,7 @@ components:
       description: |
         The last time the meter sent (or attempted to send) push data to
         the server.  The time is expressed as a decimal [Unix
-        timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
+        timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
         is an empty string.
     sysPushLastCount:
       type: integer
@@ -34972,7 +34972,7 @@ components:
       description: |
         The most recent time push data was successfully sent to the
         server.  The time is expressed as a decimal [Unix
-        timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
+        timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
         is an empty string.
     sysPushLastTs:
       type: string
@@ -34980,7 +34980,7 @@ components:
       description: |
         The time of the last register data row sent to the server.  The
         time is expressed as a decimal [Unix
-        timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
+        timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.  If unavailable, this
         is an empty string.
     sysPushLast:
       type: object
@@ -35156,7 +35156,7 @@ components:
               type:
                 type: string
                 description: |
-                  The [type code](/webapi/openapi/glossary#section/Type-Code) of the detected register.
+                  The [type code](/webapi/latest/openapi/glossary#section/Type-Code) of the detected register.
                 example: P
             required:
               - name
@@ -35179,7 +35179,7 @@ components:
       example: '1679103764.278772467'
       description: |
         The time when this status was created.  It is a decimal [Unix
-        timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.
+        timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.
     sysStatusToken:
       type: object
       properties:
@@ -35228,7 +35228,7 @@ components:
       type: string
       example: '1708030925.1'
       description: |
-        The [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) of when the FFT
+        The [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) of when the FFT
         calculations were updated most recently.  If `null`, it indicates
         that no FFT calculations are being performed.  If not `null`, the
         timestamp typically lags behind the current time by a couple of
@@ -35250,7 +35250,7 @@ components:
       type: string
       example: '1708042434'
       description: |
-        The decimal [Unix timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) of when this
+        The decimal [Unix timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) of when this
         register was last updated.
     sysTeamRegNameLastVal:
       type: string
@@ -35259,7 +35259,7 @@ components:
         The current value of the register as signed 64-bit integer
         converted to a decimal string.  Except for discrete registers,
         this is an accumulated value (see Section [Type
-        Codes](/webapi/openapi/glossary#section/Type-Codes) for details).
+        Codes](/webapi/latest/openapi/glossary#section/Type-Codes) for details).
     sysTeamRegNameLast:
       type: object
       properties:
@@ -35332,7 +35332,7 @@ components:
       example: '1679104389.095469'
       description: |
         The current meter time as a decimal [Unix
-        timestamp](/webapi/openapi/glossary#section/Unix-Timestamp) string.
+        timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string.
     sysUptime:
       type: number
       example: 1232588.28
@@ -35406,7 +35406,7 @@ components:
         System information.  Everything here is read-only.
 
         Accessing this service requires the [view_settings
-        privilege](/webapi/openapi/glossary#section/User-Privileges).
+        privilege](/webapi/latest/openapi/glossary#section/User-Privileges).
   headers:
     ETagHeader:
       description: |
