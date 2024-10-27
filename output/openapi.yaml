@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  version: main
+  version: latest
   title: eGauge WebAPI
   description: eGauge Meter API
   license:
@@ -190,7 +190,7 @@ tags:
       their side effects, such as rebooting the meter.  Unless stated
       otherwise, the resources in this service are available only to
       users with the save right (see
-      [/auth/rights](/webapi/openapi/auth/authrightsget)).
+      [/auth/rights](/webapi/latest/openapi/auth/authrightsget)).
   - name: /config
     description: |
       The meter configuration service.
@@ -392,7 +392,7 @@ tags:
       The options to use when sending an alert report to the web server.
 
       This resource is available only if
-      [/config/alert/reporter/web/service](/webapi/openapi/configalertreporterwebservice)
+      [/config/alert/reporter/web/service](/webapi/latest/openapi/configalertreporterwebservice)
       is an empty string.
 
       Multiple options can be specified in the string by separating them
@@ -407,7 +407,7 @@ tags:
         * `secure`: Only send the alert report if the server's HTTP
           certificate can be verified by the meter.  This option is
           ignored if
-          [/config/net/http/client/insecure](/webapi/openapi/confignethttpclientinsecure)
+          [/config/net/http/client/insecure](/webapi/latest/openapi/confignethttpclientinsecure)
           is `true`.
   - name: /config/alert/reporter/web/password
     description: |
@@ -421,7 +421,7 @@ tags:
       alerts.
 
       To set this to a non-empty value please use the [service
-      activation command](/webapi/openapi/cmd/cmdactivatepost) since that ensures the
+      activation command](/webapi/latest/openapi/cmd/cmdactivatepost) since that ensures the
       service provider knows to expect alerts from this meter.  The body
       of the activation request should contain member `service` set to
       the string `alert` and `provider` set to name of the desired
@@ -431,7 +431,7 @@ tags:
       The URI of the web server to use for reporting alerts.
 
       This resource is available only if
-      [/config/alert/reporter/web/service](/webapi/openapi/configalertreporterwebservice)
+      [/config/alert/reporter/web/service](/webapi/latest/openapi/configalertreporterwebservice)
       is an empty string.
   - name: /config/alert/reporter/web/user
     description: |
@@ -442,12 +442,12 @@ tags:
       when connecting to the server via an encrypted connection (https).
 
       This resource is available only if
-      [/config/alert/reporter/web/service](/webapi/openapi/configalertreporterwebservice)
+      [/config/alert/reporter/web/service](/webapi/latest/openapi/configalertreporterwebservice)
       is an empty string.
   - name: /config/alert/sys-prio
     description: |
       The priority of each system-generated alert.
-      [/sys/alert](/webapi/openapi/sysalert) provides a description of these
+      [/sys/alert](/webapi/latest/openapi/sysalert) provides a description of these
       alerts.
   - name: /config/alert/sys-prio/{idx}
     description: |
@@ -466,7 +466,7 @@ tags:
   - name: /config/bacnet/server/bip/port
     description: |
       The IPv4 port number used by the server when `bip` is enabled in
-      [/config/bacnet/server/enable](/webapi/openapi/configbacnetserverenable).
+      [/config/bacnet/server/enable](/webapi/latest/openapi/configbacnetserverenable).
       The default value is 0xBAC0 (47808).
   - name: /config/bacnet/server/enable
     description: |
@@ -486,7 +486,7 @@ tags:
   - name: /config/bacnet/server/epoch-relative
     description: |
       If true, the BACnet server reports cumulative values relative to
-      the [meter epoch](/webapi/openapi/configdbepoch).  If false, raw absolute
+      the [meter epoch](/webapi/latest/openapi/configdbepoch).  If false, raw absolute
       values are reported relative to when the meter was manufactured.
   - name: /config/bacnet/server/id
     description: |
@@ -494,7 +494,7 @@ tags:
   - name: /config/bacnet/server/mstp
     description: |
       The BACnet over MS/TP configuration.  This is used only if the
-      `mstp` protocol is [enabled](/webapi/openapi/configbacnetserverenable).
+      `mstp` protocol is [enabled](/webapi/latest/openapi/configbacnetserverenable).
   - name: /config/bacnet/server/mstp/mac
     description: |
       The MS/TP address of the meter's BACnet server.
@@ -532,8 +532,8 @@ tags:
       capped to the time of the most recent row in the database.  If a
       time is specified that is older than the oldest row in the
       database, an error object is returned.  If this error occurs,
-      check the device time ([/sys/time](/webapi/openapi/systime)) and database
-      configuration ([/sys/db](/webapi/openapi/sysdb)) to confirm that they have
+      check the device time ([/sys/time](/webapi/latest/openapi/systime)) and database
+      configuration ([/sys/db](/webapi/latest/openapi/sysdb)) to confirm that they have
       the expected values.
   - name: /config/display
     description: |
@@ -690,7 +690,7 @@ tags:
   - name: /config/local/sensor/{name}/model
     description: |
       The model name of the attached sensor. If this is `CTid`, a
-      CTid®-enabled sensor is attached and the [/ctid](/webapi/openapi/ctid)
+      CTid®-enabled sensor is attached and the [/ctid](/webapi/latest/openapi/ctid)
       service should be used to obtain details about the attached
       sensor.
   - name: /config/local/sensor/{name}/phase
@@ -752,12 +752,12 @@ tags:
   - name: /config/lua/script/tariff
     description: |
       The Lua script used to calculate energy cost.  This script can be
-      modified only if [server-storage](/webapi/openapi/configvar) variable
+      modified only if [server-storage](/webapi/latest/openapi/configvar) variable
       `global.billing.tariff_uri` is empty or unset.
 
       If loading this script takes longer than 15 seconds or evaluating
       the register formulas takes longer than half the
-      [update-interval](/webapi/openapi/configlocalupdate-interval), an alert is
+      [update-interval](/webapi/latest/openapi/configlocalupdate-interval), an alert is
       raised.
   - name: /config/lua/script/teamd
     description: |
@@ -767,7 +767,7 @@ tags:
 
       If loading this script takes longer than 15 seconds or evaluating
       the register formulas takes longer than half the
-      [update-interval](/webapi/openapi/configlocalupdate-interval), an alert is
+      [update-interval](/webapi/latest/openapi/configlocalupdate-interval), an alert is
       raised.
   - name: /config/lua/ctrld
     description: |
@@ -790,7 +790,7 @@ tags:
     description: |
       User-defined Modbus address maps.  The builtin, read-only system
       maps are available at
-      [/sys/modbus/client/map](/webapi/openapi/sysmodbusclientmap).  If a
+      [/sys/modbus/client/map](/webapi/latest/openapi/sysmodbusclientmap).  If a
       user-defined map with the same name as a system map exists, it
       will shadow (mask) the system map with them same name.
   - name: /config/modbus/client/map/{name}
@@ -996,7 +996,7 @@ tags:
       The network configuration.
 
       The current state of the network is available at
-      [/sys/net](/webapi/openapi/sysnet).
+      [/sys/net](/webapi/latest/openapi/sysnet).
   - name: /config/net/ethernet
     description: |
       The Ethernet configuration of the meter.
@@ -1156,7 +1156,7 @@ tags:
       ([PTP](https://www.rfc-editor.org/rfc/rfc8173.html))
       configuration.  NTP should normally be disabled when using this
       protocol. This can be achieved by deleting resource
-      [/config/net/ntp/server](/webapi/openapi/confignetntpserver).
+      [/config/net/ntp/server](/webapi/latest/openapi/confignetntpserver).
 
       Only model EG4*xxx* or newer meters support this resource.
 
@@ -1215,7 +1215,7 @@ tags:
       server.  Multiple options must be separated by commas (`,`).
 
       This resource is available only if
-      [/config/push/service](/webapi/openapi/configpushservice) is an empty string.
+      [/config/push/service](/webapi/latest/openapi/configpushservice) is an empty string.
 
       Available options are:
 
@@ -1227,7 +1227,7 @@ tags:
           the `POST` request.
 
         * `epoch`: Report the register values relative to the
-          [epoch](/webapi/openapi/configdbepoch).  Without this option, absolute
+          [epoch](/webapi/latest/openapi/configdbepoch).  Without this option, absolute
           values are sent which start at zero at the time the meter
           database was created.
 
@@ -1237,7 +1237,7 @@ tags:
 
         * `json`: Push data in JSON format instead of XML.  The JSON
           format is the same as the one returned by the
-          [/register](/webapi/openapi/register) service, except that the top-level
+          [/register](/webapi/latest/openapi/register) service, except that the top-level
           `ts` section and the `idx` members in the `registers` section
           are omitted since they are not meaningful for push data.
 
@@ -1261,7 +1261,7 @@ tags:
           certificate that the meter can verify as authentic.  Without
           this option, the server's certificate is not verified.  This
           option is ignored if
-          [/config/net/http/client/insecure](/webapi/openapi/confignethttpclientinsecure)
+          [/config/net/http/client/insecure](/webapi/latest/openapi/confignethttpclientinsecure)
           is `true`.
 
         * `skip=n`: Push only every `(n+1)`-th data row.  For example,
@@ -1284,7 +1284,7 @@ tags:
       be specified when using a secure connection (`https` scheme).
 
       This resource is available only if
-      [/config/push/web/service](/webapi/openapi/configpushservice) is an empty
+      [/config/push/web/service](/webapi/latest/openapi/configpushservice) is an empty
       string.
 
       This resource is write-only.
@@ -1293,7 +1293,7 @@ tags:
       The name of a push service provider to shared data with.
 
       To set this to a non-empty value please use the [service
-      activation command](/webapi/openapi/cmd/cmdactivatepost) since that ensures the
+      activation command](/webapi/latest/openapi/cmd/cmdactivatepost) since that ensures the
       push provider knows to expect data from this meter.  The body of
       the activation request should contain member `service` set to the
       string `push` and `provider` set to name of the desired push
@@ -1301,7 +1301,7 @@ tags:
   - name: /config/push/uri
     description: |
       The URI of the web server to share data with.  This resource is
-      available only if [/config/push/service](/webapi/openapi/configpushservice)
+      available only if [/config/push/service](/webapi/latest/openapi/configpushservice)
       is an empty string.
   - name: /config/push/user
     description: |
@@ -1312,7 +1312,7 @@ tags:
       `Authorization` header.
 
       This resource is available only if
-      [/config/push/web/service](/webapi/openapi/configpushservice) is an empty
+      [/config/push/web/service](/webapi/latest/openapi/configpushservice) is an empty
       string.
   - name: /config/register
     description: |
@@ -1327,7 +1327,7 @@ tags:
       supported by the meter.  Depending on meter model and database
       configuration, typically, 16 to 64 phycial registers are
       available. The actual limit is available at
-      [/sys/db/max-registers](/webapi/openapi/sysdbmax-registers).
+      [/sys/db/max-registers](/webapi/latest/openapi/sysdbmax-registers).
   - name: /config/register/physical/{reg}
     description: |
       The configuration of the named physical register.
@@ -1337,7 +1337,7 @@ tags:
       The name `local` indicates that the meter itself measures or
       calculates the value.  Any other value is a reference to the
       remote device of the same name defined at
-      [/config/remote](/webapi/openapi/configremote).
+      [/config/remote](/webapi/latest/openapi/configremote).
   - name: /config/register/physical/{reg}/did
     description: |
       The column number in which the database stores the register value.
@@ -1357,7 +1357,7 @@ tags:
       Defines the how the register value is obtained or calculated.  For
       register where `dev` is `local`, this is one of:
 
-        * A [local](/webapi/openapi/local) sensor name: `L1`-`L3`, `Ldc`, or
+        * A [local](/webapi/latest/openapi/local) sensor name: `L1`-`L3`, `Ldc`, or
           `S1`-`S30`.
 
         * A power formula written as a sum of products of sensors.  For
@@ -1376,7 +1376,7 @@ tags:
         * An equal sign (`=`) followed by an
           [eScript](/webapi/openapi/glossary#section/eScript) expression.  The register
           value is obtained by evaluating the eScript expression once
-          per [update interval](/webapi/openapi/configlocalupdate-interval).
+          per [update interval](/webapi/latest/openapi/configlocalupdate-interval).
           Non-finite numbers (e.g., not-a-number, or infinities) are
           silently converted to 0 before recording the register value.
 
@@ -1385,7 +1385,7 @@ tags:
       the particular remote device in use.  Commonly, the value is some
       sort of register name or identifier.  For example, for Modbus
       remote devices, the value is a register name defined by the
-      [Modbus map](/webapi/openapi/sysmodbusclientmap) of the remote device.
+      [Modbus map](/webapi/latest/openapi/sysmodbusclientmap) of the remote device.
   - name: /config/register/virtual
     description: |
       The virtual register configuration of the meter.
@@ -1555,7 +1555,7 @@ tags:
 
         * `billing.interval`: The meter firmware interprets this as the
           length of the demand interval in minutes (see description of
-          [/register](/webapi/openapi/register/registerget) query parameter
+          [/register](/webapi/latest/openapi/register/registerget) query parameter
           `demand`).
 
         * `billing.start_day`: The meter firmware interprets this as the
@@ -1608,7 +1608,7 @@ tags:
       this service primarily during device setup.
 
       All methods other than `GET` required a user with the [save
-      right](/webapi/openapi/auth/authrightsget).
+      right](/webapi/latest/openapi/auth/authrightsget).
 
       ## Python Example
 
@@ -1686,7 +1686,7 @@ tags:
       derived from the sensors attached to the meter.  Values obtained
       from other, remote, devices are not accessible through this
       service.  Similarly, only the most recent (current) values are
-      available.  Use the [/register](/webapi/openapi/register) service for
+      available.  Use the [/register](/webapi/latest/openapi/register) service for
       accessing values stored in the database of the meter.
 
       Derived values are called *energy* and *apparent energy* and are
@@ -1734,7 +1734,7 @@ tags:
       Provides access to various logs.  Since logs may contain sensitive
       information, this service is available only to users with the
       `save` privilege (see
-      [/auth/rights](/webapi/openapi/auth/authrightsget)).
+      [/auth/rights](/webapi/latest/openapi/auth/authrightsget)).
   - name: /lua
     description: |
       This service provides access to Lua-script related information.
@@ -1792,7 +1792,7 @@ tags:
       with 1 minute between rows, the next 9 years with 15 minutes
       between rows, and the next 50 years with 24-hours between rows.
       The actual database configuration of a meter can be found in
-      [/sys/db](/webapi/openapi/sysdb).
+      [/sys/db](/webapi/latest/openapi/sysdb).
 
       ## Basic Usage
 
@@ -1808,8 +1808,8 @@ tags:
       human-readable format, corresponds to March 10, 2023, 19:12:24 and
       123ms in the UTC timezone.  If the meter is connected to the
       Internet, its time should usually be accurate (see
-      [/config/net/ntp](/webapi/openapi/confignetntp) and
-      [/config/net/ptp](/webapi/openapi/confignetptp)).  However, it is advisable
+      [/config/net/ntp](/webapi/latest/openapi/confignetntp) and
+      [/config/net/ptp](/webapi/latest/openapi/confignetptp)).  However, it is advisable
       for a client to check the time and confirm its reasonbly close to
       actual time as discrepancies could cause confusing and erroneous
       results.
@@ -1921,7 +1921,7 @@ tags:
   - name: /store
     description: |
       **Note** _This service is deprecated and will be removed in the
-        future.  Please use [/config/var](/webapi/openapi/configvar) instead._
+        future.  Please use [/config/var](/webapi/latest/openapi/configvar) instead._
 
       This service provides the ability to store arbitrary name/value
       pairs on the meter.  This is called server-side storage.
@@ -2185,7 +2185,7 @@ tags:
     description: |
       System-defined (built-in) Modbus address maps.  The user-defined
       maps are available at
-      [/config/modbus/client/map](/webapi/openapi/configmodbusclientmap).  If a
+      [/config/modbus/client/map](/webapi/latest/openapi/configmodbusclientmap).  If a
       user-defined map with the same name as a system map exists, it
       will shadow (mask) the system map with the same name.
   - name: /sys/modbus/client/map/{name}
@@ -2350,7 +2350,7 @@ tags:
     description: |
       The network settings that are in use by the meter.  This may
       or may not be the same as the configuration established in
-      [/config/net](/webapi/openapi/confignet).
+      [/config/net](/webapi/latest/openapi/confignet).
   - name: /sys/net/homeplug
     description: |
       The HomePlug status.
@@ -2415,7 +2415,7 @@ tags:
       ([NTP](https://www.rfc-editor.org/rfc/rfc5905)) status.
   - name: /sys/net/ntp/server
     description: |
-      Status of each [configured](/webapi/openapi/confignetntpserver) NTP server.
+      Status of each [configured](/webapi/latest/openapi/confignetntpserver) NTP server.
   - name: /sys/net/ntp/server/{idx}
     description: |
       Status of the NTP server.
@@ -2600,7 +2600,7 @@ tags:
   - name: /sys/push
     description: |
       The status of the push (data sharing) service.  See
-      [/config/push](/webapi/openapi/configpush).
+      [/config/push](/webapi/latest/openapi/configpush).
   - name: /sys/push/next
     description: |
       Information about the next push request.
@@ -2643,7 +2643,7 @@ tags:
     description: |
       This is `true` if the meter needs to be rebooted, e.g., due to a
       configuration change.  If so, a [reboot
-      command](/webapi/openapi/cmd/cmdrebootpost) should be issued at the
+      command](/webapi/latest/openapi/cmd/cmdrebootpost) should be issued at the
       next opportune moment.
   - name: /sys/slowd
     description: |
@@ -2749,7 +2749,7 @@ tags:
       played back over time by inflating (or deflating) the recorded
       rate by up to +/-10% of the actual rate until the excess has been
       drained.  The excess of all registes can be reset to zero with the
-      [clear](/webapi/openapi/cmd/cmdclearpost) command.
+      [clear](/webapi/latest/openapi/cmd/cmdclearpost) command.
   - name: /sys/team/reg/{name}/last
     description: |
       The info for the most recent (last) update to the register.
@@ -2812,7 +2812,7 @@ tags:
         * `interface`: The value of this attribute is also a list of
           strings.  Each entry is the name of an interface that is
           supported by the device.  A description of each interface can
-          be obtained from [/ctrl/interface](/webapi/openapi/ctrlinterface).
+          be obtained from [/ctrl/interface](/webapi/latest/openapi/ctrlinterface).
 
       The meaning of other attributes is given below:
 
@@ -2893,7 +2893,7 @@ tags:
       eScript also supports various functions such as `sin()` to
       calculate the sine of an angle or `THD()` to calculate
       total-harmonic distortion in a signal.  A list of functions is
-      available at [/sys/func](/webapi/openapi/sysfunc).
+      available at [/sys/func](/webapi/latest/openapi/sysfunc).
 
       An eScript expression which starts with a colon (`:`) is
       interpreted as a [Lua](/webapi/openapi/glossary#section/Lua-Scripts) expression.
@@ -2998,8 +2998,8 @@ tags:
 
             * `map`: The name of the Modbus address map to use for the
               device (see
-              [/sys/modbus/client/map](/webapi/openapi/sysmodbusclientmap) and
-              [/config/modbus/client/map](/webapi/openapi/configmodbusclientmap)).
+              [/sys/modbus/client/map](/webapi/latest/openapi/sysmodbusclientmap) and
+              [/config/modbus/client/map](/webapi/latest/openapi/configmodbusclientmap)).
               If the Modbus device supports the [SunSpec
               standard](https://sunspec.org/), this can be `sunspec`
               instead.  With SunSpec, the meter can automatically detect
@@ -3068,9 +3068,9 @@ tags:
 
                  * `map`: The name of the Modbus address map to use for
                  the device (see
-                 [/sys/modbus/client/map](/webapi/openapi/sysmodbusclientmap)
+                 [/sys/modbus/client/map](/webapi/latest/openapi/sysmodbusclientmap)
                  and
-                 [/config/modbus/client/map](/webapi/openapi/configmodbusclientmap)).
+                 [/config/modbus/client/map](/webapi/latest/openapi/configmodbusclientmap)).
                  If the Modbus device supports the [SunSpec
                  standard](https://sunspec.org/), this can be `sunspec`
                  instead.  With SunSpec, the meter can automatically
@@ -3268,7 +3268,7 @@ tags:
       consist entirely of digits.
 
       Register names of locally calculated registers (registers with
-      [`dev`](/webapi/openapi/configregisterphysicalregdev) set to `local`)
+      [`dev`](/webapi/latest/openapi/configregisterphysicalregdev) set to `local`)
       attach special meaning to the last character (suffix):
 
         * `+`: Allowed only for power-registers ([type
@@ -3301,7 +3301,7 @@ tags:
       `n` is a non-negative integer.  A USB path must have the format
       `USBpath` where `path` is a sequence of one or more non-negative
       integers, separated by dots (`.`). Resource
-      [/sys/dev/serial](/webapi/openapi/sysdevserial) returns a list of serial
+      [/sys/dev/serial](/webapi/latest/openapi/sysdevserial) returns a list of serial
       ports detected by the meter.
 
       A serial port string may optionally also specify serial
@@ -3320,7 +3320,7 @@ tags:
 
       The setup mechanism is called *service activation* and is
       initiated by posting a request to end-point
-      [/cmd/activate](/webapi/openapi/cmd/cmdactivatepost).  The command, in turn,
+      [/cmd/activate](/webapi/latest/openapi/cmd/cmdactivatepost).  The command, in turn,
       executes the follow steps:
 
         1) Meter sends an activation request to a URL defined by the
@@ -3355,10 +3355,10 @@ tags:
       The activation request the meter sends to the control URL is a
       `POST` request with a JSON-body containing the following members:
 
-        * `name` (required): The [hostname](/webapi/openapi/confignethostname)
+        * `name` (required): The [hostname](/webapi/latest/openapi/confignethostname)
         of the meter.
 
-        * `sn` (required): The [serial-number](/webapi/openapi/syssn) of the
+        * `sn` (required): The [serial-number](/webapi/latest/openapi/syssn) of the
         meter.
 
         * `opts`: If present, this is an array of strings specifying the
@@ -3534,7 +3534,7 @@ tags:
           which `t` falls.
 
         * `sob(t)`: Returns the timestamp of the start of the billing
-        cycle in which `t` falls.  [Server-storage](/webapi/openapi/configvar)
+        cycle in which `t` falls.  [Server-storage](/webapi/latest/openapi/configvar)
         variable `global.billing.start_day` establishes the day of the
         month a new billing period starts.  If that day is greater than
         the number of days in the current month, the last day of that
@@ -3627,7 +3627,7 @@ tags:
         * `epoch`: The time at which the meter started recording data.
         That is, the oldest time for which the database will return
         data.  This time is user configurable via
-        [/config/db/epoch](/webapi/openapi/configdbepoch).
+        [/config/db/epoch](/webapi/latest/openapi/configdbepoch).
 
         * `soy`: Short for [`soy(now)`](/webapi/openapi/glossary#section/Time-Expressions).
 
@@ -3678,7 +3678,7 @@ tags:
       for offsets in time expressions.  For example, `1d` would step
       through the time range one day at a time, taking daylight savings
       into account (assuming the correct
-      [timezone](/webapi/openapi/configtimezone) is set on the meter).
+      [timezone](/webapi/latest/openapi/configtimezone) is set on the meter).
 
       As a complete example, the time range `som:1d:sod` would generate
       the timestamps that correspond to midnight each day of the current
@@ -3790,7 +3790,7 @@ tags:
       **Note** For the monetary unit, `${currency}` should be replaced
       by the the currency symbol applicable to the region the meter is
       installed in.  The builtin user interface of the meter uses the
-      value of [server-storage](/webapi/openapi/configvar) variable
+      value of [server-storage](/webapi/latest/openapi/configvar) variable
       `global.default.currency_symbol` for this purpose or, if
       undefined, a dollar sign (`$`).
 
@@ -4157,7 +4157,7 @@ paths:
 
         This request returns a token which can then be used to monitor
         the status of the operation.  See
-        [/sys/status/*token*/result](/webapi/openapi/sysstatustokenresult)
+        [/sys/status/*token*/result](/webapi/latest/openapi/sysstatustokenresult)
         for details.
       requestBody:
         content:
@@ -4261,7 +4261,7 @@ paths:
             device(s).
 
             **Note** If excess keeps accumulating, it may be better to
-            use the [`spiky`](/webapi/openapi/configremote) option for remote
+            use the [`spiky`](/webapi/latest/openapi/configremote) option for remote
             registers.
 
           * `web_cache`: Clears the web server cache of compressed
@@ -4343,7 +4343,7 @@ paths:
                   description: |
                     If specified, the operation is limited to the
                     registers whose [database
-                    ids](/webapi/openapi/configregisterphysicalregdid) appear in
+                    ids](/webapi/latest/openapi/configregisterphysicalregdid) appear in
                     this list.
                 data:
                   type: string
@@ -4550,7 +4550,7 @@ paths:
 
         This request returns a token which can then be used to monitor
         the status of the operation.  See
-        [/sys/status/*token*/result](/webapi/openapi/sysstatustokenresult)
+        [/sys/status/*token*/result](/webapi/latest/openapi/sysstatustokenresult)
         for details.
       requestBody:
         content:
@@ -4620,7 +4620,7 @@ paths:
 
         This request returns a token which can then be used to monitor
         the status of the operation.  See
-        [/sys/status/*token*/result](/webapi/openapi/sysstatustokenresult)
+        [/sys/status/*token*/result](/webapi/latest/openapi/sysstatustokenresult)
         for details.
       requestBody:
         content:
@@ -4684,7 +4684,7 @@ paths:
                     firmware should be updated.  In this case, a token
                     is returned.  With that, the progress of the
                     installation can be monitor at
-                    [/sys/status/*token*](/webapi/openapi/sysstatustoken).
+                    [/sys/status/*token*](/webapi/latest/openapi/sysstatustoken).
                 target:
                   type: string
                   enum:
@@ -4744,7 +4744,7 @@ paths:
       operationId: cmdWlanPost
       description: |
         Manage WLAN (Wi-Fi) connection.  See
-        [/sys/net/wlan](/webapi/openapi/sysnetwlan) to get the currently
+        [/sys/net/wlan](/webapi/latest/openapi/sysnetwlan) to get the currently
         detected and configured WLAN networks.
       requestBody:
         content:
@@ -5321,7 +5321,7 @@ paths:
             `modbus` interfaces.
 
             This parameter also supports the `index` attribute like
-            [/ctrl/call](/webapi/openapi/ctrlcall) does.
+            [/ctrl/call](/webapi/latest/openapi/ctrlcall) does.
           schema:
             type: object
             patternProperties:
@@ -5729,7 +5729,7 @@ paths:
         Get the system log.  It has a fixed size and consists of a
         sequence of messages. When the log fills up, older messages are
         replaced.  The size of this log can be configured
-        with [/config/log/system/size](/webapi/openapi/configlogsystemsize).
+        with [/config/log/system/size](/webapi/latest/openapi/configlogsystemsize).
       responses:
         '200':
           description: System log response.
@@ -5753,7 +5753,7 @@ paths:
         Get a list of available alert service providers.
 
         Reporting alerts to a service provider requires executing the
-        [service activation command](/webapi/openapi/cmd/cmdactivatepost) on the meter.
+        [service activation command](/webapi/latest/openapi/cmd/cmdactivatepost) on the meter.
         That command then uses the [service activation
         protocol](/webapi/openapi/glossary#section/Service-Activation) to set up the provider to
         ensure it is able and willing to accept the alerts.
@@ -5785,7 +5785,7 @@ paths:
         Get a list of available push service providers.
 
         Sharing data with a push service provider requires executing the
-        [service activation command](/webapi/openapi/cmd/cmdactivatepost) on the meter.
+        [service activation command](/webapi/latest/openapi/cmd/cmdactivatepost) on the meter.
         That command then uses the [service activation
         protocol](/webapi/openapi/glossary#section/Service-Activation) to set up the provider to
         ensure it is able and willing to accept the data.
@@ -6046,7 +6046,7 @@ paths:
             If present, return accumulated values of registers as raw
             cumulative values which start at zero when the meter database
             was created.  By default, the values are returned relative to
-            the [meter epoch](/webapi/openapi/configdbepoch), which means register
+            the [meter epoch](/webapi/latest/openapi/configdbepoch), which means register
             values are zero at the time of the epoch.
 
             Note that the value of this parameter is ignored and may even
@@ -6118,7 +6118,7 @@ paths:
 
             If non-empty, `tz` sets the timezone to use.  If left
             unspecified or empty, the [device
-            timezone](/webapi/openapi/configtimezone) is used by default.  The
+            timezone](/webapi/latest/openapi/configtimezone) is used by default.  The
             selected timezone affects, for example, how [time point
             names](/webapi/openapi/glossary#section/Time-Point-Names) such as `sod` (start-of-day)
             are interpreted and how time is output in the response.  The
@@ -29359,7 +29359,7 @@ components:
         decimal number and may include a fractional part.  The number is
         interpreted as seconds since the epoch.  For most logs, the epoch
         is the Unix epoch (i.e., seconds since the start of Jan 1, 1970
-        UTC).  However, for the [kernel log](/webapi/openapi/log/logkernelget),
+        UTC).  However, for the [kernel log](/webapi/latest/openapi/log/logkernelget),
         the epoch is the time the meter was powered up (booted).
       schema:
         type: number
@@ -29728,7 +29728,7 @@ components:
             (typically 32 characters long) which can be used to check on
             the current status of a potentially long-running operation.
             The current status can be retrieved from URL
-            [/sys/status/*token*](/webapi/openapi/sysstatustoken).
+            [/sys/status/*token*](/webapi/latest/openapi/sysstatustoken).
           example: 473c31462e62848b5352314dfc608669
         error:
           $ref: '#/components/schemas/ErrorString'
@@ -30215,7 +30215,7 @@ components:
                 description: |
                   The timestamp of when the entry was added to
                   the log.  It is measured as [seconds since the meter was
-                  booted](/webapi/openapi/sysuptime) (powered up).
+                  booted](/webapi/latest/openapi/sysuptime) (powered up).
               msg:
                 type: string
                 description: The log message.
@@ -30360,7 +30360,7 @@ components:
                       defined for this tariff provider.  User interfaces
                       need to make sure that the listed parameters are
                       filled in by the user and then save them in the
-                      corresponding [server-storage](/webapi/openapi/configvar)
+                      corresponding [server-storage](/webapi/latest/openapi/configvar)
                       variables before activating the tariff.  The Lua
                       tariff script can then rely on these variables to
                       correctly calculate cost.
@@ -30368,7 +30368,7 @@ components:
                       The parameters have the following meaning:
 
                         * `bill_contracted_demand`: If present,
-                        [server-storage](/webapi/openapi/configvar) variable
+                        [server-storage](/webapi/latest/openapi/configvar) variable
                         `global.billing.bill_contracted_demand` needs to
                         be set up to indicated whether or not the contract
                         demand should be billed, regardless of the actual
@@ -30377,28 +30377,28 @@ components:
                         billed.
 
                         * `contract_demand`: If present,
-                        [server-storage](/webapi/openapi/configvar) variable
+                        [server-storage](/webapi/latest/openapi/configvar) variable
                         `global.billing.contract_demand` needs to be set
                         up to indicate the demand (typically in kilowatts)
                         that was contracted from the utility.  This must
                         be a decimal number string.
 
                         * `start_day`: If present,
-                        [server-storage](/webapi/openapi/configvar) variable
+                        [server-storage](/webapi/latest/openapi/configvar) variable
                         `global.billing.start_day` needs to be set up to
                         indicate the day of the month that the meter is
                         read.  This must be a decimal integer string in
                         the range from 1 to 31.
 
                         * `surcharges`: If present,
-                        [server-storage](/webapi/openapi/configvar) variable
+                        [server-storage](/webapi/latest/openapi/configvar) variable
                         `global.billing.surcharges` needs to be set up to
                         indicate energy surcharges as a cost per unit
                         energy (e.g., dollars per kWh).  This must be a
                         decimal number string.
 
                         * `taxes`: If present,
-                        [server-storage](/webapi/openapi/configvar) variable
+                        [server-storage](/webapi/latest/openapi/configvar) variable
                         `global.billing.taxes` needs to be set up to
                         indicate the percentage of taxes to add to the
                         calculated energy cost.  This must be a positive
@@ -30773,7 +30773,7 @@ components:
           description: |
             The time at which the remote device was detected to be
             offline.  This time is reported as [number of seconds since the
-            meter was booted last](/webapi/openapi/sysuptime).
+            meter was booted last](/webapi/latest/openapi/sysuptime).
         timeout:
           type: integer
           minimum: 0
@@ -31263,7 +31263,7 @@ components:
                         attached to slowd when a device was discovered.
                         This can happen for USB devices, e.g., to make
                         their functionality available to the [control
-                        service](/webapi/openapi/ctrl).
+                        service](/webapi/latest/openapi/ctrl).
                     name:
                       type: string
                       description: |
@@ -31364,7 +31364,7 @@ components:
       example: 47808
       description: |
         The IPv4 port number used by the server when `bip` is enabled in
-        [/config/bacnet/server/enable](/webapi/openapi/configbacnetserverenable).
+        [/config/bacnet/server/enable](/webapi/latest/openapi/configbacnetserverenable).
         The default value is 0xBAC0 (47808).
     configBacnetServerBip:
       type: object
@@ -31402,7 +31402,7 @@ components:
       type: boolean
       description: |
         If true, the BACnet server reports cumulative values relative to
-        the [meter epoch](/webapi/openapi/configdbepoch).  If false, raw absolute
+        the [meter epoch](/webapi/latest/openapi/configdbepoch).  If false, raw absolute
         values are reported relative to when the meter was manufactured.
     configBacnetServerId:
       type: integer
@@ -31443,7 +31443,7 @@ components:
       example: 1
       description: |
         The BACnet over MS/TP configuration.  This is used only if the
-        `mstp` protocol is [enabled](/webapi/openapi/configbacnetserverenable).
+        `mstp` protocol is [enabled](/webapi/latest/openapi/configbacnetserverenable).
     configBacnetServer:
       type: object
       properties:
@@ -31489,8 +31489,8 @@ components:
         capped to the time of the most recent row in the database.  If a
         time is specified that is older than the oldest row in the
         database, an error object is returned.  If this error occurs,
-        check the device time ([/sys/time](/webapi/openapi/systime)) and database
-        configuration ([/sys/db](/webapi/openapi/sysdb)) to confirm that they have
+        check the device time ([/sys/time](/webapi/latest/openapi/systime)) and database
+        configuration ([/sys/db](/webapi/latest/openapi/sysdb)) to confirm that they have
         the expected values.
     configDb:
       type: object
@@ -31714,7 +31714,7 @@ components:
       example: ML-SCT-019-0100
       description: |
         The model name of the attached sensor. If this is `CTid`, a
-        CTid®-enabled sensor is attached and the [/ctid](/webapi/openapi/ctid)
+        CTid®-enabled sensor is attached and the [/ctid](/webapi/latest/openapi/ctid)
         service should be used to obtain details about the attached
         sensor.
     configLocalSensorNamePhase:
@@ -31866,12 +31866,12 @@ components:
       example: print("this is the tariff script");
       description: |
         The Lua script used to calculate energy cost.  This script can be
-        modified only if [server-storage](/webapi/openapi/configvar) variable
+        modified only if [server-storage](/webapi/latest/openapi/configvar) variable
         `global.billing.tariff_uri` is empty or unset.
 
         If loading this script takes longer than 15 seconds or evaluating
         the register formulas takes longer than half the
-        [update-interval](/webapi/openapi/configlocalupdate-interval), an alert is
+        [update-interval](/webapi/latest/openapi/configlocalupdate-interval), an alert is
         raised.
     configLuaScriptTeamd:
       type: string
@@ -31883,7 +31883,7 @@ components:
 
         If loading this script takes longer than 15 seconds or evaluating
         the register formulas takes longer than half the
-        [update-interval](/webapi/openapi/configlocalupdate-interval), an alert is
+        [update-interval](/webapi/latest/openapi/configlocalupdate-interval), an alert is
         raised.
     configLuaScript:
       type: object
@@ -32201,7 +32201,7 @@ components:
       description: |
         User-defined Modbus address maps.  The builtin, read-only system
         maps are available at
-        [/sys/modbus/client/map](/webapi/openapi/sysmodbusclientmap).  If a
+        [/sys/modbus/client/map](/webapi/latest/openapi/sysmodbusclientmap).  If a
         user-defined map with the same name as a system map exists, it
         will shadow (mask) the system map with them same name.
     configModbusClient:
@@ -32653,7 +32653,7 @@ components:
         The network configuration.
 
         The current state of the network is available at
-        [/sys/net](/webapi/openapi/sysnet).
+        [/sys/net](/webapi/latest/openapi/sysnet).
     configPushInterval:
       type: integer
       example: 60
@@ -32670,7 +32670,7 @@ components:
         server.  Multiple options must be separated by commas (`,`).
 
         This resource is available only if
-        [/config/push/service](/webapi/openapi/configpushservice) is an empty string.
+        [/config/push/service](/webapi/latest/openapi/configpushservice) is an empty string.
 
         Available options are:
 
@@ -32682,7 +32682,7 @@ components:
             the `POST` request.
 
           * `epoch`: Report the register values relative to the
-            [epoch](/webapi/openapi/configdbepoch).  Without this option, absolute
+            [epoch](/webapi/latest/openapi/configdbepoch).  Without this option, absolute
             values are sent which start at zero at the time the meter
             database was created.
 
@@ -32692,7 +32692,7 @@ components:
 
           * `json`: Push data in JSON format instead of XML.  The JSON
             format is the same as the one returned by the
-            [/register](/webapi/openapi/register) service, except that the top-level
+            [/register](/webapi/latest/openapi/register) service, except that the top-level
             `ts` section and the `idx` members in the `registers` section
             are omitted since they are not meaningful for push data.
 
@@ -32716,7 +32716,7 @@ components:
             certificate that the meter can verify as authentic.  Without
             this option, the server's certificate is not verified.  This
             option is ignored if
-            [/config/net/http/client/insecure](/webapi/openapi/confignethttpclientinsecure)
+            [/config/net/http/client/insecure](/webapi/latest/openapi/confignethttpclientinsecure)
             is `true`.
 
           * `skip=n`: Push only every `(n+1)`-th data row.  For example,
@@ -32741,7 +32741,7 @@ components:
         be specified when using a secure connection (`https` scheme).
 
         This resource is available only if
-        [/config/push/web/service](/webapi/openapi/configpushservice) is an empty
+        [/config/push/web/service](/webapi/latest/openapi/configpushservice) is an empty
         string.
 
         This resource is write-only.
@@ -32751,7 +32751,7 @@ components:
         The name of a push service provider to shared data with.
 
         To set this to a non-empty value please use the [service
-        activation command](/webapi/openapi/cmd/cmdactivatepost) since that ensures the
+        activation command](/webapi/latest/openapi/cmd/cmdactivatepost) since that ensures the
         push provider knows to expect data from this meter.  The body of
         the activation request should contain member `service` set to the
         string `push` and `provider` set to name of the desired push
@@ -32761,7 +32761,7 @@ components:
       example: https://push-service.com/data
       description: |
         The URI of the web server to share data with.  This resource is
-        available only if [/config/push/service](/webapi/openapi/configpushservice)
+        available only if [/config/push/service](/webapi/latest/openapi/configpushservice)
         is an empty string.
     configPushUser:
       type: string
@@ -32774,7 +32774,7 @@ components:
         `Authorization` header.
 
         This resource is available only if
-        [/config/push/web/service](/webapi/openapi/configpushservice) is an empty
+        [/config/push/web/service](/webapi/latest/openapi/configpushservice) is an empty
         string.
     configPush:
       type: object
@@ -32843,7 +32843,7 @@ components:
         The name `local` indicates that the meter itself measures or
         calculates the value.  Any other value is a reference to the
         remote device of the same name defined at
-        [/config/remote](/webapi/openapi/configremote).
+        [/config/remote](/webapi/latest/openapi/configremote).
     configRegisterPhysicalRegDid:
       type: integer
       minimum: 0
@@ -32869,7 +32869,7 @@ components:
         Defines the how the register value is obtained or calculated.  For
         register where `dev` is `local`, this is one of:
 
-          * A [local](/webapi/openapi/local) sensor name: `L1`-`L3`, `Ldc`, or
+          * A [local](/webapi/latest/openapi/local) sensor name: `L1`-`L3`, `Ldc`, or
             `S1`-`S30`.
 
           * A power formula written as a sum of products of sensors.  For
@@ -32888,7 +32888,7 @@ components:
           * An equal sign (`=`) followed by an
             [eScript](/webapi/openapi/glossary#section/eScript) expression.  The register
             value is obtained by evaluating the eScript expression once
-            per [update interval](/webapi/openapi/configlocalupdate-interval).
+            per [update interval](/webapi/latest/openapi/configlocalupdate-interval).
             Non-finite numbers (e.g., not-a-number, or infinities) are
             silently converted to 0 before recording the register value.
 
@@ -32897,7 +32897,7 @@ components:
         the particular remote device in use.  Commonly, the value is some
         sort of register name or identifier.  For example, for Modbus
         remote devices, the value is a register name defined by the
-        [Modbus map](/webapi/openapi/sysmodbusclientmap) of the remote device.
+        [Modbus map](/webapi/latest/openapi/sysmodbusclientmap) of the remote device.
     configRegisterPhysicalReg:
       type: object
       properties:
@@ -33284,7 +33284,7 @@ components:
         alerts.
 
         To set this to a non-empty value please use the [service
-        activation command](/webapi/openapi/cmd/cmdactivatepost) since that ensures the
+        activation command](/webapi/latest/openapi/cmd/cmdactivatepost) since that ensures the
         service provider knows to expect alerts from this meter.  The body
         of the activation request should contain member `service` set to
         the string `alert` and `provider` set to name of the desired
@@ -33296,7 +33296,7 @@ components:
         The URI of the web server to use for reporting alerts.
 
         This resource is available only if
-        [/config/alert/reporter/web/service](/webapi/openapi/configalertreporterwebservice)
+        [/config/alert/reporter/web/service](/webapi/latest/openapi/configalertreporterwebservice)
         is an empty string.
     configAlertReporterWebOptions:
       type: string
@@ -33305,7 +33305,7 @@ components:
         The options to use when sending an alert report to the web server.
 
         This resource is available only if
-        [/config/alert/reporter/web/service](/webapi/openapi/configalertreporterwebservice)
+        [/config/alert/reporter/web/service](/webapi/latest/openapi/configalertreporterwebservice)
         is an empty string.
 
         Multiple options can be specified in the string by separating them
@@ -33320,7 +33320,7 @@ components:
           * `secure`: Only send the alert report if the server's HTTP
             certificate can be verified by the meter.  This option is
             ignored if
-            [/config/net/http/client/insecure](/webapi/openapi/confignethttpclientinsecure)
+            [/config/net/http/client/insecure](/webapi/latest/openapi/confignethttpclientinsecure)
             is `true`.
     configAlertReporterWebUser:
       type: string
@@ -33333,7 +33333,7 @@ components:
         when connecting to the server via an encrypted connection (https).
 
         This resource is available only if
-        [/config/alert/reporter/web/service](/webapi/openapi/configalertreporterwebservice)
+        [/config/alert/reporter/web/service](/webapi/latest/openapi/configalertreporterwebservice)
         is an empty string.
     configAlertReporterWebPassword:
       type: string
@@ -33494,7 +33494,7 @@ components:
         - 0
       description: |
         The priority of each system-generated alert.
-        [/sys/alert](/webapi/openapi/sysalert) provides a description of these
+        [/sys/alert](/webapi/latest/openapi/sysalert) provides a description of these
         alerts.
     configAlert:
       type: object
@@ -34433,7 +34433,7 @@ components:
       description: |
         System-defined (built-in) Modbus address maps.  The user-defined
         maps are available at
-        [/config/modbus/client/map](/webapi/openapi/configmodbusclientmap).  If a
+        [/config/modbus/client/map](/webapi/latest/openapi/configmodbusclientmap).  If a
         user-defined map with the same name as a system map exists, it
         will shadow (mask) the system map with the same name.
     sysModbusClient:
@@ -34717,7 +34717,7 @@ components:
           delay: 39.609
           jitter: 2.258
       description: |
-        Status of each [configured](/webapi/openapi/confignetntpserver) NTP server.
+        Status of each [configured](/webapi/latest/openapi/confignetntpserver) NTP server.
     sysNetNtp:
       type: object
       properties:
@@ -34930,7 +34930,7 @@ components:
       description: |
         The network settings that are in use by the meter.  This may
         or may not be the same as the configuration established in
-        [/config/net](/webapi/openapi/confignet).
+        [/config/net](/webapi/latest/openapi/confignet).
     sysPushNextAttempt:
       type: string
       example: '1682658559.0'
@@ -35006,13 +35006,13 @@ components:
           $ref: '#/components/schemas/sysPushLast'
       description: |
         The status of the push (data sharing) service.  See
-        [/config/push](/webapi/openapi/configpush).
+        [/config/push](/webapi/latest/openapi/configpush).
     sysReboot:
       type: boolean
       description: |
         This is `true` if the meter needs to be rebooted, e.g., due to a
         configuration change.  If so, a [reboot
-        command](/webapi/openapi/cmd/cmdrebootpost) should be issued at the
+        command](/webapi/latest/openapi/cmd/cmdrebootpost) should be issued at the
         next opportune moment.
     sysSn:
       type: string
@@ -35075,7 +35075,7 @@ components:
       type: object
       description: |
         The result returned in response to a [service activation
-        command](/webapi/openapi/cmd/cmdactivatepost).
+        command](/webapi/latest/openapi/cmd/cmdactivatepost).
       properties:
         activated:
           type: boolean
@@ -35097,7 +35097,7 @@ components:
       type: object
       description: |
         The result returned in response to a ([send test
-        email command](/webapi/openapi/cmd/cmdtestemailpost).
+        email command](/webapi/latest/openapi/cmd/cmdtestemailpost).
       properties:
         log:
           type: string
@@ -35110,7 +35110,7 @@ components:
       type: object
       description: |
         The result returned in response to a ([test remote device
-        command](/webapi/openapi/cmd/cmdtestremotepost)).
+        command](/webapi/latest/openapi/cmd/cmdtestremotepost)).
       properties:
         trace:
           type: array
@@ -35283,7 +35283,7 @@ components:
         played back over time by inflating (or deflating) the recorded
         rate by up to +/-10% of the actual rate until the excess has been
         drained.  The excess of all registes can be reset to zero with the
-        [clear](/webapi/openapi/cmd/cmdclearpost) command.
+        [clear](/webapi/latest/openapi/cmd/cmdclearpost) command.
     sysTeamRegName:
       type: object
       properties:
