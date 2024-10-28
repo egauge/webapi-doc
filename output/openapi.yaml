@@ -7,7 +7,7 @@ info:
     name: Common Documentation License 1.0
     url: https://spdx.org/licenses/CDL-1.0.html
 servers:
-  - url: https://{devname}.d.egauge.net/api
+  - url: https://{devname}.egauge.io/api
     description: The WebAPI server
     variables:
       devname:
@@ -283,7 +283,7 @@ tags:
 
         * `<`: Condition is true if `lhs` is less than `rhs`.
         * `<=`: Condition is true if `lhs` is less-than-or-equal to `rhs`.
-        * `==`: Condition is true if `lhs` is equal to `rhs`.
+        * `=`: Condition is true if `lhs` is equal to `rhs`.
         * `!=`: Condition is true if `lhs` differs from `rhs`.
         * `>=`: Condition is true if `lhs` is greater-than-or-equal to `rhs`.
         * `>`: Condition is true if `lhs` is greater than `rhs`.
@@ -799,16 +799,16 @@ tags:
       options:
 
         * `default-modbus-addr`: The Modbus unit-number to use by
-        default.  This must be a decimal string.  For example: `"1"`.
+        default.  This must be a decimal string.  For example: `1`.
 
         * `default-serial-params`: The default serial parameters to use
         when the remote device is connected via a serial port
-        (Modbus/RTU).  This must be a string.  For example: `"9600/8n1"`
+        (Modbus/RTU).  This must be a string.  For example: `9600/8n1`
         for 9600 baud, 8 databits, no parity, 1 stop bit.
 
         * `default-tcp-port`: The default TCP port number to use when
         the remote device is connected via Modbus/TCP.  This must be a
-        decimal string.  For example: `"6001"`.
+        decimal string.  For example: `6001`.
   - name: /config/modbus/client/map/{name}/option/{opt}
     description: |
       The value of the Modbus map option.
@@ -2075,16 +2075,16 @@ tags:
       options:
 
         * `default-modbus-addr`: The Modbus unit-number to use by
-        default.  This must be a decimal string.  For example: `"1"`.
+        default.  This must be a decimal string.  For example: `1`.
 
         * `default-serial-params`: The default serial parameters to use
         when the remote device is connected via a serial port
-        (Modbus/RTU).  This must be a string.  For example: `"9600/8n1"`
+        (Modbus/RTU).  This must be a string.  For example: `9600/8n1`
         for 9600 baud, 8 databits, no parity, 1 stop bit.
 
         * `default-tcp-port`: The default TCP port number to use when
         the remote device is connected via Modbus/TCP.  This must be a
-        decimal string.  For example: `"6001"`.
+        decimal string.  For example: `6001`.
   - name: /sys/modbus/client/map/{name}/option/{opt}
     description: |
       The value of the Modbus map option.
@@ -3834,9 +3834,13 @@ paths:
                   description: |
                     The action to perform. The value `list` requests
                     that the latest available version should be returned
-                    as a version object response. The value `install`
-                    requests that the kernel or firmware should be
-                    updated and a token object response should be returned.
+                    as a version object response.
+
+                    The value `install` requests that the kernel or
+                    firmware should be updated.  In this case, a token
+                    is returned.  With that, the progress of the
+                    installation can be monitor at
+                    [/sys/status/*token*](/webapi/4.4/openapi/sysstatustoken).
                 target:
                   type: string
                   enum:
@@ -4491,7 +4495,7 @@ paths:
     get:
       tags:
         - /local
-      summary: Get local sensor values.
+      summary: Get local sensor values
       operationId: localGet
       parameters:
         - name: values
@@ -5087,20 +5091,27 @@ paths:
         - name: ts
           in: query
           description: |
-            This query parameter is ignored unless `format=csv`.
-            Otherwise, the parameter defines how timestamps are returned
-            in a CSV response.  By default, such timestamps are converted
-            using the device-local timezone and the format string `"%F
-            %T"`, which would output July 6, 2016 4:56pm as `2016-07-06
-            16:56:00`.
+            This query parameter controls how timestamps are handled
+            during this `GET` request.  The value must be a string of the
+            form `tz;fmt`, where `tz` is a timezone string and `fmt` is a
+            format string.  Either `tz` or `fmt` may be empty.
 
-            The value of this parameter must be a string of the form
-            `tz;fmt` where `tz` is the timezone to use when converting the
-            timestamp to a human-readable string and `fmt` is a format
-            string as defined by the
-            [strftime()](https://man7.org/linux/man-pages/man3/strftime.3.html)
-            function.  Either `tz` or `fmt` may be empty in which case the
-            respective default value is used.
+            If non-empty, `tz` sets the timezone to use.  If left
+            unspecified or empty, the [device
+            timezone](/webapi/4.4/openapi/configtimezone) is used by default.  The
+            selected timezone affects, for example, how [time point
+            names](/webapi/4.4/openapi/glossary#section/Time-Point-Names) such as `sod` (start-of-day)
+            are interpreted and how time is output in the response.  The
+            timezone must be in the format defined by
+            [tzset()](https://man7.org/linux/man-pages/man3/tzset.3.html).
+
+            The `fmt` string is used only when query parameter
+            `format=csv` is in effect.  In that case, `fmt` defines how
+            timestamps are output in the CSV response.  By default, the
+            format string `"%F %T"` is used, which would output July 6,
+            2016 4:56pm as `2016-07-06 16:56:00`.  The full syntax
+            available in the format string is documented in function
+            [strftime()](https://man7.org/linux/man-pages/man3/strftime.3.html).
 
             Note that the format-string typically will need to be
             percent-encoded.  In particular, each `%` character needs to
@@ -18810,7 +18821,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       description: |
-        Reset to [`UTC`](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)  x-schema:
+        Reset to
+        [`UTC`](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).
   /config/user:
     get:
       tags:
@@ -26958,6 +26970,7 @@ components:
           description: The reason the 401 response was returned.
           example: Authentication required.
     RightsObject:
+      type: object
       properties:
         usr:
           type: string
@@ -27180,6 +27193,7 @@ components:
       properties:
         token:
           type: string
+          minLength: 32
           description: |
             A status token.  This token is a hexadecimal string
             (typically 32 characters long) which can be used to check on
@@ -27566,8 +27580,8 @@ components:
                 type: number
                 description: |
                   The timestamp of when the entry was added to
-                  the log.  It is measured as seconds since the meter was
-                  booted (powered up).
+                  the log.  It is measured as [seconds since the meter was
+                  booted](/webapi/4.4/openapi/sysuptime) (powered up).
               msg:
                 type: string
                 description: The log message.
@@ -27694,10 +27708,10 @@ components:
                       defined for this tariff provider.  User interfaces
                       need to make sure that the listed parameters are
                       filled in by the user and then save them in the
-                      corresponding [server-storage](/webapi/4.4/openapi/store) variables
-                      before activating the tariff.  The Lua tariff script
-                      can then rely on these variables to correctly
-                      calculate cost.
+                      corresponding [server-storage](/webapi/4.4/openapi/store)
+                      variables before activating the tariff.  The Lua
+                      tariff script can then rely on these variables to
+                      correctly calculate cost.
 
                       The parameters have the following meaning:
 
@@ -27707,7 +27721,7 @@ components:
                         be set up to indicated whether or not the contract
                         demand should be billed, regardless of the actual
                         demand.  If the value of this variable is the
-                        string `"true"`, the contract demand needs to be
+                        string `true`, the contract demand needs to be
                         billed.
 
                         * `contract_demand`: If present,
@@ -27755,6 +27769,13 @@ components:
           $ref: '#/components/schemas/ErrorString'
         ranges:
           type: array
+          description: |
+            Each range returns a sequence of equi-distant rows.
+            Each time range specified with the `time` query option
+            results in one or more entries in the `ranges` array.
+            In general, there is no easy way to tell when the
+            ranges generated by one time-range switch to those
+            generated by the next time-range.
           items:
             type: object
             properties:
@@ -27778,12 +27799,7 @@ components:
                   An array of register rows ordered from youngest to
                   oldest.  The first row was measured at the timestamp
                   given by member `ts`.  Each subsequent row is `delta`
-                  seconds older than its preceeding row.  A row consists
-                  of an array of strings which list the register values
-                  in order of increasing register index.  Only selected
-                  registers are present in this array (see query option
-                  `reg`).  The register values are signed 64-bit
-                  integers, represented as decimal strings.
+                  seconds older than its preceeding row.
         registers:
           type: array
           items:
@@ -27881,6 +27897,7 @@ components:
               - - '6408'
                 - '-37505'
     RegisterConditionObject:
+      type: object
       properties:
         current:
           $ref: '#/components/schemas/ForeverStamp'
@@ -28184,7 +28201,7 @@ components:
     configDisplayOrientation:
       type: integer
       minimum: 0
-      exclusiveMaximum: 360
+      maximum: 359
       example: 90
       description: |
         The angle in degrees by which the orientation of the display
@@ -28527,16 +28544,16 @@ components:
         options:
 
           * `default-modbus-addr`: The Modbus unit-number to use by
-          default.  This must be a decimal string.  For example: `"1"`.
+          default.  This must be a decimal string.  For example: `1`.
 
           * `default-serial-params`: The default serial parameters to use
           when the remote device is connected via a serial port
-          (Modbus/RTU).  This must be a string.  For example: `"9600/8n1"`
+          (Modbus/RTU).  This must be a string.  For example: `9600/8n1`
           for 9600 baud, 8 databits, no parity, 1 stop bit.
 
           * `default-tcp-port`: The default TCP port number to use when
           the remote device is connected via Modbus/TCP.  This must be a
-          decimal string.  For example: `"6001"`.
+          decimal string.  For example: `6001`.
     configModbusClientMapNameRegItemName:
       type: string
       example: irradiance
@@ -29159,6 +29176,7 @@ components:
       example:
         eth0:
           transport: UDPv4
+          udp_ttl: 1
       description: |
         The network interface configurations for PTP. If empty, PTP is disabled.
     configNetPtp:
@@ -29722,7 +29740,7 @@ components:
       enum:
         - <
         - <=
-        - '=='
+        - '='
         - '!='
         - '>='
         - '>'
@@ -29733,7 +29751,7 @@ components:
 
           * `<`: Condition is true if `lhs` is less than `rhs`.
           * `<=`: Condition is true if `lhs` is less-than-or-equal to `rhs`.
-          * `==`: Condition is true if `lhs` is equal to `rhs`.
+          * `=`: Condition is true if `lhs` is equal to `rhs`.
           * `!=`: Condition is true if `lhs` differs from `rhs`.
           * `>=`: Condition is true if `lhs` is greater-than-or-equal to `rhs`.
           * `>`: Condition is true if `lhs` is greater than `rhs`.
@@ -30668,16 +30686,16 @@ components:
         options:
 
           * `default-modbus-addr`: The Modbus unit-number to use by
-          default.  This must be a decimal string.  For example: `"1"`.
+          default.  This must be a decimal string.  For example: `1`.
 
           * `default-serial-params`: The default serial parameters to use
           when the remote device is connected via a serial port
-          (Modbus/RTU).  This must be a string.  For example: `"9600/8n1"`
+          (Modbus/RTU).  This must be a string.  For example: `9600/8n1`
           for 9600 baud, 8 databits, no parity, 1 stop bit.
 
           * `default-tcp-port`: The default TCP port number to use when
           the remote device is connected via Modbus/TCP.  This must be a
-          decimal string.  For example: `"6001"`.
+          decimal string.  For example: `6001`.
     sysModbusClientMapNameRegItemName:
       type: string
       example: irradiance
