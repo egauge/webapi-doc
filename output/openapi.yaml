@@ -599,7 +599,7 @@ tags:
         * `c`: The accumulated (cumulative) value of the register should
         be displayed.
 
-      Note that an empty string imples that the register is not
+      Note that an empty string implies that the register is not
       displayed at all
 
       For the special keyword `.default`, this establishes how registers
@@ -1325,7 +1325,7 @@ tags:
       database at discrete points in time (the database rows).  There is
       an upper limit on the number of physical registers that can be
       supported by the meter.  Depending on meter model and database
-      configuration, typically, 16 to 64 phycial registers are
+      configuration, typically, 16 to 64 physical registers are
       available. The actual limit is available at
       [/sys/db/max-registers](/webapi/latest/openapi/sysdbmax-registers).
   - name: /config/register/physical/{reg}
@@ -1404,7 +1404,7 @@ tags:
         * `use`: Intended to represent total power consumption at a
           site.  It is generally presented with the name `Usage` in
           English and the equivalent translation in other languages
-          (subject to availablility).
+          (subject to availability).
 
         * `gen`: Intended to represent total power generation at a site,
           e.g., from local solar or wind power generation facilities.
@@ -1810,7 +1810,7 @@ tags:
       Internet, its time should usually be accurate (see
       [/config/net/ntp](/webapi/latest/openapi/confignetntp) and
       [/config/net/ptp](/webapi/latest/openapi/confignetptp)).  However, it is advisable
-      for a client to check the time and confirm its reasonbly close to
+      for a client to check the time and confirm its reasonably close to
       actual time as discrepancies could cause confusing and erroneous
       results.
 
@@ -2439,7 +2439,7 @@ tags:
   - name: /sys/net/ntp/server/{idx}/name
     description: |
       The hostname of the configured NTP server.  If the name is
-      unknown, this this is `null`.  This normally happens when the NTP
+      unknown, this is `null`.  This normally happens when the NTP
       server is configured as an IP address.
   - name: /sys/net/ntp/server/{idx}/next_poll
     description: |
@@ -2748,7 +2748,7 @@ tags:
       recording a big jump, an excess is recorded which will then be
       played back over time by inflating (or deflating) the recorded
       rate by up to +/-10% of the actual rate until the excess has been
-      drained.  The excess of all registes can be reset to zero with the
+      drained.  The excess of all registers can be reset to zero with the
       [clear](/webapi/latest/openapi/cmd/cmdclearpost) command.
   - name: /sys/team/reg/{name}/last
     description: |
@@ -2870,7 +2870,7 @@ tags:
 
       ## eScript
 
-      eScript is a simple scripting langage which supports
+      eScript is a simple scripting language which supports
       basic arithmetic operations (addition, subtraction, multiplication,
       and division) of double-precision floating point numbers.  The
       operations follow normal precedence rules.  Parentheses can be used
@@ -3340,7 +3340,7 @@ tags:
 
         1) The meter extracts the service URL from the service
         provider's response and starts sending data to that URL.  With
-        this, service activation has completed sucessfully.
+        this, service activation has completed successfully.
 
       Once activated, the meter will send data to the service URL as
       needed (e.g., periodically for push data or when an alert occurs
@@ -3661,7 +3661,7 @@ tags:
       subsequent colon are left out, the interval defaults to one
       second.  If `step` is an empty string, the range consists of only
       the start and end timestamps.  For example, `100::103` would
-      correspond to `[100, 103]`.  If the timerange consists of only a
+      correspond to `[100, 103]`.  If the time range consists of only a
       single number, it is interpreted as a singleton consisting of only
       the specified time.
 
@@ -31571,7 +31571,7 @@ components:
           * `c`: The accumulated (cumulative) value of the register should
           be displayed.
 
-        Note that an empty string imples that the register is not
+        Note that an empty string implies that the register is not
         displayed at all
 
         For the special keyword `.default`, this establishes how registers
@@ -33010,7 +33010,7 @@ components:
           * `use`: Intended to represent total power consumption at a
             site.  It is generally presented with the name `Usage` in
             English and the equivalent translation in other languages
-            (subject to availablility).
+            (subject to availability).
 
           * `gen`: Intended to represent total power generation at a site,
             e.g., from local solar or wind power generation facilities.
@@ -34583,7 +34583,7 @@ components:
       example: null
       description: |
         The hostname of the configured NTP server.  If the name is
-        unknown, this this is `null`.  This normally happens when the NTP
+        unknown, this is `null`.  This normally happens when the NTP
         server is configured as an IP address.
     sysNetNtpServerItemState:
       type: string
@@ -35282,7 +35282,7 @@ components:
         recording a big jump, an excess is recorded which will then be
         played back over time by inflating (or deflating) the recorded
         rate by up to +/-10% of the actual rate until the excess has been
-        drained.  The excess of all registes can be reset to zero with the
+        drained.  The excess of all registers can be reset to zero with the
         [clear](/webapi/latest/openapi/cmd/cmdclearpost) command.
     sysTeamRegName:
       type: object
