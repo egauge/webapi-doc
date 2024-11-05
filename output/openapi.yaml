@@ -2429,13 +2429,13 @@ tags:
     description: |
       The estimated time it takes for a network packet from the meter to
       reach this NTP server (or vice versa).  The unit is milliseconds.
-      The is available only if the meter considers this server a peer.
+      This is available only if the meter considers this server a peer.
   - name: /sys/net/ntp/server/{idx}/jitter
     description: |
       The estimated jitter (variation) for the time it takes for a
       network packet from the meter to reach this NTP server (or vice
       versa). The unit is milliseconds.
-      The is available only if the meter considers this server a peer.
+      This is available only if the meter considers this server a peer.
   - name: /sys/net/ntp/server/{idx}/name
     description: |
       The hostname of the configured NTP server.  If the name is
@@ -2449,7 +2449,7 @@ tags:
     description: |
       The estimated difference between the meter's time and this NTP
       server's time.  The unit is milliseconds.
-      The is available only if the meter considers this server a peer.
+      This is available only if the meter considers this server a peer.
   - name: /sys/net/ntp/server/{idx}/poll_interval
     description: |
       The interval of time between successive contacts from the meter to
@@ -2475,7 +2475,7 @@ tags:
       The meter's estimate of the time accuracy provided by this server.
       Smaller numbers mean higher accuracy.  A stratum 0 server is the
       most accurate (atomic clock or GPS clock).
-      The is available only if the meter considers this server a peer.
+      This is available only if the meter considers this server a peer.
   - name: /sys/net/ntp/server/{idx}/trust_level
     description: |
       The meter's estimate of how trustworthy this server's time is.
@@ -34627,7 +34627,7 @@ components:
         The meter's estimate of the time accuracy provided by this server.
         Smaller numbers mean higher accuracy.  A stratum 0 server is the
         most accurate (atomic clock or GPS clock).
-        The is available only if the meter considers this server a peer.
+        This is available only if the meter considers this server a peer.
     sysNetNtpServerItemNextPoll:
       type: integer
       example: 615
@@ -34646,14 +34646,14 @@ components:
       description: |
         The estimated difference between the meter's time and this NTP
         server's time.  The unit is milliseconds.
-        The is available only if the meter considers this server a peer.
+        This is available only if the meter considers this server a peer.
     sysNetNtpServerItemDelay:
       type: number
       example: 0.79
       description: |
         The estimated time it takes for a network packet from the meter to
         reach this NTP server (or vice versa).  The unit is milliseconds.
-        The is available only if the meter considers this server a peer.
+        This is available only if the meter considers this server a peer.
     sysNetNtpServerItemJitter:
       type: number
       example: 0.106
@@ -34661,7 +34661,7 @@ components:
         The estimated jitter (variation) for the time it takes for a
         network packet from the meter to reach this NTP server (or vice
         versa). The unit is milliseconds.
-        The is available only if the meter considers this server a peer.
+        This is available only if the meter considers this server a peer.
     sysNetNtpServerItem:
       type: object
       properties:
