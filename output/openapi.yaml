@@ -2002,6 +2002,13 @@ tags:
   - name: /sys/boot
     description: |
       Information about the most recent power-up (boot) event.
+  - name: /sys/boot/backup_power_ok
+    description: |
+      This is `true` if the battery/supercap backup power supply of the
+      meter was able to maintain power to the board until it was powered
+      up again.  If `false`, the supply failed and some subsystems of
+      the meter (e.g., the real-time clock) may have been cleared to
+      their reset state.
   - name: /sys/boot/reason
     description: |
       The reason for the most recent CPU reset. The strings vary
@@ -25083,6 +25090,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       parameters: []
+  /sys/boot/backup_power_ok:
+    get:
+      tags:
+        - /sys/boot/backup_power_ok
+      summary: Get /sys/boot/backup_power_ok
+      operationId: sysBootBackupPowerOkGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysBootBackupPowerOk'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
   /sys/db:
     get:
       tags:
@@ -33807,6 +33839,14 @@ components:
         timestamp](/webapi/latest/openapi/glossary#section/Unix-Timestamp) string or `null` if
         unavailable.  Unanticipated reboots, e.g., due to power failure or
         watchdog-timeouts do not update this resource.
+    sysBootBackupPowerOk:
+      type: boolean
+      description: |
+        This is `true` if the battery/supercap backup power supply of the
+        meter was able to maintain power to the board until it was powered
+        up again.  If `false`, the supply failed and some subsystems of
+        the meter (e.g., the real-time clock) may have been cleared to
+        their reset state.
     sysBoot:
       type: object
       properties:
@@ -33814,6 +33854,8 @@ components:
           $ref: '#/components/schemas/sysBootReason'
         time:
           $ref: '#/components/schemas/sysBootTime'
+        backup_power_ok:
+          $ref: '#/components/schemas/sysBootBackupPowerOk'
       description: |
         Information about the most recent power-up (boot) event.
     sysDbMaxRegisters:
