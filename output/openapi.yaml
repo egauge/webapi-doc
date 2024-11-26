@@ -3001,7 +3001,7 @@ tags:
         * `modbus`: This link type can be used to read data from a
            [Modbus/TCP](https://modbus.org/docs/Modbus_Messaging_Implementation_Guide_V1_0b.pdf)
            device.  The address must have the format
-           `map.unit@host:port`:
+           `map.unit@host:port|options`:
 
             * `map`: The name of the Modbus address map to use for the
               device (see
@@ -3019,6 +3019,10 @@ tags:
             * `port`: The port number to use.  Defaults to the value of
               map option `default-tcp-port`, or port 502 if the option
               is not present.
+
+            * `options`: A comma-separated list of options to use for
+              the link.  The only option supported is `spiky`.  This has
+              the same effect as the `spiky` option for link-type `tcp`.
 
             An example address is `sunspec.1@192.168.1.34` which would
             refer to a SunSpec-compatible device with unit number 1 and
@@ -3071,7 +3075,7 @@ tags:
                [Modbus/RTU](https://modbus.org/docs/Modbus_over_serial_line_V1_02.pdf)
                protocol which can connect two or more devices over
                RS485.  `devaddr` must have the format
-               `modbus://map.unit@serdev` where:
+               `modbus://map.unit@serdev|options` where:
 
                  * `map`: The name of the Modbus address map to use for
                  the device (see
@@ -3098,6 +3102,11 @@ tags:
                  `host` is the hostname or IP address of an
                  RS485-to-Ethernet adapter and `port` is an optional TCP
                  port number.
+
+                 * `options`: A comma-separated list of options to use
+                 for the link.  The only option supported is `spiky`.
+                 This has the same effect as the `spiky` option for
+                 link-type `tcp`.
 
                 An example address is `modbus://sunspec.1@USB1` which
                 would refer to a SunSpec-compatible device with unit
