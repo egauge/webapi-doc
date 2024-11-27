@@ -1244,8 +1244,12 @@ tags:
         * `hour`: Data will be pushed with hour granularity (at most one
           row of data per hour).
 
-        * `max=n`: Pushed at most `n` rows in a single `POST` request.
-          This limit must be in the range from 1 to 900.
+        * `max=n`: Include at most `n` rows in a single `POST` request.
+          This defaults to 900 and must be in the range from 1 to 9000.
+          If smaller than the data update-frequency
+          (1/[update_interval](/webapi/latest/openapi/configlocalupdate-interval)), a
+          single `POST` request may contain as many rows as are needed
+          to cover one second.
 
         * `msec`: Data will be pushed with millisecond granularity (at
           most one row of data per millisecond).
@@ -32740,8 +32744,12 @@ components:
           * `hour`: Data will be pushed with hour granularity (at most one
             row of data per hour).
 
-          * `max=n`: Pushed at most `n` rows in a single `POST` request.
-            This limit must be in the range from 1 to 900.
+          * `max=n`: Include at most `n` rows in a single `POST` request.
+            This defaults to 900 and must be in the range from 1 to 9000.
+            If smaller than the data update-frequency
+            (1/[update_interval](/webapi/latest/openapi/configlocalupdate-interval)), a
+            single `POST` request may contain as many rows as are needed
+            to cover one second.
 
           * `msec`: Data will be pushed with millisecond granularity (at
             most one row of data per millisecond).
