@@ -3026,7 +3026,8 @@ tags:
 
             * `options`: A comma-separated list of options to use for
               the link.  The only option supported is `spiky`.  This has
-              the same effect as the `spiky` option for link-type `tcp`.
+              the same effect as the `spiky` option for link-type `tcp`
+              (see below).
 
             An example address is `sunspec.1@192.168.1.34` which would
             refer to a SunSpec-compatible device with unit number 1 and
@@ -3054,10 +3055,15 @@ tags:
 
         * `slowd`: This link type can be used to read data from various
           devices connected over a serial port.  The address must have
-          the format `proto://devaddr`, where `proto` is the name of the
-          communication protocol and `devaddr` is a device-address in a
-          format that depends on the protocol.  The available protocols
-          are:
+          the format `proto://devaddr|options`, where `proto` is the
+          name of the communication protocol, `devaddr` is a
+          device-address in a format that depends on the protocol, and
+          `options` is an optional, comma-separated list of options to
+          use for the link.  If no options are specified, the `|`
+          character can be left out as well.  The only option currently
+          supported is `spiky`.  It has the same effect as the `spiky`
+          option for link-type `tcp` (see below).  The available
+          protocols are:
 
             * `alphatechnics`: Implements a proprietary protocol for
               reading [AlphaTechnics
@@ -3079,7 +3085,7 @@ tags:
                [Modbus/RTU](https://modbus.org/docs/Modbus_over_serial_line_V1_02.pdf)
                protocol which can connect two or more devices over
                RS485.  `devaddr` must have the format
-               `modbus://map.unit@serdev|options` where:
+               `modbus://map.unit@serdev` where:
 
                  * `map`: The name of the Modbus address map to use for
                  the device (see
@@ -3106,11 +3112,6 @@ tags:
                  `host` is the hostname or IP address of an
                  RS485-to-Ethernet adapter and `port` is an optional TCP
                  port number.
-
-                 * `options`: A comma-separated list of options to use
-                 for the link.  The only option supported is `spiky`.
-                 This has the same effect as the `spiky` option for
-                 link-type `tcp`.
 
                 An example address is `modbus://sunspec.1@USB1` which
                 would refer to a SunSpec-compatible device with unit
