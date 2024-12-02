@@ -2420,6 +2420,27 @@ tags:
   - name: /sys/net/ipv4/gateway
     description: |
       The IPv4 network number in dotted decimal notation.
+  - name: /sys/net/link
+    description: |
+      Status of each link.
+  - name: /sys/net/link/{idx}
+    description: |
+      Status of the link.
+  - name: /sys/net/link/{idx}/id
+    description: |
+      The interface index of the link.
+  - name: /sys/net/link/{idx}/name
+    description: |
+      The name of the link.
+  - name: /sys/net/link/{idx}/state
+    description: |
+      The operational state of the link.
+  - name: /sys/net/link/{idx}/addr
+    description: |
+      The link layer address (e.g. MAC address).
+  - name: /sys/net/link/{idx}/broadcast
+    description: |
+      The link layer broadcast address.
   - name: /sys/net/ntp
     description: |
       Network Time Protocol
@@ -27369,6 +27390,239 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       parameters: []
+  /sys/net/link:
+    get:
+      tags:
+        - /sys/net/link
+      summary: Get /sys/net/link
+      operationId: sysNetLinkGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetLink'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/net/link/{idx}:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a link.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/link/{idx}
+      summary: Get /sys/net/link/{idx}
+      operationId: sysNetLinkItemGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetLinkItem'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters:
+        - $ref: '#/components/parameters/maxDepthParam'
+        - $ref: '#/components/parameters/filterParam'
+  /sys/net/link/{idx}/id:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a link.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/link/{idx}/id
+      summary: Get /sys/net/link/{idx}/id
+      operationId: sysNetLinkItemIdGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetLinkItemId'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/net/link/{idx}/name:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a link.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/link/{idx}/name
+      summary: Get /sys/net/link/{idx}/name
+      operationId: sysNetLinkItemNameGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetLinkItemName'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/net/link/{idx}/state:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a link.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/link/{idx}/state
+      summary: Get /sys/net/link/{idx}/state
+      operationId: sysNetLinkItemStateGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetLinkItemState'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/net/link/{idx}/addr:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a link.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/link/{idx}/addr
+      summary: Get /sys/net/link/{idx}/addr
+      operationId: sysNetLinkItemAddrGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetLinkItemAddr'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+  /sys/net/link/{idx}/broadcast:
+    parameters:
+      - name: idx
+        in: path
+        description: |
+          The index of a link.
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+    get:
+      tags:
+        - /sys/net/link/{idx}/broadcast
+      summary: Get /sys/net/link/{idx}/broadcast
+      operationId: sysNetLinkItemBroadcastGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysNetLinkItemBroadcast'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
   /sys/net/ntp:
     get:
       tags:
@@ -34630,6 +34884,81 @@ components:
       description: |
         The Internet Protocol v4 ([IPv4](https://www.rfc-editor.org/rfc/rfc791))
         configuration.
+    sysNetLinkItemId:
+      type: integer
+      example: 1
+      description: |
+        The interface index of the link.
+    sysNetLinkItemName:
+      type: string
+      example: wlan0
+      description: |
+        The name of the link.
+    sysNetLinkItemState:
+      type: string
+      example: up
+      enum:
+        - unknown
+        - notpresent
+        - down
+        - lowerlayerdown
+        - testing
+        - dormant
+        - up
+      description: |
+        The operational state of the link.
+    sysNetLinkItemAddr:
+      type: string
+      example: 32:ab:cd:03:76:fc
+      description: |
+        The link layer address (e.g. MAC address).
+    sysNetLinkItemBroadcast:
+      type: string
+      example: ff:ff:ff:ff:ff:ff
+      description: |
+        The link layer broadcast address.
+    sysNetLinkItem:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/sysNetLinkItemId'
+        name:
+          $ref: '#/components/schemas/sysNetLinkItemName'
+        state:
+          $ref: '#/components/schemas/sysNetLinkItemState'
+        addr:
+          $ref: '#/components/schemas/sysNetLinkItemAddr'
+        broadcast:
+          $ref: '#/components/schemas/sysNetLinkItemBroadcast'
+      description: |
+        Status of the link.
+    sysNetLink:
+      type: array
+      items:
+        $ref: '#/components/schemas/sysNetLinkItem'
+      example:
+        - id: 1
+          name: lo
+          state: unknown
+          addr: '00:00:00:00:00:00'
+          broadcast: '00:00:00:00:00:00'
+        - id: 2
+          name: sit0
+          state: down
+          addr: 0.0.0.0
+          broadcast: 0.0.0.0
+        - id: 3
+          name: eth0
+          state: up
+          addr: 45:ab:cd:03:76:fe
+          broadcast: ff:ff:ff:ff:ff:ff
+        - id: 4
+          name: wlan0
+          state: dormant
+          addr: 32:ab:cd:03:76:fc
+          broadcast: ff:ff:ff:ff:ff:ff
+      description: |
+        Status of each link.
     sysNetNtpServerItemAddress:
       type: string
       example: 192.168.1.1
@@ -34983,6 +35312,8 @@ components:
           $ref: '#/components/schemas/sysNetHomeplug'
         ipv4:
           $ref: '#/components/schemas/sysNetIpv4'
+        link:
+          $ref: '#/components/schemas/sysNetLink'
         ntp:
           $ref: '#/components/schemas/sysNetNtp'
         wlan:
