@@ -848,6 +848,27 @@ tags:
         * `float`: IEEE-754 single-precision float.
         * `floatl`: IEEE-754 single-precision float, word-swapped.
         * `double`: IEEE-754 double-precision float.
+  - name: /config/modbus/client/map/{name}/reg/{idx}/encoding
+    description: |
+      The byte-order used when encoding or decoding numeric values
+      to/from Modbus packets.  This consists of a string of up eight
+      characters, each of which must be a letter in the range from `A`
+      through `H` or the letter `X`.  The letter `A` represents the most
+      significant byte in the value.  Higher letters represent bytes of
+      decreasing significance.  For example, the string `AB` indicates
+      that a 16-bit value is encoded with the most sigificant byte
+      first, followed by the least significant byte (i.e., the
+      big-endian encoding used by default for Modbus).  Conversely, the
+      string `BA` would encode the same value in little-endian, with the
+      least-sigificant byte first, followed by the most significant
+      byte.  The letter `X` can be used for bytes whose values should be
+      ignored (i.e., treated as 0).  For example, the string `BCDX`
+      would encode a 24-bit value in the first three bytes of a Modbus
+      packet, with the fourth byte set to 0.
+
+      The encoding is ignored for non-numeric or word-swapped types
+      (i.e., it is used only for `s16`, `u16`, `s32`, `u32`, `s64`,
+      `u64`, `float16`, `float`, and `double`).
   - name: /config/modbus/client/map/{name}/reg/{idx}/kind
     description: |
       The kind of the register. Possible values are:
@@ -2254,6 +2275,27 @@ tags:
         * `float`: IEEE-754 single-precision float.
         * `floatl`: IEEE-754 single-precision float, word-swapped.
         * `double`: IEEE-754 double-precision float.
+  - name: /sys/modbus/client/map/{name}/reg/{idx}/encoding
+    description: |
+      The byte-order used when encoding or decoding numeric values
+      to/from Modbus packets.  This consists of a string of up eight
+      characters, each of which must be a letter in the range from `A`
+      through `H` or the letter `X`.  The letter `A` represents the most
+      significant byte in the value.  Higher letters represent bytes of
+      decreasing significance.  For example, the string `AB` indicates
+      that a 16-bit value is encoded with the most sigificant byte
+      first, followed by the least significant byte (i.e., the
+      big-endian encoding used by default for Modbus).  Conversely, the
+      string `BA` would encode the same value in little-endian, with the
+      least-sigificant byte first, followed by the most significant
+      byte.  The letter `X` can be used for bytes whose values should be
+      ignored (i.e., treated as 0).  For example, the string `BCDX`
+      would encode a 24-bit value in the first three bytes of a Modbus
+      packet, with the fourth byte set to 0.
+
+      The encoding is ignored for non-numeric or word-swapped types
+      (i.e., it is used only for `s16`, `u16`, `s32`, `u32`, `s64`,
+      `u64`, `float16`, `float`, and `double`).
   - name: /sys/modbus/client/map/{name}/reg/{idx}/kind
     description: |
       The kind of the register. Possible values are:
@@ -12695,6 +12737,117 @@ paths:
                 $ref: '#/components/schemas/UnauthorizedObject'
       description: |
         Reset to `u16`.
+  /config/modbus/client/map/{name}/reg/{idx}/encoding:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The name of a user Modbus map (editable).
+        required: true
+        schema:
+          type: string
+          example: my_modbus_map
+      - name: idx
+        in: path
+        description: |
+          The index of a Modbus map register.
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - /config/modbus/client/map/{name}/reg/{idx}/encoding
+      summary: Get /config/modbus/client/map/{name}/reg/{idx}/encoding
+      operationId: configModbusClientMapNameRegItemEncodingGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/configModbusClientMapNameRegItemEncoding'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETagHeader'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
+    put:
+      tags:
+        - /config/modbus/client/map/{name}/reg/{idx}/encoding
+      summary: Replace /config/modbus/client/map/{name}/reg/{idx}/encoding
+      operationId: configModbusClientMapNameRegItemEncodingPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configModbusClientMapNameRegItemEncoding'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    post:
+      tags:
+        - /config/modbus/client/map/{name}/reg/{idx}/encoding
+      summary: Update /config/modbus/client/map/{name}/reg/{idx}/encoding
+      operationId: configModbusClientMapNameRegItemEncodingPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configModbusClientMapNameRegItemEncoding'
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+    delete:
+      tags:
+        - /config/modbus/client/map/{name}/reg/{idx}/encoding
+      summary: Delete /config/modbus/client/map/{name}/reg/{idx}/encoding
+      operationId: configModbusClientMapNameRegItemEncodingDelete
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusObject'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      description: |
+        Reset to the empty string, i.e., the default big-endian encoding
+        used by Modbus.
   /config/modbus/client/map/{name}/reg/{idx}/kind:
     parameters:
       - name: name
@@ -26660,6 +26813,47 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedObject'
       parameters: []
+  /sys/modbus/client/map/{name}/reg/{idx}/encoding:
+    parameters:
+      - name: name
+        in: path
+        description: |
+          The name of a system Modbus map (read-only).
+        required: true
+        schema:
+          type: string
+          example: egauge_prm3
+      - name: idx
+        in: path
+        description: |
+          The index of a Modbus map register.
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - /sys/modbus/client/map/{name}/reg/{idx}/encoding
+      summary: Get /sys/modbus/client/map/{name}/reg/{idx}/encoding
+      operationId: sysModbusClientMapNameRegItemEncodingGet
+      responses:
+        '200':
+          description: Normal response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/sysModbusClientMapNameRegItemEncoding'
+                  error:
+                    $ref: '#/components/schemas/ErrorString'
+        '401':
+          description: Unauthorized response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedObject'
+      parameters: []
   /sys/modbus/client/map/{name}/reg/{idx}/kind:
     parameters:
       - name: name
@@ -32299,6 +32493,29 @@ components:
           * `float`: IEEE-754 single-precision float.
           * `floatl`: IEEE-754 single-precision float, word-swapped.
           * `double`: IEEE-754 double-precision float.
+    configModbusClientMapNameRegItemEncoding:
+      type: string
+      example: ABCD
+      description: |
+        The byte-order used when encoding or decoding numeric values
+        to/from Modbus packets.  This consists of a string of up eight
+        characters, each of which must be a letter in the range from `A`
+        through `H` or the letter `X`.  The letter `A` represents the most
+        significant byte in the value.  Higher letters represent bytes of
+        decreasing significance.  For example, the string `AB` indicates
+        that a 16-bit value is encoded with the most sigificant byte
+        first, followed by the least significant byte (i.e., the
+        big-endian encoding used by default for Modbus).  Conversely, the
+        string `BA` would encode the same value in little-endian, with the
+        least-sigificant byte first, followed by the most significant
+        byte.  The letter `X` can be used for bytes whose values should be
+        ignored (i.e., treated as 0).  For example, the string `BCDX`
+        would encode a 24-bit value in the first three bytes of a Modbus
+        packet, with the fourth byte set to 0.
+
+        The encoding is ignored for non-numeric or word-swapped types
+        (i.e., it is used only for `s16`, `u16`, `s32`, `u32`, `s64`,
+        `u64`, `float16`, `float`, and `double`).
     configModbusClientMapNameRegItemKind:
       type: string
       enum:
@@ -32422,6 +32639,8 @@ components:
           $ref: '#/components/schemas/configModbusClientMapNameRegItemAddr'
         type:
           $ref: '#/components/schemas/configModbusClientMapNameRegItemType'
+        encoding:
+          $ref: '#/components/schemas/configModbusClientMapNameRegItemEncoding'
         kind:
           $ref: '#/components/schemas/configModbusClientMapNameRegItemKind'
         unit:
@@ -34545,6 +34764,29 @@ components:
           * `float`: IEEE-754 single-precision float.
           * `floatl`: IEEE-754 single-precision float, word-swapped.
           * `double`: IEEE-754 double-precision float.
+    sysModbusClientMapNameRegItemEncoding:
+      type: string
+      example: ABCD
+      description: |
+        The byte-order used when encoding or decoding numeric values
+        to/from Modbus packets.  This consists of a string of up eight
+        characters, each of which must be a letter in the range from `A`
+        through `H` or the letter `X`.  The letter `A` represents the most
+        significant byte in the value.  Higher letters represent bytes of
+        decreasing significance.  For example, the string `AB` indicates
+        that a 16-bit value is encoded with the most sigificant byte
+        first, followed by the least significant byte (i.e., the
+        big-endian encoding used by default for Modbus).  Conversely, the
+        string `BA` would encode the same value in little-endian, with the
+        least-sigificant byte first, followed by the most significant
+        byte.  The letter `X` can be used for bytes whose values should be
+        ignored (i.e., treated as 0).  For example, the string `BCDX`
+        would encode a 24-bit value in the first three bytes of a Modbus
+        packet, with the fourth byte set to 0.
+
+        The encoding is ignored for non-numeric or word-swapped types
+        (i.e., it is used only for `s16`, `u16`, `s32`, `u32`, `s64`,
+        `u64`, `float16`, `float`, and `double`).
     sysModbusClientMapNameRegItemKind:
       type: string
       enum:
@@ -34668,6 +34910,8 @@ components:
           $ref: '#/components/schemas/sysModbusClientMapNameRegItemAddr'
         type:
           $ref: '#/components/schemas/sysModbusClientMapNameRegItemType'
+        encoding:
+          $ref: '#/components/schemas/sysModbusClientMapNameRegItemEncoding'
         kind:
           $ref: '#/components/schemas/sysModbusClientMapNameRegItemKind'
         unit:
